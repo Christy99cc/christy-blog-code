@@ -34,7 +34,7 @@ categories: ''
 * Google GFS是一个基于分布式集群的大型分布式文件系统，为MapReduce计算框架提供低层数据存储和数据可靠性支撑
 * GFS是一个构建在分布节点本地文件系统之上的一个**逻辑文件系统**，它将数据存储在物理上分布的每个节点上，但通过GFS将整个数据形成一个逻辑上整体的文件。
 
-![](https://cdn.sparkling.land/christy/images/image-20200316230647221.png)
+![04Google云计算技术_pic1](https://x.arcto.xyz/JX3mtT/04Google云计算技术_pic1.png)
 
 #### GFS的3个假设
 
@@ -58,7 +58,7 @@ categories: ''
 
 #### **系统架构**
 
-![](https://cdn.sparkling.land/christy/images/GFS系统架构.png)
+![GFS系统架构](https://x.arcto.xyz/NpvBlE/GFS系统架构.png)
 
 > ⚠️Client与Master之间只有控制信息，无数据信息，减少主服务器的负载。
 
@@ -189,11 +189,11 @@ Chunk Server 数据块服务器
 * 工作：**对这些对应相同key的value值进行归并处理**
 * 输出结果：`（key, final_value）`，所有Reduce的结果并在一起就是最终结果
 
-![](https://cdn.sparkling.land/christy/images/image-20200820001628281.png)
+![04Google云计算技术_pic2](https://x.arcto.xyz/CavNpa/04Google云计算技术_pic2.png)
 
 ### 实现机制
 
-![](https://cdn.sparkling.land/christy/images/image-20200317001312687.png)
+![04Google云计算技术_pic3](https://x.arcto.xyz/2bq2bY/04Google云计算技术_pic3.png)
 
 #### **Google MapReduce并行处理的基本过程**
 
@@ -291,7 +291,7 @@ Bigtable是一个**分布式多维映射表**，表中的数据通过一个**行
 
 `(row:string, column:string, time:int64)→string`
 
-![](https://cdn.sparkling.land/christy/images/image-20200820003357053.png)
+![04Google云计算技术_pic4](https://x.arcto.xyz/gKBXqX/04Google云计算技术_pic4.png)
 
 * 行(Row)
   * 大小不超过64KB的任意字符串。表中的数据都是根据行关键字进行排序的。
@@ -300,7 +300,7 @@ Bigtable是一个**分布式多维映射表**，表中的数据通过一个**行
 * 子表(Tablet)
   * 一个大表可能太大，不利于存储管理，**将在水平方向上被分为多个子表**
 
-![](https://cdn.sparkling.land/christy/images/image-20200820003727037.png)
+![04Google云计算技术_pic5](https://x.arcto.xyz/Xfvpqe/04Google云计算技术_pic5.png)
 
 * 列(Column)
   * 特定含义的数据的集合。
