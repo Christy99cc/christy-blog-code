@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="动态规划," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介动态规划，Dynamic Programming，简称DP。 特点 最优子结构 重叠子问题  解题一般思路 分解子问题：子问题与原问题相同&#x2F;相似，只是缩小了规模，“大而化小，小而化了”。 确定状态：子问题各变量的一组取值 确定边界：初始状态，或者边界条件的取值 确定状态转移方程：递推的公式  关键是确定状态转移方程，在什么条件下进行什么状态的转换。 DP vs. 递归 递归：自上而下，就会有重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划（一）">
+<meta property="og:url" content="http://yoursite.com/2020/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="一杯西瓜汁er🍉">
+<meta property="og:description" content="简介动态规划，Dynamic Programming，简称DP。 特点 最优子结构 重叠子问题  解题一般思路 分解子问题：子问题与原问题相同&#x2F;相似，只是缩小了规模，“大而化小，小而化了”。 确定状态：子问题各变量的一组取值 确定边界：初始状态，或者边界条件的取值 确定状态转移方程：递推的公式  关键是确定状态转移方程，在什么条件下进行什么状态的转换。 DP vs. 递归 递归：自上而下，就会有重">
+<meta property="og:image" content="https://x.arcto.xyz/i8wSqE/N%E4%B8%BA6%E7%9A%84%E9%80%92%E5%BD%92%E6%A0%91.png">
+<meta property="og:image" content="https://cdn.sparkling.land/christy/images/image-20200725213658262.png">
+<meta property="article:published_time" content="2020-07-29T12:59:43.000Z">
+<meta property="article:modified_time" content="2021-08-05T08:56:43.893Z">
+<meta property="article:author" content="Christy">
+<meta property="article:tag" content="动态规划">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://x.arcto.xyz/i8wSqE/N%E4%B8%BA6%E7%9A%84%E9%80%92%E5%BD%92%E6%A0%91.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/29/动态规划（一）/"/>
+
+
+
+
+
+  <title>动态规划（一） | 一杯西瓜汁er🍉</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一杯西瓜汁er🍉</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Christy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杯西瓜汁er🍉">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">动态规划（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-29T20:59:43+08:00">
+                2020-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>动态规划，Dynamic Programming，简称DP。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>最优子结构</li>
+<li>重叠子问题</li>
+</ul>
+<h2 id="解题一般思路"><a href="#解题一般思路" class="headerlink" title="解题一般思路"></a>解题一般思路</h2><ol>
+<li>分解子问题：子问题与原问题相同/相似，只是缩小了规模，“大而化小，小而化了”。</li>
+<li>确定状态：子问题各变量的一组取值</li>
+<li>确定边界：初始状态，或者边界条件的取值</li>
+<li>确定状态转移方程：递推的公式</li>
+</ol>
+<p>关键是确定状态转移方程，在什么条件下进行什么状态的转换。</p>
+<h2 id="DP-vs-递归"><a href="#DP-vs-递归" class="headerlink" title="DP vs. 递归"></a>DP vs. 递归</h2><ul>
+<li>递归：自上而下，就会有重复的子问题</li>
+<li>DP：自下而上，用空间换时间</li>
+</ul>
+<h2 id="🌰"><a href="#🌰" class="headerlink" title="🌰"></a>🌰</h2><ul>
+<li>最长公共子序列LCS</li>
+<li>最长上升子序列</li>
+</ul>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>首先从最简单的开始，通过<strong>斐波那契数列</strong>来感受<strong>重叠子问题</strong>。</p>
+<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><pre><code>F(0) = 0,   F(1) = 1
+F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.</code></pre><p>给定 <code>N</code>，计算 <code>F(N)</code>。</p>
+<p>显然，这个问题用递归求解很简单。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (N == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (N == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> fib(N - <span class="number">1</span>) + fib(N - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>附上力扣的题目链接<a href="https://leetcode-cn.com/problems/fibonacci-number/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/fibonacci-number/</a></p>
+<p>假设<code>N=6</code>，画出递归树，可以发现有很多重复的子问题，也就是在求解的过程中进行了重复计算，增加了时间的开销。</p>
+<p><img src="https://x.arcto.xyz/i8wSqE/N%E4%B8%BA6%E7%9A%84%E9%80%92%E5%BD%92%E6%A0%91.png" alt="N为6的递归树"></p>
+<p>我们把重复计算的地方存下来，“用空间换时间”，避免重复的计算。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f[<span class="number">101</span>];</span><br><span class="line">    f[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        f[i] = f[i - <span class="number">1</span>] + f[i - <span class="number">2</span>];</span><br><span class="line">        f[i] = f[i] % (<span class="number">1000000007</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>附上力扣题目链接<a href="https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/</a></p>
+<h2 id="70-爬楼梯"><a href="#70-爬楼梯" class="headerlink" title="70. 爬楼梯"></a><a href="https://leetcode-cn.com/problems/climbing-stairs/" target="_blank" rel="noopener">70. 爬楼梯</a></h2><p>到达第n阶楼梯的方法数量 = 到达第n-1阶楼梯的方法总数 + 到达第n-2阶楼梯的方法总数<br>解释：最后一步可能走一个阶梯，也可能走两个阶梯<br>其实是一个斐波那契数列</p>
+<ul>
+<li>状态</li>
+</ul>
+<p><code>d[i]</code>表示达到第<code>i</code>阶的方法总数</p>
+<ul>
+<li><p>边界：</p>
+<p>  d[0] = 1 实际上无这种情况，为递推定义的<br>  d[1] = 1<br>  n&gt;=2时，进行状态转移</p>
+</li>
+<li><p>状态转移方程：</p>
+</li>
+</ul>
+<p><code>d[n] = d[n - 1] + d[n - 2]</code></p>
+<p>解题代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> d[<span class="number">101</span>];</span><br><span class="line">    d[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    d[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        d[i] = d[i - <span class="number">1</span>] + d[i - <span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> d[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="746-使用最小花费爬楼梯"><a href="#746-使用最小花费爬楼梯" class="headerlink" title="746. 使用最小花费爬楼梯"></a><a href="https://leetcode-cn.com/problems/min-cost-climbing-stairs/" target="_blank" rel="noopener">746. 使用最小花费爬楼梯</a></h2><ul>
+<li>分析过程</li>
+</ul>
+<p>对于每个阶梯，都有选和不选，两种情况。</p>
+<p>假设求d[9]，选择第9个阶梯，那么有两种情况：一是选择第7个阶梯，二是选择第8个阶梯。</p>
+<p>…依次做下去。</p>
+<p><img src="https://cdn.sparkling.land/christy/images/image-20200725213658262.png" alt></p>
+<ul>
+<li>状态</li>
+</ul>
+<p><code>d[i]</code>代表到达<code>i</code>阶的最小花费，<code>i=0</code>和<code>i=1</code>的情况下特别处理</p>
+<ul>
+<li><p>边界</p>
+<p>  n&lt;2的时候，取min(cost[0], cost[1]);<br>  d[0] = cost[0];<br>  d[1] = cost[1];</p>
+</li>
+<li><p>结果</p>
+</li>
+</ul>
+<p>求的是到达n的前1阶或前2阶的最小值，即<code>min(d[costSize - 2], d[costSize - 1]);</code></p>
+<ul>
+<li>状态方程</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d[i] = <span class="built_in">min</span>(d[i - <span class="number">2</span>] + cost[i], d[i - <span class="number">1</span>] + cost[i]); <span class="comment">// 当 i &gt;=2 时</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>代码</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by Christy on 2020/7/25.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &lt; b ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minCostClimbingStairs</span><span class="params">(<span class="keyword">int</span> *cost, <span class="keyword">int</span> costSize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *d = (<span class="keyword">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * costSize);</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">if</span> (costSize &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">min</span>(cost[<span class="number">0</span>], cost[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    d[<span class="number">0</span>] = cost[<span class="number">0</span>];</span><br><span class="line">    d[<span class="number">1</span>] = cost[<span class="number">1</span>]; <span class="comment">// 这里不能写min(min(cost[0], cost[1]);</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; costSize; ++i) &#123;</span><br><span class="line">        d[i] = <span class="built_in">min</span>(d[i - <span class="number">2</span>] + cost[i], d[i - <span class="number">1</span>] + cost[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">min</span>(d[costSize - <span class="number">2</span>], d[costSize - <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="经典问题的状态转移方程"><a href="#经典问题的状态转移方程" class="headerlink" title="经典问题的状态转移方程"></a>经典问题的状态转移方程</h1><p><a href="https://www.cnblogs.com/tgycoder/p/5037559.html" target="_blank" rel="noopener">动态规划问题 - 经典模型的状态转移方程</a></p>
+<h1 id="力扣上的一个关于DP的总结"><a href="#力扣上的一个关于DP的总结" class="headerlink" title="力扣上的一个关于DP的总结"></a>力扣上的一个关于DP的总结</h1><blockquote>
+<p><a href="https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns#Decision-Making" target="_blank" rel="noopener">https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns#Decision-Making</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/16/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/08/18/01%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="prev" title="01分布式系统概述">
+                01分布式系统概述 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.jpg"
+                alt="Christy" />
+            
+              <p class="site-author-name" itemprop="name">Christy</p>
+              <p class="site-description motion-element" itemprop="description">保持热情:)</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+                <a href="/archives">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/christy99cc" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题一般思路"><span class="nav-number">1.2.</span> <span class="nav-text">解题一般思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DP-vs-递归"><span class="nav-number">1.3.</span> <span class="nav-text">DP vs. 递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#🌰"><span class="nav-number">1.4.</span> <span class="nav-text">🌰</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题目"><span class="nav-number">2.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#斐波那契数列"><span class="nav-number">2.1.</span> <span class="nav-text">斐波那契数列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#70-爬楼梯"><span class="nav-number">2.2.</span> <span class="nav-text">70. 爬楼梯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#746-使用最小花费爬楼梯"><span class="nav-number">2.3.</span> <span class="nav-text">746. 使用最小花费爬楼梯</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经典问题的状态转移方程"><span class="nav-number">3.</span> <span class="nav-text">经典问题的状态转移方程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#力扣上的一个关于DP的总结"><span class="nav-number">4.</span> <span class="nav-text">力扣上的一个关于DP的总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2020 &mdash; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> </div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
