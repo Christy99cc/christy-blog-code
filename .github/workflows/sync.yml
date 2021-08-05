@@ -31,4 +31,4 @@ jobs:
         git clone $SOURCE_REPO && cd $SOURCE_REPO_NAME
         npm install && sudo npm install hexo -g
         hexo generate
-        git remote add origin $DESTINATION_REPO && git add . && git commit -m "Update blog" && git push -f origin $DESTINATION_BRANCH
+        git remote set-url origin $DESTINATION_REPO && git add . && git commit -m "Update blog" && git push -f origin $DESTINATION_BRANCH
