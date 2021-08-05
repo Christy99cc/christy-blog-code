@@ -19,16 +19,4 @@ pages:
 - source/_posts/anaconda-vscode-pytorch.md
 - source/_posts/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id.md
 - source/_posts/git.md
-- source/_posts/ml-1.md
-- source/_posts/ml-10.md
-- source/_posts/ml-11.md
-- source/_posts/ml-12.md
-- source/_posts/ml-2.md
-- source/_posts/ml-3.md
-- source/_posts/ml-4.md
-- source/_posts/ml-5.md
-- source/_posts/ml-6.md
-- source/_posts/ml-7.md
-- source/_posts/ml-8.md
-- source/_posts/ml-9.md
-- source/_posts/ml.md
+- source/_posts/这是一个测试.md
