@@ -1,90 +1,32 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="分布式系统与云计算概论," />
-
-
-
-
-
-
-
-
-
-
+<script class="next-config" data-name="main" type="application/json">{"hostname":"christy99cc.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.7.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"بحث...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="为专业课复习用  介绍Amazon Web Service（AWS） Amazon云的提出IaaS：将硬件设备等基础资源封装成服务供用户使用 Amazon提供的服务主要包括 弹性计算云EC2 简单存储服务S3 简单数据库服务Simple DB 简单队列服务SQS 弹性MapReduce服务 内容推送服务CloudFront 电子商务服务DevPay 灵活支付服务FPS  🌿基础存储架构Dyna">
 <meta property="og:type" content="article">
 <meta property="og:title" content="05Amazon云计算AWS">
-<meta property="og:url" content="http://yoursite.com/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/index.html">
+<meta property="og:url" content="https://christy99cc.github.io/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/index.html">
 <meta property="og:site_name" content="一杯西瓜汁er🍉">
 <meta property="og:description" content="为专业课复习用  介绍Amazon Web Service（AWS） Amazon云的提出IaaS：将硬件设备等基础资源封装成服务供用户使用 Amazon提供的服务主要包括 弹性计算云EC2 简单存储服务S3 简单数据库服务Simple DB 简单队列服务SQS 弹性MapReduce服务 内容推送服务CloudFront 电子商务服务DevPay 灵活支付服务FPS  🌿基础存储架构Dyna">
+<meta property="og:locale">
 <meta property="og:image" content="https://cdn.sparkling.land/christy/images/Dynamo%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84.png">
 <meta property="og:image" content="https://x.arcto.xyz/H0Oh14/dynamo%E4%B8%80%E8%87%B4%E6%80%A7hash.png">
 <meta property="og:image" content="https://x.arcto.xyz/IkDGuR/dynamo%E8%99%9A%E6%8B%9F%E8%8A%82%E7%82%B9.png">
@@ -92,241 +34,197 @@
 <meta property="og:image" content="https://x.arcto.xyz/LBWKgD/dynamo%E5%90%91%E9%87%8F%E6%97%B6%E9%92%9F%E6%8A%80%E6%9C%AF.png">
 <meta property="og:image" content="https://x.arcto.xyz/j17e0T/Dynamo%E4%B8%B4%E6%97%B6%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6.png">
 <meta property="og:image" content="https://x.arcto.xyz/6CwBAu/dynamo-merkle-tree.png">
-<meta property="article:published_time" content="2020-08-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-08-05T13:19:32.144Z">
+<meta property="article:published_time" content="2020-08-22T08:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-05T08:48:41.794Z">
 <meta property="article:author" content="Christy">
 <meta property="article:tag" content="分布式系统与云计算概论">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.sparkling.land/christy/images/Dynamo%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84.png">
 
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<link rel="canonical" href="https://christy99cc.github.io/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/08/22/05Amazon云计算AWS/"/>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://christy99cc.github.io/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/","path":"2020/08/22/05Amazon云计算AWS/","title":"05Amazon云计算AWS"}</script>
 
-
-
-
-
-  <title>05Amazon云计算AWS | 一杯西瓜汁er🍉</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>05Amazon云计算AWS | 一杯西瓜汁er🍉</title>
   
 
 
 
 
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
 
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-
-
-<meta name="generator" content="Hexo 4.2.1"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">一杯西瓜汁er🍉</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="تشغيل شريط التصفح" role="button">
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">一杯西瓜汁er🍉</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
-  
-    <ul id="menu" class="menu">
-      
+
+
+
+
+
+</div>
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-
-      
-    </ul>
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
 
-  
-</nav>
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          المحتويات
+        </li>
+        <li class="sidebar-nav-overview">
+          عام
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Amazon%E4%BA%91%E7%9A%84%E6%8F%90%E5%87%BA"><span class="nav-number">1.1.</span> <span class="nav-text">Amazon云的提出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Amazon%E6%8F%90%E4%BE%9B%E7%9A%84%E6%9C%8D%E5%8A%A1%E4%B8%BB%E8%A6%81%E5%8C%85%E6%8B%AC"><span class="nav-number">1.2.</span> <span class="nav-text">Amazon提供的服务主要包括</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%BF%E5%9F%BA%E7%A1%80%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84Dynamo"><span class="nav-number">2.</span> <span class="nav-text">🌿基础存储架构Dynamo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8C%BFDynamo"><span class="nav-number">2.1.</span> <span class="nav-text">🌿Dynamo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8C%BFDynamo%E9%9C%80%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E4%B8%BB%E8%A6%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">🌿Dynamo需要解决的主要问题及解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamo%E7%9A%84%E5%AD%98%E5%82%A8%E8%8A%82%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">Dynamo的存储节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.3.1.</span> <span class="nav-text">两个基本概念</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dynamo%E6%9E%B6%E6%9E%84%E7%9A%84%E4%B8%BB%E8%A6%81%E6%8A%80%E6%9C%AF"><span class="nav-number">3.</span> <span class="nav-text">Dynamo架构的主要技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%9D%87%E8%A1%A1%E5%88%86%E5%B8%83%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">数据均衡分布的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%8C%BF%F0%9F%8C%BF%F0%9F%8C%BF%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">🌿🌿🌿一致性哈希算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95"><span class="nav-number">3.1.2.</span> <span class="nav-text">改进的一致性哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E5%8C%BA%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">数据分区的好处</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">改进的一致性哈希算法的优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD"><span class="nav-number">3.2.</span> <span class="nav-text">数据备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%8F%AF%E8%B0%83%E7%9A%84%E5%BC%B1quorum%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">参数可调的弱quorum机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98"><span class="nav-number">3.3.</span> <span class="nav-text">数据冲突问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%AD%E9%80%9A%E5%B8%B8%E8%80%83%E8%99%91%E7%9A%84%E4%B8%89%E4%B8%AA%E5%9B%A0%E7%B4%A0"><span class="nav-number">3.3.1.</span> <span class="nav-text">分布式系统架构中通常考虑的三个因素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Why%E6%95%B0%E6%8D%AE%E5%86%B2%E7%AA%81%EF%BC%9F"><span class="nav-number">3.3.2.</span> <span class="nav-text">Why数据冲突？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E5%86%B2%E7%AA%81%EF%BC%9F"><span class="nav-number">3.3.3.</span> <span class="nav-text">How解决数据冲突？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%90%E5%91%98%E8%B5%84%E6%A0%BC%E5%8F%8A%E9%94%99%E8%AF%AF%E6%A3%80%E6%B5%8B"><span class="nav-number">3.4.</span> <span class="nav-text">成员资格及错误检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E9%94%99%E6%9C%BA%E5%88%B6%E2%80%94%E2%80%94%E4%B8%B4%E6%97%B6%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">3.5.</span> <span class="nav-text">容错机制——临时故障处理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E9%94%99%E6%9C%BA%E5%88%B6%E2%80%94%E2%80%94%E6%B0%B8%E4%B9%85%E6%80%A7%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">3.6.</span> <span class="nav-text">容错机制——永久性故障处理机制</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Christy</p>
+  <div class="site-description" itemprop="description">保持热情:)</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">المقالات</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">التصنيفات</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">الوسوم</span></a>
+      </div>
+  </nav>
+</div>
 
 
 
- </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://christy99cc.github.io/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Christy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="description" content="保持热情:)">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="一杯西瓜汁er🍉">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05Amazon云计算AWS
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">05Amazon云计算AWS</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">نُشر في</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-22T16:00:00+00:00">
-                2020-08-22
-              </time>
-            
+      <time title="أُنشأ: 2020-08-22 16:00:00" itemprop="dateCreated datePublished" datetime="2020-08-22T16:00:00+08:00">2020-08-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">عُدل في</span>
+        <time title="عُدل: 2021-08-05 16:48:41" itemprop="dateModified" datetime="2021-08-05T16:48:41+08:00">2021-08-05</time>
+      </span>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+</div>
 
         </div>
       </header>
-    
 
     
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
         <blockquote>
 <p>为专业课复习用</p>
 </blockquote>
@@ -453,7 +351,7 @@
 <p>Dynamo中还通过Gossip来实现错误检测。任何节点向其他节点发起通信后，如果对方没有回应，则认为对方节点失效</p>
 </blockquote>
 <p>为了避免新加入的节点之间不能及时发现其他节点的存在，Dynamo中设置了一些<strong>种子节点</strong>（Seed Node）。<strong>种子节点和所有的节点都有联系</strong>。当新节点加入时，它扮演一个中介的角色，使新加入节点之间互相感知。</p>
-<p>![成员资格及错误检测 ](<a href="https://x.arcto.xyz/AA3YFW/dynamo成员资格及错误检测" target="_blank" rel="noopener">https://x.arcto.xyz/AA3YFW/dynamo成员资格及错误检测</a> .png)</p>
+<p>![成员资格及错误检测 ](<a target="_blank" rel="noopener" href="https://x.arcto.xyz/AA3YFW/dynamo%E6%88%90%E5%91%98%E8%B5%84%E6%A0%BC%E5%8F%8A%E9%94%99%E8%AF%AF%E6%A3%80%E6%B5%8B">https://x.arcto.xyz/AA3YFW/dynamo成员资格及错误检测</a> .png)</p>
 <ul>
 <li>自底向上每一层代表一次随机通信</li>
 <li>第一层节点1将信息交换给节点2</li>
@@ -465,269 +363,66 @@
 <h3 id="容错机制——永久性故障处理机制"><a href="#容错机制——永久性故障处理机制" class="headerlink" title="容错机制——永久性故障处理机制"></a>容错机制——永久性故障处理机制</h3><p>Dynamo采用Merkle哈希树技术来加快检测和减少数据传输量</p>
 <p><img src="https://x.arcto.xyz/6CwBAu/dynamo-merkle-tree.png" alt="dynamo-merkle-tree"></p>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8E%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E8%AE%BA/" rel="tag"># 分布式系统与云计算概论</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/" rel="next" title="04Google云计算技术">
-                <i class="fa fa-chevron-left"></i> 04Google云计算技术
-              </a>
-            
+          <div class="post-tags">
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8E%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E8%AE%BA/" rel="tag"># 分布式系统与云计算概论</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/10/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E3%80%91mapper%E6%89%BE%E4%B8%8D%E5%88%B0/" rel="prev" title="【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found.">
-                【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found. <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/uploads/avatar.jpg"
-                alt="Christy" />
-            
-              <p class="site-author-name" itemprop="name">Christy</p>
-              <p class="site-description motion-element" itemprop="description">保持热情:)</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-                <a href="/archives">
-                  <span class="site-state-item-count">12</span>
-                  <span class="site-state-item-name">日志</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/" rel="prev" title="04Google云计算技术">
+                  <i class="fa fa-chevron-left"></i> 04Google云计算技术
                 </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/christy99cc" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
             </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Amazon云的提出"><span class="nav-number">1.1.</span> <span class="nav-text">Amazon云的提出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Amazon提供的服务主要包括"><span class="nav-number">1.2.</span> <span class="nav-text">Amazon提供的服务主要包括</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#🌿基础存储架构Dynamo"><span class="nav-number">2.</span> <span class="nav-text">🌿基础存储架构Dynamo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#🌿Dynamo"><span class="nav-number">2.1.</span> <span class="nav-text">🌿Dynamo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#🌿Dynamo需要解决的主要问题及解决方案"><span class="nav-number">2.2.</span> <span class="nav-text">🌿Dynamo需要解决的主要问题及解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamo的存储节点"><span class="nav-number">2.3.</span> <span class="nav-text">Dynamo的存储节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#两个基本概念"><span class="nav-number">2.3.1.</span> <span class="nav-text">两个基本概念</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dynamo架构的主要技术"><span class="nav-number">3.</span> <span class="nav-text">Dynamo架构的主要技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据均衡分布的问题"><span class="nav-number">3.1.</span> <span class="nav-text">数据均衡分布的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#🌿🌿🌿一致性哈希算法"><span class="nav-number">3.1.1.</span> <span class="nav-text">🌿🌿🌿一致性哈希算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改进的一致性哈希算法"><span class="nav-number">3.1.2.</span> <span class="nav-text">改进的一致性哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#数据分区的好处"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">数据分区的好处</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#改进的一致性哈希算法的优势"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">改进的一致性哈希算法的优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据备份"><span class="nav-number">3.2.</span> <span class="nav-text">数据备份</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数可调的弱quorum机制"><span class="nav-number">3.2.1.</span> <span class="nav-text">参数可调的弱quorum机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据冲突问题"><span class="nav-number">3.3.</span> <span class="nav-text">数据冲突问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式系统架构中通常考虑的三个因素"><span class="nav-number">3.3.1.</span> <span class="nav-text">分布式系统架构中通常考虑的三个因素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Why数据冲突？"><span class="nav-number">3.3.2.</span> <span class="nav-text">Why数据冲突？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How解决数据冲突？"><span class="nav-number">3.3.3.</span> <span class="nav-text">How解决数据冲突？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#成员资格及错误检测"><span class="nav-number">3.4.</span> <span class="nav-text">成员资格及错误检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容错机制——临时故障处理机制"><span class="nav-number">3.5.</span> <span class="nav-text">容错机制——临时故障处理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容错机制——永久性故障处理机制"><span class="nav-number">3.6.</span> <span class="nav-text">容错机制——永久性故障处理机制</span></a></li></ol></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2020/10/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E3%80%91mapper%E6%89%BE%E4%B8%8D%E5%88%B0/" rel="next" title="【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found.">
+                  【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found. <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2020 &mdash; <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Christy</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> </div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christy</span>
+</div>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
+    </div>
+  </footer>
+
   
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
+  
 
 
 
@@ -737,130 +432,6 @@
 
 
 
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
