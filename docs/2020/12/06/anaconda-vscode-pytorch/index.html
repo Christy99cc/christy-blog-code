@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog-1/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog-1/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog-1/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog-1/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/blog-1/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/blog-1/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"arctome.github.io","root":"/blog-1/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="记录一次Anaconda+VSCode+PyTorch的配置 操作系统为macOS Catalina 10.15.7 更新：  由于需要GPU，在下载Anaconda和PyTorch中，也会附带说明了在windows10的操作。 其他地方都是按照MacOS来记录的。   下载Anaconda先去官网或者清华镜像站下载Anaconda或者Miniconda官网链接https:&#x2F;&#x2F;www.anaco">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Anaconda+VSCode+PyTorch的配置">
-<meta property="og:url" content="http://yoursite.com/2020/12/06/anaconda-vscode-pytorch/index.html">
+<meta property="og:url" content="https://arctome.github.io/2020/12/06/anaconda-vscode-pytorch/index.html">
 <meta property="og:site_name" content="一杯西瓜汁er🍉">
 <meta property="og:description" content="记录一次Anaconda+VSCode+PyTorch的配置 操作系统为macOS Catalina 10.15.7 更新：  由于需要GPU，在下载Anaconda和PyTorch中，也会附带说明了在windows10的操作。 其他地方都是按照MacOS来记录的。   下载Anaconda先去官网或者清华镜像站下载Anaconda或者Miniconda官网链接https:&#x2F;&#x2F;www.anaco">
 <meta property="og:locale">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://x.arcto.xyz/16oo5U/vscode%E4%B8%8B%E8%BD%BDpython%E6%8F%92%E4%BB%B6.jpg">
 
-<link rel="canonical" href="http://yoursite.com/2020/12/06/anaconda-vscode-pytorch/">
+<link rel="canonical" href="https://arctome.github.io/2020/12/06/anaconda-vscode-pytorch/">
 
 
 <script id="page-configurations">
@@ -99,7 +99,7 @@
 
   <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
+    <a href="/blog-1/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">一杯西瓜汁er🍉</h1>
       <span class="logo-line-after"><i></i></span>
@@ -119,12 +119,12 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/blog-1/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/blog-1/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -155,10 +155,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/06/anaconda-vscode-pytorch/">
+    <link itemprop="mainEntityOfPage" href="https://arctome.github.io/2020/12/06/anaconda-vscode-pytorch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/blog-1/images/avatar.gif">
       <meta itemprop="name" content="Christy">
       <meta itemprop="description" content="保持热情:)">
     </span>
@@ -296,7 +296,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/" rel="tag"># 配置环境</a>
+              <a href="/blog-1/tags/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/" rel="tag"># 配置环境</a>
           </div>
 
         
@@ -305,11 +305,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E3%80%91mapper%E6%89%BE%E4%B8%8D%E5%88%B0/" rel="prev" title="【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found.">
+    <a href="/blog-1/2020/10/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E3%80%91mapper%E6%89%BE%E4%B8%8D%E5%88%B0/" rel="prev" title="【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found.">
       <i class="fa fa-chevron-left"></i> 【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found.
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/" rel="next" title="bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id, ">
+    <a href="/blog-1/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/" rel="next" title="bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id, ">
       bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id,  <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -382,19 +382,19 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+          <a href="/blog-1/archives/">
         
           <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
+            <a href="/blog-1/categories/">
         <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
+            <a href="/blog-1/tags/">
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
@@ -445,19 +445,19 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/blog-1/lib/anime.min.js"></script>
+  <script src="/blog-1/lib/velocity/velocity.min.js"></script>
+  <script src="/blog-1/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/utils.js"></script>
+<script src="/blog-1/js/utils.js"></script>
 
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
+<script src="/blog-1/js/motion.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="/blog-1/js/schemes/muse.js"></script>
+
+
+<script src="/blog-1/js/next-boot.js"></script>
 
 
 
