@@ -120,7 +120,7 @@ macOS上安装没有什么需要注意的地方。下载好之后，双击进行
 #### 下载python插件
 
 在VSCode的应用商店中搜索Python，并下载
-![image](https://cdn.sparkling.land/christy/images/352E9947-8451-4B8B-8AFD-AA228A6F9F71.jpg)￼
+![vscode下载python插件](https://x.arcto.xyz/16oo5U/vscode下载python插件.jpg)￼
 
 #### 下载Python解释器
 
@@ -134,7 +134,7 @@ macOS上安装没有什么需要注意的地方。下载好之后，双击进行
 
     conda activate pytorch
 
-![image](https://cdn.sparkling.land/christy/images/9308D293-6DEC-471C-A3A3-5DF2F497344D.jpg)￼
+![验证python的安装](https://x.arcto.xyz/RK3zzQ/验证python的安装.jpg)￼
 
 > 后来换了一台电脑下载的是miniconda，无所谓啦\~
 
@@ -142,7 +142,7 @@ macOS上安装没有什么需要注意的地方。下载好之后，双击进行
 
 使用快捷键shift + command + P ，或者点击**菜单栏**中的**查看**里的**命令面板**， 打开命令面板。
 输入`python:select interpreter`  选择python解释器。这里选择我要用的pytorch里的python3.6.2就好了。
-![image](https://cdn.sparkling.land/christy/images/6C8E6FAB-9BD4-47DE-9F6E-C29652D2B3C8.jpg)￼
+![vscode设置python解释器](https://x.arcto.xyz/T-xnZd/vscode设置python解释器.jpg)￼
 
 Note：代码补全要用IntelliCode，不要用Pylance（要卸掉）
 

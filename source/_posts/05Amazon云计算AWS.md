@@ -96,7 +96,7 @@ Dynamo采用了<u>分布式的数据存储架构</u>，均衡的数据分布可�
 
 一致性哈希算法除了能够保证哈希运算结果充分分散到整个环上外，还能保证在添加或删除设备节点时只会影响到其在哈希环中的前驱设备节点，而不会对其他设备节点产生影响。
 
-![dynamo一致性hash](https://cdn.sparkling.land/christy/images/dynamo一致性hash.png)
+![dynamo一致性hash](https://x.arcto.xyz/H0Oh14/dynamo一致性hash.png)
 
 一致性哈希算法可以**大大降低**在添加或删除节点时引起的**节点间的数据传输开销**
 
@@ -110,7 +110,7 @@ Dynamo中引入了**虚拟节点**的概念
 
 各个虚拟节点的**能力基本相当**，并随机分布在**哈希环**上。
 
-![dynamo虚拟节点](https://cdn.sparkling.land/christy/images/dynamo虚拟节点.png)
+![dynamo虚拟节点](https://x.arcto.xyz/IkDGuR/dynamo虚拟节点.png)
 
 
 
@@ -118,7 +118,7 @@ Dynamo将整个哈希环划分成Q等份，每个等份称为一个数据分区�
 
 在存储数据时，每个数据会被先分配到某个数据分区，再根据负责该数据分区的虚拟节点，最终确定其所存储的物理节点。
 
-![dynamo数据分区](https://cdn.sparkling.land/christy/images/dynamo数据分区.png)
+![dynamo数据分区](https://x.arcto.xyz/IkDGuR/dynamo虚拟节点.png)
 
 ##### 数据分区的好处
 
@@ -177,7 +177,7 @@ Dynamo将整个哈希环划分成Q等份，每个等份称为一个数据分区�
 
 采用**向量时钟技术**。
 
-![dynamo向量时钟技术](https://cdn.sparkling.land/christy/images/dynamo向量时钟技术.png)
+![dynamo向量时钟技术](https://x.arcto.xyz/LBWKgD/dynamo向量时钟技术.png)
 
 Dynamo中的向量时钟通过`[node, counter]` 对 来表示。
 
@@ -196,7 +196,7 @@ Dynamo中的向量时钟通过`[node, counter]` 对 来表示。
 
 为了避免新加入的节点之间不能及时发现其他节点的存在，Dynamo中设置了一些**种子节点**（Seed Node）。**种子节点和所有的节点都有联系**。当新节点加入时，它扮演一个中介的角色，使新加入节点之间互相感知。
 
-![成员资格及错误检测 ](https://cdn.sparkling.land/christy/images/dynamo成员资格及错误检测.png)
+![成员资格及错误检测 ](https://x.arcto.xyz/AA3YFW/dynamo成员资格及错误检测 .png)
 
 
 - 自底向上每一层代表一次随机通信
@@ -208,12 +208,12 @@ Dynamo中的向量时钟通过`[node, counter]` 对 来表示。
 为了处理临时失效的节点，Dynamo中采用了一种带有监听的数据回传机制（Hinted Handoff）
 当虚拟节点A失效后，会将数据临时存放在节点D的临时空间中，并在节点A重新可用后，由节点D将数据回传给节点A。
 
-![Dynamo临时故障处理机制](https://cdn.sparkling.land/christy/images/Dynamo临时故障处理机制.png)
+![Dynamo临时故障处理机制](https://x.arcto.xyz/j17e0T/Dynamo临时故障处理机制.png)
 
 
 ### 容错机制——永久性故障处理机制
 
 Dynamo采用Merkle哈希树技术来加快检测和减少数据传输量
 
-![dynamo-merkle-tree](https://cdn.sparkling.land/christy/images/dynamo-merkle-tree.png)
+![dynamo-merkle-tree](https://x.arcto.xyz/6CwBAu/dynamo-merkle-tree.png)
 
