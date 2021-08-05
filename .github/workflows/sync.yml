@@ -17,15 +17,18 @@ jobs:
     - name: Clone Source Repo
       working-directory: /tmp
       env:
-        SOURCE_REPO: https://Christy99cc:${{ secrets.ACCESS_TOKEN }}@github.com/Christy99cc/blog.git
-        SOURCE_REPO_NAME: blog
+        # SOURCE_REPO: https://Christy99cc:${{ secrets.ACCESS_TOKEN }}@github.com/Christy99cc/blog.git
+        # SOURCE_REPO_NAME: blog
+        SOURCE_REPO: https://Christy99cc:${{ secrets.ACCESS_TOKEN }}@github.com/Christy99cc/Christy99cc.github.io.git
+        SOURCE_REPO_NAME: Christy99cc.github.io
         SOURCE_BRANCH: master
         DESTINATION_REPO: https://Christy99cc:${{ secrets.ACCESS_TOKEN }}@github.com/Christy99cc/Christy99cc.github.io.git
-        DESTINATION_BRANCH: master
+        # DESTINATION_BRANCH: master
+        DESTINATION_BRANCH: display
       run: |
         git config --global user.email "christy99cc@qq.com"
         git config --global user.name "Christy99cc"
-        git clone $SOURCE_REPO && cd $SOURCE_REPO_NAME && rm -rf .git
+        git clone $SOURCE_REPO && cd $SOURCE_REPO_NAME
         npm install && sudo npm install hexo -g
-        hexo generate && cd docs &&  git init
+        hexo generate
         git remote add origin $DESTINATION_REPO && git add . && git commit -m "Update blog" && git push -f origin $DESTINATION_BRANCH
