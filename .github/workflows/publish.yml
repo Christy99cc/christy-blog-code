@@ -37,7 +37,8 @@ jobs:
       run: |
         git config --local user.email "42288895+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git commit -m "Hexo build pages" -a
+        git pull
+        git commit -m "Hexo build pages @${{ secrets.GITHUB_RUN_ID }}" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
