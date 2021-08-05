@@ -39,7 +39,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git stash
         git pull origin production
-        git stash pop
+        git checkout stash -- .
         git commit -m "Hexo build pages @${{ secrets.GITHUB_RUN_ID }}" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
