@@ -9,8 +9,8 @@ sections:
   label: 总结
   create: documents
   match: "**/*"
-upload_dir: christy/images
-public_path: https://cdn.sparkling.land/christy/images
+upload_dir: 
+public_path: 
 front_matter_path: ''
 use_front_matter_path: 
 file_template: ":filename:"
