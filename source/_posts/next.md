@@ -10,7 +10,7 @@ categories: ''
 
 > 写在前：
 > 本小白使用的是Hexo和NexT主题搭建的博客
-> 版本说明：hexo@5.4.0、hexo-theme-next@8.7.0
+> 版本说明：hexo 5.4.0、hexo-theme-next 8.6.1
 
 # NexT初步
 
