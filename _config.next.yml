@@ -376,10 +376,10 @@ codeblock:
     light: prism
     dark: prism-dark
   # Add copy button on codeblock
-  copy_button:
-    enable: false
+  copy_button:  # 代码复制功能
+    enable: true
     # Available values: default | flat | mac
-    style: 
+    style: mac
 
 back2top:
   enable: true
