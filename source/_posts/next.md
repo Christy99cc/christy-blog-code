@@ -19,6 +19,7 @@ categories: ''
 > 
 
 - 提倡使用npm安装
+
 ```
     cd hexo-site
     npm install hexo-theme-next
@@ -29,6 +30,7 @@ categories: ''
 
 > 🔗 https://theme-next.js.org/docs/getting-started/configuration
 > 
+
 ```
     # 通过 npm 安装
     cp node_modules/hexo-theme-next/_config.yml _config.next.yml 
