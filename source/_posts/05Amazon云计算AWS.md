@@ -62,7 +62,7 @@ Amazon平台的架构是完全的**分布式、去中心化**
 
 Dynamo中的存储节点呈<u>无中心的环状</u>分布。
 
-![Dynamo存储架构](https://cdn.sparkling.land/christy/images/Dynamo存储架构.png)
+![Dynamo存储架构](https://x.arcto.xyz/3GRgG9/Dynamo存储架构.png)
 
 #### 两个基本概念
 
