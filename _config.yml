@@ -100,11 +100,11 @@ theme: next
 deploy:
   type: ''
 
-# 本地搜索
-search:
-  path: search.xml # path：索引文件的路径，相对于站点根目录
-  field: post  # 搜索范围，默认是 post，还可以选择 page、all，设置成 all 表示搜索所有页面s
-  format: html
-  limit: 100  # limit：限制搜索的条目数
+# # 本地搜索
+# search:
+#   path: search.xml # path：索引文件的路径，相对于站点根目录
+#   field: post  # 搜索范围，默认是 post，还可以选择 page、all，设置成 all 表示搜索所有页面s
+#   format: html
+#   limit: 100  # limit：限制搜索的条目数
   
 
