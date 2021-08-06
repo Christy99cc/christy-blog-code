@@ -25,7 +25,7 @@ custom_file_path:
   #postMeta: source/_data/post-meta.njk
   #postBodyEnd: source/_data/post-body-end.njk
   #footer: source/_data/footer.njk
-  #bodyEnd: source/_data/body-end.njk
+  bodyEnd: source/_data/body-end.njk
   #variable: source/_data/variables.styl
   #mixin: source/_data/mixins.styl
   style: source/_data/styles.styl
@@ -180,6 +180,20 @@ toc:
   # Maximum heading depth of generated toc.
   max_depth: 6
 
+#-------------------------------------------------------------
+# 鼠标点击特效&打字特效
+# Reference: https://tding.top/archives/58cff12b.html
+#-------------------------------------------------------------
+
+# 鼠标点击特效
+# mouse click effect: fireworks | explosion | love | text
+cursor_effect: love
+
+# 打字特效
+# typing effect
+typing_effect:
+  colorful: true  # 礼花特效
+  shake: false    # 震动特效
 
 # ---------------------------------------------------------------
 # Footer Settings
@@ -365,7 +379,7 @@ codeblock:
   copy_button:
     enable: false
     # Available values: default | flat | mac
-    style:
+    style: 
 
 back2top:
   enable: true
