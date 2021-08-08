@@ -543,8 +543,8 @@ if(canvas.getContext){
 <p>发表单位：中国科学院大学、清华大学、圣迭戈加利福尼亚大学</p>
 </blockquote>
 <ul>
-<li>论文地址：<a target="_blank" rel="noopener" href="http://arxiv.org/abs/2104.06976">http://arxiv.org/abs/2104.06976</a></li>
-<li>代码地址：<a target="_blank" rel="noopener" href="https://github.com/mlpc-ucsd/PRTR">https://github.com/mlpc-ucsd/PRTR</a></li>
+<li><p>论文地址：<a target="_blank" rel="noopener" href="http://arxiv.org/abs/2104.06976">http://arxiv.org/abs/2104.06976</a></p></li>
+<li><p>代码地址：<a target="_blank" rel="noopener" href="https://github.com/mlpc-ucsd/PRTR">https://github.com/mlpc-ucsd/PRTR</a></p></li>
 </ul>
 <h2 id="主要创新点">主要创新点</h2>
 <ul>
@@ -555,13 +555,13 @@ if(canvas.getContext){
 <p>根据论文</p>
 </blockquote>
 <ol type="1">
-<li>提出了一种通过构建级联Transformers的基于回归的人体姿态识别方法。</li>
-<li>两种类型的级联Transformer:
+<li><p>提出了一种通过构建级联Transformers的基于回归的人体姿态识别方法。</p></li>
+<li><p>两种类型的级联Transformer:</p>
 <ul>
 <li>two-stage，第2个Transformer使用第1个Transformer检测到的图像patch</li>
 <li>end-to-end，使用了spatial Transformer network (STN)</li>
 </ul></li>
-<li>关键点的可视化</li>
+<li><p>关键点的可视化</p></li>
 </ol>
 <h2 id="方法">方法</h2>
 <p>两种Transformer如下：</p>
@@ -569,13 +569,7 @@ if(canvas.getContext){
 <center>
 [two-stage的]
 </center>
-<p><strong>two-stage</strong>： TRansformer (PRTR) 两阶段变体的姿态识别架构。</p>
-<ul>
-<li>首先，利用全图图像特征和绝对位置编码，人体检测Transformer使用一组学习的人查询检测图中的人。</li>
-<li>在过滤背景查询后，我们用预测框裁剪原始图像。</li>
-<li>将裁剪后的图像和相对于相应边界框的位置编码一起输入一个关键点检测Transformer。</li>
-<li>最后，通过<u>匈牙利算法</u>从一个更大的关键点查询集合中读出J个关键点。关键点检测Transformer以矢量化的方式处理所有非背景关键点proposals。h(0)表示假设(查询)，通过Transformer解码器将特征向量提炼为最终的预测y^。</li>
-</ul>
+<p><strong>two-stage</strong>： TRansformer (PRTR) 两阶段变体的姿态识别架构。 - 首先，利用全图图像特征和绝对位置编码，人体检测Transformer使用一组学习的人查询检测图中的人。 - 在过滤背景查询后，我们用预测框裁剪原始图像。 - 将裁剪后的图像和相对于相应边界框的位置编码一起输入一个关键点检测Transformer。 - 最后，通过<u>匈牙利算法</u>从一个更大的关键点查询集合中读出J个关键点。关键点检测Transformer以矢量化的方式处理所有非背景关键点proposals。h(0)表示假设(查询)，通过Transformer解码器将特征向量提炼为最终的预测y^。</p>
 <img src="https://x.arcto.xyz/6FD1so/prtr-end-to-end.png" title="fig:" alt="prtr-end-to-end">
 <center>
 [end-to-end的]
@@ -592,28 +586,28 @@ if(canvas.getContext){
 <p>得到边界框后，对RGB图像进行裁剪，并使用另一个CNN主干来得到人的特征图。因为只有匹配的查询涉及计算关键点检测Transformer的损失，所以我们过滤掉了不匹配的查询。像人检测的过程中,我们使用的encoder-decoder架构Transformer预测并行的方式，但我们使用另一组查询(Q代表数量)。最后，一个分类头预测包括J种类型的关节、背景(∅)、2声道回归头输出每个关键点的坐标。</p>
 <p>由于PRTR推断出比ground truth(J代表数量)更大的预测数量，我们需要找到它们之间的匹配来计算损失。我们将该匹配问题表述为最优二部匹配问题，该问题可由<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/96229700">匈牙利算法</a>有效地求解。具体来说，我们试图找到一个内射函数σ∈[J]→[Q]，它首先以离散的方式使匹配代价C最小:</p>
 <p><span class="math display">\[
-\\mathcal{C}=\\underset{\\sigma}{\\arg \\min } \\sum_{i}^{J} \\mathcal{C}\\left(y_{i}, \\hat{y}_{\\sigma(i)}\\right)
+\mathcal{C}=\underset{\sigma}{\arg \min } \sum_{i}^{J} \mathcal{C}\left(y_{i}, \hat{y}_{\sigma(i)}\right)
 \]</span></p>
-<p>其中，<span class="math inline">\(\\hat{y}_{\\sigma(i)}\)</span> 代表与第i个关键点相匹配的预测。</p>
+<p>其中，<span class="math inline">\(\hat{y}_{\sigma(i)}\)</span> 代表与第i个关键点相匹配的预测。</p>
 <p>在训练阶段，我们混合使用分类概率和坐标偏差来匹配查询。例如，第i个关键点与其匹配的查询σ(i)的代价函数为：</p>
 <p><span class="math display">\[
-\\mathcal{C}_{i}=-\\hat{p}_{\\sigma(i)}\\left(c_{i}\\right)+\\left|b_{i}-\\hat{b}_{\\sigma(i)}\\right|
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)+\left\|b_{i}-\hat{b}_{\sigma(i)}\right\|
 \]</span></p>
-<p>其中，<span class="math inline">\(\\hat{p}_{\\sigma(i)}\)</span> 是查询的类概率， <span class="math inline">\(c_{i}\)</span> 是第i个关键点的类标签。然而，在推断阶段，我们不能访问ground-truth关键点坐标，因此我们只使用分类概率将J原型关键点与查询匹配。所以，第i个关键点的匹配代价可以简单地表述为： <span class="math display">\[
-\\mathcal{C}_{i}=-\\hat{p}_{\\sigma(i)}\\left(c_{i}\\right)
+<p>其中，<span class="math inline">\(\hat{p}_{\sigma(i)}\)</span> 是查询的类概率， <span class="math inline">\(c_{i}\)</span> 是第i个关键点的类标签。然而，在推断阶段，我们不能访问ground-truth关键点坐标，因此我们只使用分类概率将J原型关键点与查询匹配。所以，第i个关键点的匹配代价可以简单地表述为： <span class="math display">\[
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)
 \]</span></p>
-<p>二部匹配算法后，返回匹配的J个关键点作为预测。 模型的损失函数是通过对匹配查询，将方程2中的负概率替换为负对数似然<span class="math inline">\(-\\log \\hat{p}_{\\sigma(i)}\\left(c_{i}\\right)\)</span>得到的。对于不匹配的查询，我们只反向传播分类损失。为了解决∅class造成的类失衡，我们将其对数概率项权重设为0.1。</p>
+<p>二部匹配算法后，返回匹配的J个关键点作为预测。 模型的损失函数是通过对匹配查询，将方程2中的负概率替换为负对数似然<span class="math inline">\(-\log \hat{p}_{\sigma(i)}\left(c_{i}\right)\)</span>得到的。对于不匹配的查询，我们只反向传播分类损失。为了解决∅class造成的类失衡，我们将其对数概率项权重设为0.1。</p>
 <h3 id="使用-stn-的多层裁剪">使用 STN 的多层裁剪</h3>
 <p>在前一节中，我们介绍了一个两阶段的pipeline。然而，在端到端理念下，我们希望模型是端到端可调的，以利用人体检测和关键点识别任务之间的协同作用。为此，我们合并了<strong>STN</strong>，直接从第一个CNN骨干生成的特征图中裁剪出关键点检测Transformer所需的图像特征。这种裁剪操作不仅对特征映射是可微的，而且对边界框坐标也是可微的。</p>
-<p>例如，由<span class="math inline">\(b = \\left(x_{\\text {left }}, x_{\\text {right }}, y_{\\text {top }}, x_{\\text {down }}\\right)\)</span>生成的<span class="math inline">\(w × h\)</span>网格可以表示为:</p>
+<p>例如，由<span class="math inline">\(b = \left(x_{\text {left }}, x_{\text {right }}, y_{\text {top }}, x_{\text {down }}\right)\)</span>生成的<span class="math inline">\(w × h\)</span>网格可以表示为:</p>
 <p><span class="math display">\[
-x_{i}=\\frac{w-i}{w} x_{\\mathrm{left}}+\\frac{i}{w} x_{\\mathrm{right}}
+x_{i}=\frac{w-i}{w} x_{\mathrm{left}}+\frac{i}{w} x_{\mathrm{right}}
 \]</span></p>
 <p><span class="math display">\[
-y_{j}=\\frac{h-j}{h} y_{\\mathrm{top}}+\\frac{j}{h} y_{\\mathrm{down}}
+y_{j}=\frac{h-j}{h} y_{\mathrm{top}}+\frac{j}{h} y_{\mathrm{down}}
 \]</span></p>
 <p>其中，<span class="math inline">\(b\)</span>相对于原始图像，<span class="math inline">\(w × h\)</span>为关键点检测Transformer所需的特征图尺寸。 为了减轻关键点识别中常见的分辨率挑战，我们使用<strong>双线性核</strong>将网格应用于CNN主干不同中间层生成的不同尺度的特征图。 用U表示原始的W × H特征图，可微采样过程可以表示为: <span class="math display">\[
-V_{i j}=\\sum_{m, n} U_{n m} \\max \\left(0,1-\\left|x_{i}-m\\right|\\right) \\max \\left(0,1-\\left|y_{j}-n\\right|\\right)
+V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \left(0,1-\left|y_{j}-n\right|\right)
 \]</span></p>
 <p>在得到一系列相同大小的图像特征后，我们将它们连接成一个单一的特征图，用于关键点检测Transformer。这种多层裁剪变体<strong>图[end-to-end]</strong>所示。</p>
 <h2 id="实验">实验🧪</h2>

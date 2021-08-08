@@ -7,30 +7,37 @@ tags:
 categories: ''
 
 ---
+
+
 > 写在前：
 > 记录📝
+
 
 ## 相关信息💻
 
 > 论文发表在CVPR2021
 >
 > 发表单位：中国科学院大学、清华大学、圣迭戈加利福尼亚大学
+>
 
-* 论文地址：[http://arxiv.org/abs/2104.06976](http://arxiv.org/abs/2104.06976)
-* 代码地址：[https://github.com/mlpc-ucsd/PRTR](https://github.com/mlpc-ucsd/PRTR)
+- 论文地址：[http://arxiv.org/abs/2104.06976](http://arxiv.org/abs/2104.06976)
+
+- 代码地址：[https://github.com/mlpc-ucsd/PRTR](https://github.com/mlpc-ucsd/PRTR)
 
 ## 主要创新点
 
-* **基于Transformer**的人体姿态估计（论文中说是第一篇）
+- **基于Transformer**的人体姿态估计（论文中说是第一篇）
+
 
 ## 贡献点💡
-
 > 根据论文
 
 1. 提出了一种通过构建级联Transformers的基于回归的人体姿态识别方法。
+
 2. 两种类型的级联Transformer:
-   * two-stage，第2个Transformer使用第1个Transformer检测到的图像patch
-   * end-to-end，使用了spatial Transformer network (STN)
+    - two-stage，第2个Transformer使用第1个Transformer检测到的图像patch
+    - end-to-end，使用了spatial Transformer network (STN) 
+    
 3. 关键点的可视化
 
 ## 方法
@@ -38,111 +45,108 @@ categories: ''
 两种Transformer如下：
 
 ![prtr-2-stage](https://x.arcto.xyz/r77JrM/prtr-2-stage.png)
-<center>\[two-stage的\]</center>
+<center>[two-stage的]</center>
 
 **two-stage**： TRansformer (PRTR) 两阶段变体的姿态识别架构。
-
-* 首先，利用全图图像特征和绝对位置编码，人体检测Transformer使用一组学习的人查询检测图中的人。
-* 在过滤背景查询后，我们用预测框裁剪原始图像。
-* 将裁剪后的图像和相对于相应边界框的位置编码一起输入一个关键点检测Transformer。
-* 最后，通过<u>匈牙利算法</u>从一个更大的关键点查询集合中读出J个关键点。关键点检测Transformer以矢量化的方式处理所有非背景关键点proposals。h(0)表示假设(查询)，通过Transformer解码器将特征向量提炼为最终的预测y^。
+- 首先，利用全图图像特征和绝对位置编码，人体检测Transformer使用一组学习的人查询检测图中的人。
+- 在过滤背景查询后，我们用预测框裁剪原始图像。
+- 将裁剪后的图像和相对于相应边界框的位置编码一起输入一个关键点检测Transformer。
+- 最后，通过<u>匈牙利算法</u>从一个更大的关键点查询集合中读出J个关键点。关键点检测Transformer以矢量化的方式处理所有非背景关键点proposals。h(0)表示假设(查询)，通过Transformer解码器将特征向量提炼为最终的预测y^。
 
 ![prtr-end-to-end](https://x.arcto.xyz/6FD1so/prtr-end-to-end.png)
-<center>\[end-to-end的\]</center>
+<center>[end-to-end的]</center>
 **end-to-end**：基于TRansformer (PRTR)端到端变体的姿态识别架构。对于端到端学习，我们没有在RGB图像级别上进行裁剪，而是对骨干生成的多层特征采用可微分双线性采样，为关键点检测Transformer提供了放大和多层次的特征。
 
 ### 人体检测Transformer
+- 自顶向下的方式解决多人姿态识别问题，基于DEtection Transformer (DETR)，采用Transformer架构作为第一阶段人体检测的backbone。
+- 在编码器阶段，由CNN生成的图像特征被扁平化并送入Transformer编码器以生成上下文化的图像特征
+- 在解码器阶段，给定一组固定的学习到的query embedding（查询嵌入）作为输入，Transformer解码器根据图像特征的上下文推理目标之间的关系，并行输出所有的目标queries。
+- 使用**分类头**将目标分类为人或背景（空集），并使用4通道的**回归头**预测边界框。
 
-* 自顶向下的方式解决多人姿态识别问题，基于DEtection Transformer (DETR)，采用Transformer架构作为第一阶段人体检测的backbone。
-* 在编码器阶段，由CNN生成的图像特征被扁平化并送入Transformer编码器以生成上下文化的图像特征
-* 在解码器阶段，给定一组固定的学习到的query embedding（查询嵌入）作为输入，Transformer解码器根据图像特征的上下文推理目标之间的关系，并行输出所有的目标queries。
-* 使用**分类头**将目标分类为人或背景（空集），并使用4通道的**回归头**预测边界框。
 
 ### 关键点检测Transformer
 
-得到边界框后，对RGB图像进行裁剪，并使用另一个CNN主干来得到人的特征图。因为只有匹配的查询涉及计算关键点检测Transformer的损失，所以我们过滤掉了不匹配的查询。像人检测的过程中,我们使用的encoder-decoder架构Transformer预测并行的方式，但我们使用另一组查询(Q代表数量)。最后，一个分类头预测包括J种类型的关节、背景(∅)、2声道回归头输出每个关键点的坐标。
+  得到边界框后，对RGB图像进行裁剪，并使用另一个CNN主干来得到人的特征图。因为只有匹配的查询涉及计算关键点检测Transformer的损失，所以我们过滤掉了不匹配的查询。像人检测的过程中,我们使用的encoder-decoder架构Transformer预测并行的方式，但我们使用另一组查询(Q代表数量)。最后，一个分类头预测包括J种类型的关节、背景(∅)、2声道回归头输出每个关键点的坐标。
+  
 
-由于PRTR推断出比ground truth(J代表数量)更大的预测数量，我们需要找到它们之间的匹配来计算损失。我们将该匹配问题表述为最优二部匹配问题，该问题可由[匈牙利算法](https://zhuanlan.zhihu.com/p/96229700)有效地求解。具体来说，我们试图找到一个内射函数σ∈\[J\]→\[Q\]，它首先以离散的方式使匹配代价C最小:
+  由于PRTR推断出比ground truth(J代表数量)更大的预测数量，我们需要找到它们之间的匹配来计算损失。我们将该匹配问题表述为最优二部匹配问题，该问题可由[匈牙利算法](https://zhuanlan.zhihu.com/p/96229700)有效地求解。具体来说，我们试图找到一个内射函数σ∈[J]→[Q]，它首先以离散的方式使匹配代价C最小:
 
 $$
-\\mathcal{C}=\\underset{\\sigma}{\\arg \\min } \\sum_{i}^{J} \\mathcal{C}\\left(y_{i}, \\hat{y}_{\\sigma(i)}\\right)
+\mathcal{C}=\underset{\sigma}{\arg \min } \sum_{i}^{J} \mathcal{C}\left(y_{i}, \hat{y}_{\sigma(i)}\right)
 $$
 
-其中，$\\hat{y}_{\\sigma(i)}$ 代表与第i个关键点相匹配的预测。
+其中，$\hat{y}_{\sigma(i)}$ 代表与第i个关键点相匹配的预测。
+
 
 在训练阶段，我们混合使用分类概率和坐标偏差来匹配查询。例如，第i个关键点与其匹配的查询σ(i)的代价函数为：
 
 $$
-\\mathcal{C}_{i}=-\\hat{p}_{\\sigma(i)}\\left(c_{i}\\right)+\\left|b_{i}-\\hat{b}_{\\sigma(i)}\\right|
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)+\left\|b_{i}-\hat{b}_{\sigma(i)}\right\|
 $$
 
-其中，$\\hat{p}_{\\sigma(i)}$ 是查询的类概率， $c_{i}$ 是第i个关键点的类标签。然而，在推断阶段，我们不能访问ground-truth关键点坐标，因此我们只使用分类概率将J原型关键点与查询匹配。所以，第i个关键点的匹配代价可以简单地表述为：
+其中，$\hat{p}_{\sigma(i)}$ 是查询的类概率， $c_{i}$ 是第i个关键点的类标签。然而，在推断阶段，我们不能访问ground-truth关键点坐标，因此我们只使用分类概率将J原型关键点与查询匹配。所以，第i个关键点的匹配代价可以简单地表述为：
 $$
-\\mathcal{C}_{i}=-\\hat{p}_{\\sigma(i)}\\left(c_{i}\\right)
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)
 $$
 
 二部匹配算法后，返回匹配的J个关键点作为预测。
-模型的损失函数是通过对匹配查询，将方程2中的负概率替换为负对数似然$-\\log \\hat{p}_{\\sigma(i)}\\left(c_{i}\\right)$得到的。对于不匹配的查询，我们只反向传播分类损失。为了解决∅class造成的类失衡，我们将其对数概率项权重设为0.1。
+模型的损失函数是通过对匹配查询，将方程2中的负概率替换为负对数似然$-\log \hat{p}_{\sigma(i)}\left(c_{i}\right)$得到的。对于不匹配的查询，我们只反向传播分类损失。为了解决∅class造成的类失衡，我们将其对数概率项权重设为0.1。
+
 
 ### 使用 STN 的多层裁剪
-
 在前一节中，我们介绍了一个两阶段的pipeline。然而，在端到端理念下，我们希望模型是端到端可调的，以利用人体检测和关键点识别任务之间的协同作用。为此，我们合并了**STN**，直接从第一个CNN骨干生成的特征图中裁剪出关键点检测Transformer所需的图像特征。这种裁剪操作不仅对特征映射是可微的，而且对边界框坐标也是可微的。
 
-例如，由$b = \\left(x_{\\text {left }}, x_{\\text {right }}, y_{\\text {top }}, x_{\\text {down }}\\right)$生成的$w × h$网格可以表示为:
+例如，由$b = \left(x_{\text {left }}, x_{\text {right }}, y_{\text {top }}, x_{\text {down }}\right)$生成的$w × h$网格可以表示为:
 
 $$
-x_{i}=\\frac{w-i}{w} x_{\\mathrm{left}}+\\frac{i}{w} x_{\\mathrm{right}}
+x_{i}=\frac{w-i}{w} x_{\mathrm{left}}+\frac{i}{w} x_{\mathrm{right}}
 $$
 
 $$
-y_{j}=\\frac{h-j}{h} y_{\\mathrm{top}}+\\frac{j}{h} y_{\\mathrm{down}}
+y_{j}=\frac{h-j}{h} y_{\mathrm{top}}+\frac{j}{h} y_{\mathrm{down}}
 $$
 
 其中，$b$相对于原始图像，$w × h$为关键点检测Transformer所需的特征图尺寸。
 为了减轻关键点识别中常见的分辨率挑战，我们使用**双线性核**将网格应用于CNN主干不同中间层生成的不同尺度的特征图。
 用U表示原始的W × H特征图，可微采样过程可以表示为:
 $$
-V_{i j}=\\sum_{m, n} U_{n m} \\max \\left(0,1-\\left|x_{i}-m\\right|\\right) \\max \\left(0,1-\\left|y_{j}-n\\right|\\right)
+V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \left(0,1-\left|y_{j}-n\right|\right)
 $$
 
-在得到一系列相同大小的图像特征后，我们将它们连接成一个单一的特征图，用于关键点检测Transformer。这种多层裁剪变体**图\[end-to-end\]**所示。
+在得到一系列相同大小的图像特征后，我们将它们连接成一个单一的特征图，用于关键点检测Transformer。这种多层裁剪变体**图[end-to-end]**所示。
 
 ## 实验🧪
-
 ### 实验设置
 
 #### 数据集
-
-* COCO Keypoint Detection task
-* MPII Human Pose Dataset
+- COCO Keypoint Detection task
+- MPII Human Pose Dataset
 
 #### 评价标准
-
-* Object Keypoint Similarity (OKS) for COCO
-* Percentage of Correct Keypoints (PCK) for MPII
+- Object Keypoint Similarity (OKS) for COCO
+- Percentage of Correct Keypoints (PCK) for MPII
 
 ### 实验结果
-
-* COCO dataset
-  ![prtr-coco-result-1](https://x.arcto.xyz/YElJVU/prtr-coco-result-1.png)
-  ![prtr-coco-result-2](https://x.arcto.xyz/mQwSwv/prtr-coco-result-2.png)
-* MPII val dataset
-  ![prtr-mpii-result](https://x.arcto.xyz/CRnCCr/prtr-mpii-result.png)
+- COCO dataset
+![prtr-coco-result-1](https://x.arcto.xyz/YElJVU/prtr-coco-result-1.png)
+![prtr-coco-result-2](https://x.arcto.xyz/mQwSwv/prtr-coco-result-2.png)
+- MPII val dataset
+![prtr-mpii-result](https://x.arcto.xyz/CRnCCr/prtr-mpii-result.png)
 
 ## 参考链接🔗
+- [Pose Recognition with Cascade Transformers 论文笔记](https://www.yuque.com/jinluzhang/researchblog/prtr)
 
-* [Pose Recognition with Cascade Transformers 论文笔记](https://www.yuque.com/jinluzhang/researchblog/prtr)
 
 ### 回顾
-
-* End-to-end object detection with transformers（DETR）ECCV 2020
-* Cascaded pose regression（step-by-step regression）
-* Locality-constrained spatial transformer network for video crowd counting.(STN)
+- End-to-end object detection with transformers（DETR）ECCV 2020
+- Cascaded pose regression（step-by-step regression）
+- Locality-constrained spatial transformer network for video crowd counting.(STN)
 
 > ⬆️这些还需要再去看看补充一下
 
+
 ### 什么是Transformer
 
-* [十分钟理解Transformer](https://zhuanlan.zhihu.com/p/82312421)
-* [BERT大火却不懂Transformer？读这一篇就够了](https://zhuanlan.zhihu.com/p/54356280)
-* [详解Transformer （Attention Is All You Need）](https://zhuanlan.zhihu.com/p/48508221)
+- [十分钟理解Transformer](https://zhuanlan.zhihu.com/p/82312421)
+- [BERT大火却不懂Transformer？读这一篇就够了](https://zhuanlan.zhihu.com/p/54356280)
+- [详解Transformer （Attention Is All You Need）](https://zhuanlan.zhihu.com/p/48508221)
