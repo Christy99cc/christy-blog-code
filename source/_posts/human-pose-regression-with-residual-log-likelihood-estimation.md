@@ -7,14 +7,15 @@ tags:
 categories: ''
 
 ---
-
 > 写在前：
 > 记录📝
 
 ## 相关信息💻
 
 > 论文在ICCV2021
+>
 > 发表单位：上海交通大学、香港中文大学、商汤科技
+>
 
 - 论文地址：[https://arxiv.org/abs/2107.11291](https://arxiv.org/abs/2107.11291)
 - 代码地址：[https://github.com/Jeff-sjtu/res-loglikelihood-regression](https://github.com/Jeff-sjtu/res-loglikelihood-regression)
@@ -31,4 +32,3 @@ categories: ''
 ## CITE🔗
 遇到的别人写得很不错的笔记
 - [论文笔记及思考：Human Pose Regression with Residual Log-likelihood Estimation(ICCV 2021 Oral)](https://zhuanlan.zhihu.com/p/395521994)
-
