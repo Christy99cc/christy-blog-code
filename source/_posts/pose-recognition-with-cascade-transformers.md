@@ -1,14 +1,12 @@
 ---
 title: "【论文阅读】Pose Recognition with Cascade Transformers"
-date: 2021-08-08T08:30:00Z
+date: 2021-08-08T08:30:00.000+00:00
 tags:
 - 姿态估计
 - 论文阅读
 categories: ''
 
 ---
-
-
 > 写在前：
 > 记录📝
 
@@ -16,7 +14,9 @@ categories: ''
 ## 相关信息💻
 
 > 论文发表在CVPR2021
+> 
 > 发表单位：中国科学院大学、清华大学、圣迭戈加利福尼亚大学
+> 
 
 - 论文地址：[http://arxiv.org/abs/2104.06976](http://arxiv.org/abs/2104.06976)
 - 代码地址：[https://github.com/mlpc-ucsd/PRTR](https://github.com/mlpc-ucsd/PRTR)
@@ -27,11 +27,15 @@ categories: ''
 
 
 ## 贡献点💡
+
 > 根据论文
+
 1. 提出了一种通过构建级联Transformers的基于回归的人体姿态识别方法。
+
 2. 两种类型的级联Transformer:
     - two-stage，第2个Transformer使用第1个Transformer检测到的图像patch
     - end-to-end，使用了spatial Transformer network (STN) 
+    
 3. 关键点的可视化
 
 ## 方法
