@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"999795.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="记录一次Anaconda+VSCode+PyTorch的配置 操作系统为macOS Catalina 10.15.7 更新：  由于需要GPU，在下载Anaconda和PyTorch中，也会附带说明了在windows10的操作。 其他地方都是按照MacOS来记录的。   下载Anaconda 先去官网或者清华镜像站下载Anaconda或者Miniconda 官网链接 https:&#x2F;&#x2F;www.an">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Anaconda+VSCode+PyTorch的配置">
+<meta property="og:url" content="https://999795.xyz/2020/12/06/anaconda-vscode-pytorch/index.html">
+<meta property="og:site_name" content="一杯西瓜汁er🍉">
+<meta property="og:description" content="记录一次Anaconda+VSCode+PyTorch的配置 操作系统为macOS Catalina 10.15.7 更新：  由于需要GPU，在下载Anaconda和PyTorch中，也会附带说明了在windows10的操作。 其他地方都是按照MacOS来记录的。   下载Anaconda 先去官网或者清华镜像站下载Anaconda或者Miniconda 官网链接 https:&#x2F;&#x2F;www.an">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://x.arcto.xyz/16oo5U/vscode下载python插件.jpg">
+<meta property="og:image" content="https://x.arcto.xyz/RK3zzQ/验证python的安装.jpg">
+<meta property="og:image" content="https://x.arcto.xyz/T-xnZd/vscode设置python解释器.jpg">
+<meta property="article:published_time" content="2020-12-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-08T09:22:39.442Z">
+<meta property="article:author" content="Christy">
+<meta property="article:tag" content="配置环境">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://x.arcto.xyz/16oo5U/vscode下载python插件.jpg">
+
+
+<link rel="canonical" href="https://999795.xyz/2020/12/06/anaconda-vscode-pytorch/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://999795.xyz/2020/12/06/anaconda-vscode-pytorch/","path":"2020/12/06/anaconda-vscode-pytorch/","title":"Anaconda+VSCode+PyTorch的配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Anaconda+VSCode+PyTorch的配置 | 一杯西瓜汁er🍉</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">一杯西瓜汁er🍉</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDanaconda"><span class="nav-number">1.</span> <span class="nav-text">下载Anaconda</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E5%8E%BB%E5%AE%98%E7%BD%91%E6%88%96%E8%80%85%E6%B8%85%E5%8D%8E%E9%95%9C%E5%83%8F%E7%AB%99%E4%B8%8B%E8%BD%BDanaconda%E6%88%96%E8%80%85miniconda"><span class="nav-number">1.1.</span> <span class="nav-text">先去官网或者清华镜像站下载Anaconda或者Miniconda</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%98%E7%BD%91%E9%93%BE%E6%8E%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">官网链接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E9%95%9C%E5%83%8F%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.1.2.</span> <span class="nav-text">通过镜像下载</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E5%A5%BD"><span class="nav-number">1.2.</span> <span class="nav-text">检测是否安装好</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF%E7%9A%84%E6%9C%89base%E5%AD%97%E6%A0%B7"><span class="nav-number">1.3.</span> <span class="nav-text">打开终端的有(base)字样</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BApytorch%E6%96%B0%E5%BB%BA%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">为PyTorch新建虚拟环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85pytorch"><span class="nav-number">3.</span> <span class="nav-text">安装PyTorch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#macos"><span class="nav-number">3.1.</span> <span class="nav-text">MacOS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#win"><span class="nav-number">3.2.</span> <span class="nav-text">Win</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E9%85%8D%E7%BD%AEpython"><span class="nav-number">4.</span> <span class="nav-text">VSCode配置python</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85vscode"><span class="nav-number">4.1.</span> <span class="nav-text">下载安装VSCode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDpython%E6%8F%92%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">下载python插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDpython%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-number">4.3.</span> <span class="nav-text">下载Python解释器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEpython%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-number">4.4.</span> <span class="nav-text">设置python解释器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8"><span class="nav-number">5.</span> <span class="nav-text">VSCode代码自动补全</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%89%93%E5%BC%80%E5%85%A8%E5%B1%80%E7%9A%84setting.json"><span class="nav-number">5.0.1.</span> <span class="nav-text">如何打开全局的setting.json</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8conda%E5%AE%89%E8%A3%85opencv"><span class="nav-number">7.</span> <span class="nav-text">用conda安装opencv</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Christy"
+      src="/upload/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Christy</p>
+  <div class="site-description" itemprop="description">保持热情:)</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/christy99cc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;christy99cc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2020/12/06/anaconda-vscode-pytorch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/upload/avatar.jpg">
+      <meta itemprop="name" content="Christy">
+      <meta itemprop="description" content="保持热情:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杯西瓜汁er🍉">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Anaconda+VSCode+PyTorch的配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-06 16:00:00" itemprop="dateCreated datePublished" datetime="2020-12-06T16:00:00+00:00">2020-12-06</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>记录一次Anaconda+VSCode+PyTorch的配置</p>
+<p>操作系统为macOS Catalina 10.15.7</p>
+<p>更新：</p>
+<blockquote>
+<p>由于需要GPU，在下载Anaconda和PyTorch中，也会附带说明了在windows10的操作。</p>
+<p>其他地方都是按照MacOS来记录的。</p>
+</blockquote>
+</blockquote>
+<h3 id="下载anaconda">下载Anaconda</h3>
+<h4 id="先去官网或者清华镜像站下载anaconda或者miniconda">先去官网或者清华镜像站下载Anaconda或者Miniconda</h4>
+<h5 id="官网链接">官网链接</h5>
+<p><a target="_blank" rel="noopener" href="https://www.anaconda.com/products/individual#Downloads" title="https://www.anaconda.com/products/individual#Downloads">https://www.anaconda.com/products/individual#Downloads</a></p>
+<p>有win、mac、linux的版本选择，操作系统是什么就选择对应的就好啦~</p>
+<p><strong>例如 Windows10：</strong></p>
+<p>我直接在官网上下载的，也可以去清华镜像站找对应的版本。</p>
+<p><strong>注意：</strong>在安装过程中，有一步需要将<strong>“添加到PATH”勾选上！</strong></p>
+<p>一定要勾选上（尽管勾选之后说明文字会标红），不然后面配置稍有些麻烦。</p>
+<h5 id="通过镜像下载">通过镜像下载</h5>
+<p>如果在官网的下载速度较慢，可以去清华镜像站下载。下面以anaconda的安装为例。（安装miniconda也是同样操作） <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/</a>￼ 找自己对应的操作系统，和需要的版本，进行下载。</p>
+<p><strong>例如 Mac OS：</strong> 我用到的是Anaconda3-2020.11-MacOSX-x86_64.pkg，<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-MacOSX-x86_64.pkg">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-MacOSX-x86_64.pkg</a>￼（点击即可下载）。也推荐下载miniconda。</p>
+<p>macOS上安装没有什么需要注意的地方。下载好之后，双击进行安装，一直点“继续”，直到完成。</p>
+<h4 id="检测是否安装好">检测是否安装好</h4>
+<p>输入<code>conda -V</code>，查看版本号，出现conda版本号就是安装好了。</p>
+<h4 id="打开终端的有base字样">打开终端的有(base)字样</h4>
+<blockquote>
+<p>macOS里遇到的问题</p>
+</blockquote>
+<p>新版的Anaconda会在每一个新开的terminal里面自动进入虚拟环境base。看着有些强迫症犯了。 使用如下命令就能把默认进入base虚拟环境关掉了。 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda config --set auto_activate_base false</span><br></pre></td></tr></table></figure></p>
+<p>另外，如果需要进入base虚拟环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate</span><br></pre></td></tr></table></figure>
+<p>退出当前虚拟环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+<h3 id="为pytorch新建虚拟环境">为PyTorch新建虚拟环境</h3>
+<ol type="1">
+<li>新建虚拟环境，命名为pytorch，指定python版本为3.6。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create --name pytorch python=3.6</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>安装好之后，进入pytorch虚拟环境。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate pytorch</span><br></pre></td></tr></table></figure>
+<h3 id="安装pytorch">安装PyTorch</h3>
+<p>在pytorch虚拟环境中安装PyTorch。要注意，先进入pytorch虚拟环境。 附上官网的链接：</p>
+<p><a target="_blank" rel="noopener" href="https://pytorch.org">https://pytorch.org</a>￼</p>
+<p>根据官网，安装PyTorch。</p>
+<h4 id="macos">MacOS</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio -c pytorch</span><br></pre></td></tr></table></figure>
+<h4 id="win">Win</h4>
+<blockquote>
+<p>要选择对应的cuda版本的，如果没有GPU就要选择None</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch</span><br></pre></td></tr></table></figure>
+<h3 id="vscode配置python">VSCode配置python</h3>
+<p>参考官方链接 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/python/python-tutorial#_prerequisites">https://code.visualstudio.com/docs/python/python-tutorial#_prerequisites</a>￼</p>
+<h4 id="下载安装vscode">下载安装VSCode</h4>
+<p>官网下载，附上链接 <a target="_blank" rel="noopener" href="https://code.visualstudio.com">https://code.visualstudio.com</a>￼</p>
+<h4 id="下载python插件">下载python插件</h4>
+<p>在VSCode的应用商店中搜索Python，并下载 <img src="https://x.arcto.xyz/16oo5U/vscode下载python插件.jpg" alt="vscode下载python插件">￼</p>
+<h4 id="下载python解释器">下载Python解释器</h4>
+<p>这里的python解释器使用<strong>pytorch虚拟环境</strong>中的，见上文中“为PyTorch新建虚拟环境”。</p>
+<p>验证python是否安装</p>
+<pre><code>python3 --version</code></pre>
+<p>由于我使用pytorch环境下的python，需要先进入该环境。</p>
+<pre><code>conda activate pytorch</code></pre>
+<p><img src="https://x.arcto.xyz/RK3zzQ/验证python的安装.jpg" alt="验证python的安装">￼</p>
+<blockquote>
+<p>后来换了一台电脑下载的是miniconda，无所谓啦~</p>
+</blockquote>
+<h4 id="设置python解释器">设置python解释器</h4>
+<p>使用快捷键shift + command + P ，或者点击<strong>菜单栏</strong>中的<strong>查看</strong>里的<strong>命令面板</strong>， 打开命令面板。 输入<code>python:select interpreter</code> 选择python解释器。这里选择我要用的pytorch里的python3.6.2就好了。 <img src="https://x.arcto.xyz/T-xnZd/vscode设置python解释器.jpg" alt="vscode设置python解释器">￼</p>
+<p>Note：代码补全要用IntelliCode，不要用Pylance（要卸掉）</p>
+<h3 id="vscode代码自动补全">VSCode代码自动补全</h3>
+<p>下载插件：Visual Studio IntelliCode 注意：VS Code会在右下角推荐Pylance，不要下载</p>
+<p>在全局的setting.json中，找到以下有关editor.suggest设置为false的代码删掉</p>
+<pre><code>  &quot;editor.acceptSuggestionOnCommitCharacter&quot;: false,
+    &quot;editor.suggest.showClasses&quot;: false,
+    &quot;editor.suggest.showConstructors&quot;: false,
+    &quot;editor.suggest.showEvents&quot;: false,
+    &quot;editor.suggest.showFields&quot;: false,
+    &quot;editor.suggest.showFunctions&quot;: false,
+    &quot;editor.suggest.showVariables&quot;: false,
+    &quot;editor.suggest.showValues&quot;: false,
+    &quot;editor.suggest.showUnits&quot;: false,
+    &quot;editor.suggest.showTypeParameters&quot;: false,
+    &quot;editor.suggest.showSnippets&quot;: false,
+    &quot;editor.suggest.showReferences&quot;: false,
+    &quot;editor.suggest.showOperators&quot;: false,
+    &quot;editor.suggest.showModules&quot;: false,
+    &quot;editor.suggest.showProperties&quot;: false,
+    &quot;editor.suggest.showIssues&quot;: false,
+    &quot;editor.suggest.showMethods&quot;: false,
+    &quot;editor.suggest.showIcons&quot;: false,
+    &quot;editor.suggest.showInterfaces&quot;: false,
+    &quot;editor.suggest.showFolders&quot;: false,
+    &quot;editor.suggest.showFiles&quot;: false,
+    &quot;editor.suggest.snippetsPreventQuickSuggestions&quot;: false,
+    &quot;editor.suggest.showWords&quot;: false,
+    &quot;editor.suggest.showKeywords&quot;: false,
+    &quot;editor.suggest.showEnums&quot;: false,
+    &quot;editor.suggest.showEnumMembers&quot;: false,
+    &quot;editor.suggest.showConstants&quot;: false,
+    &quot;editor.suggest.filterGraceful&quot;: false,
+    &quot;editor.suggest.showStructs&quot;: false,
+    &quot;editor.suggest.showUsers&quot;: false,</code></pre>
+<p>将下面这行的null改为true，即将</p>
+<pre><code>&quot;editor.quickSuggestions&quot;: null,</code></pre>
+<p>改为</p>
+<pre><code>&quot;editor.quickSuggestions&quot;: true,</code></pre>
+<h5 id="如何打开全局的setting.json">如何打开全局的setting.json</h5>
+<p>点击 code =&gt; 首选项 =&gt; 设置，随便找一项设置，点击<strong>在setting.json中编辑</strong>，（再删掉新加的代码就好了），不知道有什么其他的好方法。</p>
+<h3 id="其他">其他</h3>
+<p>当然啦，PyCharm也是很好的选择~也推荐~</p>
+<h3 id="用conda安装opencv">用conda安装opencv</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install opencv3 -c anaconda</span><br></pre></td></tr></table></figure>
+<p>c是channel的意思，要指定anaconda或者menpo做channel才行。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Christy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://999795.xyz/2020/12/06/anaconda-vscode-pytorch/" title="Anaconda+VSCode+PyTorch的配置">https://999795.xyz/2020/12/06/anaconda-vscode-pytorch/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83/" rel="tag"><i class="fa fa-tag"></i> 配置环境</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E3%80%91mapper%E6%89%BE%E4%B8%8D%E5%88%B0/" rel="prev" title="【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found.">
+                  <i class="fa fa-chevron-left"></i> 【问题】A component required a bean of type 'com.cs.actionmall.mapper.UserMapper' that could not be found.
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/" rel="next" title="bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id, ">
+                  bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id,  <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">24k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">22 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+  <script async src="/js/cursor/love.min.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+</body>
+</html>

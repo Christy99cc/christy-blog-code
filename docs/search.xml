@@ -1,0 +1,1536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>01分布式系统概述</title>
+    <url>/2020/08/18/01%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>为专业课复习用</p>
+</blockquote>
+<h2 id="分布式系统概念">🌿分布式系统概念</h2>
+<h3 id="概念">🌿概念</h3>
+<p>一个分布式系统是<strong>若干个独立</strong>的计算机的集合，通过通信网络互相连接，实现资源共享和协同工作，但是对该系统的用户来说，感觉该系统就像一台计算机一样。</p>
+<blockquote>
+<p>硬件方面：每台计算机都是独立、自主的</p>
+<p>软件方面：用户感觉在独占系统</p>
+</blockquote>
+<h3 id="应用举例">🌰应用举例</h3>
+<ul>
+<li>万维网</li>
+<li>移动计算</li>
+<li>连锁店</li>
+<li>云计算</li>
+</ul>
+<h3 id="从集中式系统到分布式系统的原因">🌿从集中式系统到分布式系统的原因</h3>
+<ul>
+<li>高性能微型计算机的普及</li>
+<li>高速计算机网络（LAN、WAN）的普及</li>
+</ul>
+<h2 id="分布式系统的特点">🌿分布式系统的特点</h2>
+<h3 id="优点">优点</h3>
+<h4 id="与集中式系统相比较">与集中式系统相比较</h4>
+<ol type="1">
+<li><p>经济性</p>
+<p>微型处理机提供了比大型主机更好的性能价格比</p></li>
+<li><p>性能</p>
+<p>分布式系统总的计算能力比单个大型主机更强</p></li>
+<li><p>固有的分布性能</p>
+<p>一些应用涉及空间上分散的机器</p></li>
+<li><p>可靠性</p>
+<p>多工系统的容错能力：如果一个机器崩溃，整个系统还可以运转</p></li>
+<li><p>渐增（可扩充性强）</p>
+<p>计算能力可以逐渐有所增加</p></li>
+</ol>
+<h4 id="与独立pc机比较">与独立PC机比较</h4>
+<ol type="1">
+<li>支持数据共享
+<ul>
+<li>文件</li>
+<li>数据库</li>
+</ul></li>
+<li>支持设备共享
+<ul>
+<li>高档打印机</li>
+<li>海量磁盘<br>
+</li>
+</ul></li>
+<li>增强人与人之间的沟通
+<ul>
+<li>Email</li>
+<li>bbs<br>
+</li>
+</ul></li>
+<li>灵活性
+<ul>
+<li>负载分配（在其他的机器上执行任务） |</li>
+</ul></li>
+</ol>
+<h3 id="存在的问题">存在的问题</h3>
+<ol type="1">
+<li><p>缺乏充分的软件产品和应用经验</p>
+<p>操作系统、中间件、编程语言、工具</p></li>
+<li><p>网络性能的限制</p>
+<p>QoS（带宽、速度）</p></li>
+<li><p>安全性</p>
+<p>黑客、泄密、盗用、破坏</p></li>
+</ol>
+<h2 id="硬件概念">硬件概念</h2>
+<h3 id="flynn分类">Flynn分类</h3>
+<p>按照<strong>指令流、数据流</strong>的个数</p>
+<ul>
+<li>SISD
+<ul>
+<li>单指令流、单数据流</li>
+<li>PC机</li>
+</ul></li>
+<li>SIMD
+<ul>
+<li>单指令流、多数据流</li>
+<li>矩阵计算机</li>
+</ul></li>
+<li>MISD
+<ul>
+<li>多指令流、单数据流</li>
+<li>无🌰</li>
+</ul></li>
+<li>MIMD
+<ul>
+<li>多指令流、多数据流</li>
+<li>分布式系统</li>
+</ul></li>
+</ul>
+<h3 id="mimd分类"><strong>MIMD</strong>分类</h3>
+<h4 id="存储器使用">存储器使用</h4>
+<ul>
+<li>共享式 --- 多处理器系统</li>
+<li>私有式 --- 多计算机系统</li>
+</ul>
+<h4 id="连接方式">连接方式</h4>
+<ul>
+<li>总线式</li>
+<li>交换式</li>
+</ul>
+<h4 id="mimd系统分类">MIMD系统分类</h4>
+<ol type="1">
+<li><p>总线型多处理机</p></li>
+<li><p>交换型多处理机</p>
+<p>交叉开关线:n^2个交叉开关点</p></li>
+<li><p>总线型多计算机</p></li>
+<li><p>交换型多计算机</p></li>
+</ol>
+<h2 id="软件概念">软件概念</h2>
+<h3 id="分类">分类</h3>
+<ul>
+<li>紧耦合式</li>
+<li>松耦合式</li>
+</ul>
+<h3 id="系统">系统</h3>
+<ul>
+<li>DOS 分布式操作系统</li>
+<li>NOS 网络操作系统</li>
+<li>Middleware中间件系统
+<ul>
+<li>是一种独立的系统软件或服务程序，分布式应用软件借助这种软件在 不同的技术之间共享资源</li>
+<li>中间件位于操作系统之上，管理计算资 源和网络通信。</li>
+</ul></li>
+</ul>
+<h3 id="分布式系统的结构模型">🌿分布式系统的结构模型</h3>
+<p>客户-服务器模型</p>
+<h2 id="分布式系统设计问题目标">分布式系统设计问题/目标</h2>
+<ol type="1">
+<li>透明性(Transparency) ：访问透明性、位置透明性等</li>
+<li>开放性：系统能不能进行扩展和重新实现</li>
+<li>可扩展性：规模、地域、管理可扩展性</li>
+<li>可靠性：可用性、安全性、容错性</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>分布式系统与云计算概论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>02云计算概论</title>
+    <url>/2020/08/18/02%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E8%AE%BA/</url>
+    <content><![CDATA[<blockquote>
+<p>为专业课复习用</p>
+</blockquote>
+<h2 id="云计算概念">🌿云计算概念</h2>
+<blockquote>
+<p>Wikipedia上对云计算的定义</p>
+</blockquote>
+<p>云计算是一种能够将动态伸缩的虚拟化资源通过互联网以服务的方式提供给用户的计算模式，用户不需要知道如何管理那些支持云计算的基础设施。</p>
+<h3 id="国外云计算的先行者">国外云计算的先行者</h3>
+<p>Amazon、Google、Microsoft</p>
+<blockquote>
+<p>🌿<strong>Google</strong>发表学术论文的形式公开其云计算三大法宝：GFS、MapReduce和Bigtable。</p>
+</blockquote>
+<h2 id="云计算的分类">🌿云计算的分类</h2>
+<h3 id="按服务类型分">按服务类型分</h3>
+<ol type="1">
+<li>SaaS
+<ul>
+<li><p>Software as a Service</p></li>
+<li><p>将软件作为服务</p></li>
+<li><p>针对性更强，它将某些特定应用软件功能封装成服务</p>
+<p>🌰Gmail</p></li>
+</ul></li>
+<li>PaaS
+<ul>
+<li><p>Platform as a Service</p></li>
+<li><p>将平台作为服务</p></li>
+<li><p>对资源的抽象层次更进一步，提供用户应用程序运行环境</p>
+<p>🌰Google App Engine 、Microsoft Windows Azure</p></li>
+</ul></li>
+<li>IaaS
+<ul>
+<li><p>Infrastructure as a Service</p></li>
+<li><p>将基础设施作为服务</p></li>
+<li><p>将硬件设备等基础资源封装成服务供用户使用</p>
+<p>🌰 Amazon EC2/S3</p></li>
+</ul></li>
+</ol>
+<blockquote>
+<p>从SaaS到PaaS到IaaS，依次：专用性减弱、通用性增强</p>
+</blockquote>
+<p>假设系统的实现如下图：</p>
+<p><img src="https://x.arcto.xyz/WAZFT6/02云计算概论_pic1.png"></p>
+<p>基础设施是指包括服务器、网络、数据中心</p>
+<p>平台是指包括支撑软件及以下的</p>
+<p>软件是指全部的部分</p>
+<h3 id="按服务方式分">按服务方式分</h3>
+<ol type="1">
+<li>共有云</li>
+<li>混合云</li>
+<li>私有云</li>
+</ol>
+<h2 id="云计算的特征">🌿云计算的特征</h2>
+<ul>
+<li>硬件和软件都是资源</li>
+<li>资源可以根据需要进行动态扩展和配置</li>
+<li>资源物理上分布式共享，逻辑上单一整体呈现</li>
+<li>用户使用资源按量付费、无需管理</li>
+</ul>
+<h2 id="云计算的优势">🌿云计算的优势</h2>
+<ol type="1">
+<li>优化产业布局</li>
+<li>推进专业分工</li>
+<li>提升资源利用力</li>
+<li>减少初期投资</li>
+<li>降低管理开销</li>
+</ol>
+<h2 id="云计算与其他类型的计算">云计算与其他类型的计算</h2>
+<ul>
+<li>云计算与并行计算
+<ul>
+<li>并行计算：一群同构处理单元的集合，这些处理单元通过通信和协作来更快地解决大规模计算问题</li>
+</ul></li>
+<li>云计算与网格计算
+<ul>
+<li>网格计算：将分散在网络中的空闲服务器、存储系统和网络连接起来，形成一个整合系统，为用户提供功能强大的计算及存储能力来处理特定的任务</li>
+</ul></li>
+<li>云计算与效用计算
+<ul>
+<li>效用计算：IT资源能够根据用户的要求按需提供，并根据使用情况付费</li>
+</ul></li>
+</ul>
+<h2 id="云计算的产生动力">云计算的产生动力</h2>
+<ol type="1">
+<li>宽带的发展为云计算提供了硬件基础</li>
+<li>互联网用户的新需求为云计算提供了服务基础
+<ul>
+<li>接入能力：可以从任何地点、任何设备接入服务和数据</li>
+<li>共享能力：数据的建立和存储共享 容易方便</li>
+<li>自由：不希望受数据的影响</li>
+<li>简单：容易学会, 容易使用</li>
+<li>安全：相信数据不会丢失或不会被不允许的人看到</li>
+</ul></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>分布式系统与云计算概论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>03大数据概述</title>
+    <url>/2020/08/18/03%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>为专业课复习用</p>
+</blockquote>
+<h2 id="信息科技为大数据时代提供技术支撑">信息科技为大数据时代提供技术支撑</h2>
+<ol type="1">
+<li>存储设备容量不断增加</li>
+<li>CPU处理能力大幅提升</li>
+<li>网络带宽不断增加</li>
+</ol>
+<h2 id="定义">定义</h2>
+<p>海量数据或巨量数据，其规模巨大到无法通过目前主流的计算机系统在合理时间内获取、存储、管理、处理并提炼以帮助使用者决策。</p>
+<h2 id="特点4v">特点4V</h2>
+<ol type="1">
+<li>价值密度低（Value）</li>
+<li>数据量大（Volume）</li>
+<li>快速（Velocity）</li>
+<li>多样（Variety）</li>
+</ol>
+<h2 id="大数据的影响">大数据的影响</h2>
+<blockquote>
+<p>图灵奖获得者、著名数据库专家Jim Gray博士观察并总结人类自古以来，在科学研究上，<strong>先后</strong>历经了<strong>实验、理论、计算和数据</strong>四种范式</p>
+</blockquote>
+<p>在思维方式方面，大数据完全颠覆了传统的思维方式：</p>
+<ul>
+<li><p>全样而非抽样</p></li>
+<li><p>效率而非精确</p></li>
+<li><p>相关而非因果</p></li>
+</ul>
+<h2 id="大数据的关键技术">大数据的关键技术</h2>
+<h3 id="两大核心技术">两大核心技术</h3>
+<ol type="1">
+<li>分布式存储
+<ul>
+<li>GFS/HDFS、BigTable等</li>
+</ul></li>
+<li>分布式处理
+<ul>
+<li>MapReduce</li>
+</ul></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>分布式系统与云计算概论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>05Amazon云计算AWS</title>
+    <url>/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/</url>
+    <content><![CDATA[<blockquote>
+<p>为专业课复习用</p>
+</blockquote>
+<h2 id="介绍">介绍</h2>
+<p>Amazon Web Service（AWS）</p>
+<h3 id="amazon云的提出">Amazon云的提出</h3>
+<p>IaaS：将硬件设备等基础资源封装成服务供用户使用</p>
+<h3 id="amazon提供的服务主要包括">Amazon提供的服务主要包括</h3>
+<ul>
+<li>弹性计算云EC2</li>
+<li>简单存储服务S3</li>
+<li>简单数据库服务Simple DB</li>
+<li>简单队列服务SQS</li>
+<li>弹性MapReduce服务</li>
+<li>内容推送服务CloudFront</li>
+<li>电子商务服务DevPay</li>
+<li>灵活支付服务FPS</li>
+</ul>
+<h2 id="基础存储架构dynamo">🌿基础存储架构Dynamo</h2>
+<p>🌿Amazon平台基础存储架构：Dynamo</p>
+<p>Amazon平台的架构是完全的<strong>分布式、去中心化</strong></p>
+<p><strong>需求</strong>——Amazon平台中有很多服务对存储的需求只是读取、写入，（满足简单的键/值式存储）</p>
+<h3 id="dynamo">🌿Dynamo</h3>
+<ul>
+<li>简单的键/值方式存储数据，不支持复杂的查询</li>
+<li>存储的是数据值的原始形式（bit），不解析数据的具体内容、不识别任何数据结构，这使得它几乎可以处理所有的数据类型</li>
+</ul>
+<h3 id="dynamo需要解决的主要问题及解决方案">🌿Dynamo需要解决的主要问题及解决方案</h3>
+<table>
+<thead>
+<tr class="header">
+<th>问题</th>
+<th>采取的相关技术</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>数据均衡分布</td>
+<td>改进的一致性哈希算法</td>
+</tr>
+<tr class="even">
+<td>数据备份</td>
+<td>参数可调的quorum机制</td>
+</tr>
+<tr class="odd">
+<td>数据冲突处理</td>
+<td>向量时钟Vector Clock</td>
+</tr>
+<tr class="even">
+<td>成员资格及错误检测</td>
+<td>基于Gossip协议的成员资格和错误检测</td>
+</tr>
+<tr class="odd">
+<td>临时故障处理</td>
+<td>Hinted handoff（数据回传机制）</td>
+</tr>
+<tr class="even">
+<td>永久故障处理</td>
+<td>Merkle哈希树</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dynamo的存储节点">Dynamo的存储节点</h3>
+<p>Dynamo中的存储节点呈<u>无中心的环状</u>分布。</p>
+<figure>
+<img src="https://x.arcto.xyz/3GRgG9/Dynamo存储架构.png" alt><figcaption>Dynamo存储架构</figcaption>
+</figure>
+<h4 id="两个基本概念">两个基本概念</h4>
+<ol type="1">
+<li><p>preference list</p>
+<p>存储与某个特定键值相对应的数据的节点列表</p></li>
+<li><p>coordinator</p>
+<p>执行一次读或写操作的节点</p></li>
+</ol>
+<blockquote>
+<p>通常，coordinator 是 preference list 上的第一个节点</p>
+</blockquote>
+<h2 id="dynamo架构的主要技术">Dynamo架构的主要技术</h2>
+<h3 id="数据均衡分布的问题">数据均衡分布的问题</h3>
+<p>Dynamo采用了<u>分布式的数据存储架构</u>，均衡的数据分布可以保证负载平衡和系统良好的扩展性。</p>
+<p>因此，<u>各个节点上数据的均衡性</u>是影响Dynamo性能的关键问题。</p>
+<blockquote>
+<p>取模分配方式：如果增加一台主机，会有大量的数据进行迁移</p>
+</blockquote>
+<h4 id="一致性哈希算法">🌿🌿🌿一致性哈希算法</h4>
+<p>一致性哈希算法是目前主流的<strong>分布式哈希表</strong>（Distributed Hash Table，DHT）协议之一</p>
+<p>一致性哈希算法除了能够保证哈希运算结果充分分散到整个环上外，还能保证在添加或删除设备节点时只会影响到其在哈希环中的前驱设备节点，而不会对其他设备节点产生影响。</p>
+<figure>
+<img src="https://x.arcto.xyz/H0Oh14/dynamo一致性hash.png" alt><figcaption>dynamo一致性hash</figcaption>
+</figure>
+<p>一致性哈希算法可以<strong>大大降低</strong>在添加或删除节点时引起的<strong>节点间的数据传输开销</strong></p>
+<h4 id="改进的一致性哈希算法">改进的一致性哈希算法</h4>
+<p>Dynamo中引入了<strong>虚拟节点</strong>的概念</p>
+<p>每个虚拟节点都<strong>隶属于</strong>某一个实际的<strong>物理节点</strong>，一个物理节点根据其性能的差异被分为<strong>一个或多个虚拟节点</strong>。</p>
+<p>各个虚拟节点的<strong>能力基本相当</strong>，并随机分布在<strong>哈希环</strong>上。</p>
+<figure>
+<img src="https://x.arcto.xyz/IkDGuR/dynamo虚拟节点.png" alt><figcaption>dynamo虚拟节点</figcaption>
+</figure>
+<p>Dynamo将整个哈希环划分成Q等份，每个等份称为一个数据分区（Partition）</p>
+<p>在存储数据时，每个数据会被先分配到某个数据分区，再根据负责该数据分区的虚拟节点，最终确定其所存储的物理节点。</p>
+<figure>
+<img src="https://x.arcto.xyz/IkDGuR/dynamo虚拟节点.png" alt><figcaption>dynamo数据分区</figcaption>
+</figure>
+<h5 id="数据分区的好处">数据分区的好处</h5>
+<ol type="1">
+<li>减小数据分布不均衡的可能性</li>
+<li>添加或删除设备节点时引起较小的数据传输</li>
+</ol>
+<h5 id="改进的一致性哈希算法的优势">改进的一致性哈希算法的优势</h5>
+<ul>
+<li>负载均衡</li>
+<li>屏蔽节点处理能力差异</li>
+</ul>
+<h3 id="数据备份">数据备份</h3>
+<blockquote>
+<p>可以参照上面的数据分区的图来看</p>
+</blockquote>
+<ul>
+<li>在Dynamo中，每个数据的副本备份存储在哈希环顺时针方向上该数据所在虚拟节点的后继节点中。</li>
+<li>数据备份在存储数据的同时进行，会使每次写操作的延时变长。</li>
+<li>Dynamo中对写操作进行了优化，保证一个副本必须写入硬盘，其他副本只要写入节点的内存即返回写成功。</li>
+<li>每个虚拟节点上实际存储了分配给它以及分配它的前N-1个前驱虚拟节点的数据。</li>
+</ul>
+<h4 id="参数可调的弱quorum机制">参数可调的弱quorum机制</h4>
+<p>读写参数W、R、N</p>
+<p>N：系统中每条记录的副本数</p>
+<p>W：每次记录成功写操作需要写入的副本数</p>
+<p>R：每次记录读请求最少需要读取的副本数。</p>
+<p>满足R+W&gt;N，用户即可自行配置R和W</p>
+<h3 id="数据冲突问题">数据冲突问题</h3>
+<h4 id="分布式系统架构中通常考虑的三个因素">分布式系统架构中通常考虑的三个因素</h4>
+<ol type="1">
+<li>可靠性 Reliability</li>
+<li>可用性 Availability</li>
+<li>一致性 Consistency</li>
+</ol>
+<h4 id="why数据冲突">Why数据冲突？</h4>
+<ul>
+<li>Dynamo选择通过牺牲一致性来保证系统的可靠性和可用性，没有采用强一致性模型而采用了最终一致性模型。</li>
+<li>由于Dynamo中可能出现同一个数据被<strong>多个节点同时更新</strong>的情况，且<strong>无法保证数据副本的更新顺序</strong>，这有可能会导致数据冲突。</li>
+</ul>
+<h4 id="how解决数据冲突">How解决数据冲突？</h4>
+<p>采用<strong>向量时钟技术</strong>。</p>
+<figure>
+<img src="https://x.arcto.xyz/LBWKgD/dynamo向量时钟技术.png" alt><figcaption>dynamo向量时钟技术</figcaption>
+</figure>
+<p>Dynamo中的向量时钟通过<code>[node, counter]</code> 对 来表示。</p>
+<blockquote>
+<p>node表示操作节点 counter是其对应的计数器，初始值为 0节点每进行一次更新操作则计数器加 1</p>
+</blockquote>
+<h3 id="成员资格及错误检测">成员资格及错误检测</h3>
+<p>由于Dynamo采用了无中心的架构，每个成员节点都需要保存其他节点的路由信息。</p>
+<p>为了保证每个节点都能拥有最新的成员节点信息，Dynamo中采用了一种类似于<strong>Gossip（闲聊）协议</strong>的技术</p>
+<blockquote>
+<p>Dynamo中还通过Gossip来实现错误检测。任何节点向其他节点发起通信后，如果对方没有回应，则认为对方节点失效</p>
+</blockquote>
+<p>为了避免新加入的节点之间不能及时发现其他节点的存在，Dynamo中设置了一些<strong>种子节点</strong>（Seed Node）。<strong>种子节点和所有的节点都有联系</strong>。当新节点加入时，它扮演一个中介的角色，使新加入节点之间互相感知。</p>
+<figure>
+<img src="https://x.arcto.xyz/AA3YFW/dynamo成员资格及错误检测%20.png" alt><figcaption>成员资格及错误检测</figcaption>
+</figure>
+<ul>
+<li>自底向上每一层代表一次随机通信</li>
+<li>第一层节点1将信息交换给节点2</li>
+<li>第二层节点1和2同时开始随机选择其他节点交换信息</li>
+<li>直到N个节点全部传遍</li>
+</ul>
+<h3 id="容错机制临时故障处理机制">容错机制——临时故障处理机制</h3>
+<p>为了处理临时失效的节点，Dynamo中采用了一种带有监听的数据回传机制（Hinted Handoff） 当虚拟节点A失效后，会将数据临时存放在节点D的临时空间中，并在节点A重新可用后，由节点D将数据回传给节点A。</p>
+<figure>
+<img src="https://x.arcto.xyz/j17e0T/Dynamo临时故障处理机制.png" alt><figcaption>Dynamo临时故障处理机制</figcaption>
+</figure>
+<h3 id="容错机制永久性故障处理机制">容错机制——永久性故障处理机制</h3>
+<p>Dynamo采用Merkle哈希树技术来加快检测和减少数据传输量</p>
+<figure>
+<img src="https://x.arcto.xyz/6CwBAu/dynamo-merkle-tree.png" alt><figcaption>dynamo-merkle-tree</figcaption>
+</figure>
+]]></content>
+      <tags>
+        <tag>分布式系统与云计算概论</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Anaconda+VSCode+PyTorch的配置</title>
+    <url>/2020/12/06/anaconda-vscode-pytorch/</url>
+    <content><![CDATA[<blockquote>
+<p>记录一次Anaconda+VSCode+PyTorch的配置</p>
+<p>操作系统为macOS Catalina 10.15.7</p>
+<p>更新：</p>
+<blockquote>
+<p>由于需要GPU，在下载Anaconda和PyTorch中，也会附带说明了在windows10的操作。</p>
+<p>其他地方都是按照MacOS来记录的。</p>
+</blockquote>
+</blockquote>
+<h3 id="下载anaconda">下载Anaconda</h3>
+<h4 id="先去官网或者清华镜像站下载anaconda或者miniconda">先去官网或者清华镜像站下载Anaconda或者Miniconda</h4>
+<h5 id="官网链接">官网链接</h5>
+<p><a href="https://www.anaconda.com/products/individual#Downloads" title="https://www.anaconda.com/products/individual#Downloads">https://www.anaconda.com/products/individual#Downloads</a></p>
+<p>有win、mac、linux的版本选择，操作系统是什么就选择对应的就好啦~</p>
+<p><strong>例如 Windows10：</strong></p>
+<p>我直接在官网上下载的，也可以去清华镜像站找对应的版本。</p>
+<p><strong>注意：</strong>在安装过程中，有一步需要将<strong>“添加到PATH”勾选上！</strong></p>
+<p>一定要勾选上（尽管勾选之后说明文字会标红），不然后面配置稍有些麻烦。</p>
+<h5 id="通过镜像下载">通过镜像下载</h5>
+<p>如果在官网的下载速度较慢，可以去清华镜像站下载。下面以anaconda的安装为例。（安装miniconda也是同样操作） <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/</a>￼ 找自己对应的操作系统，和需要的版本，进行下载。</p>
+<p><strong>例如 Mac OS：</strong> 我用到的是Anaconda3-2020.11-MacOSX-x86_64.pkg，<a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-MacOSX-x86_64.pkg">https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-2020.11-MacOSX-x86_64.pkg</a>￼（点击即可下载）。也推荐下载miniconda。</p>
+<p>macOS上安装没有什么需要注意的地方。下载好之后，双击进行安装，一直点“继续”，直到完成。</p>
+<h4 id="检测是否安装好">检测是否安装好</h4>
+<p>输入<code>conda -V</code>，查看版本号，出现conda版本号就是安装好了。</p>
+<h4 id="打开终端的有base字样">打开终端的有(base)字样</h4>
+<blockquote>
+<p>macOS里遇到的问题</p>
+</blockquote>
+<p>新版的Anaconda会在每一个新开的terminal里面自动进入虚拟环境base。看着有些强迫症犯了。 使用如下命令就能把默认进入base虚拟环境关掉了。 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda config --set auto_activate_base false</span><br></pre></td></tr></table></figure></p>
+<p>另外，如果需要进入base虚拟环境</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda activate</span><br></pre></td></tr></table></figure>
+<p>退出当前虚拟环境</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+<h3 id="为pytorch新建虚拟环境">为PyTorch新建虚拟环境</h3>
+<ol type="1">
+<li>新建虚拟环境，命名为pytorch，指定python版本为3.6。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create --name pytorch python=3.6</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>安装好之后，进入pytorch虚拟环境。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda activate pytorch</span><br></pre></td></tr></table></figure>
+<h3 id="安装pytorch">安装PyTorch</h3>
+<p>在pytorch虚拟环境中安装PyTorch。要注意，先进入pytorch虚拟环境。 附上官网的链接：</p>
+<p><a href="https://pytorch.org">https://pytorch.org</a>￼</p>
+<p>根据官网，安装PyTorch。</p>
+<h4 id="macos">MacOS</h4>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio -c pytorch</span><br></pre></td></tr></table></figure>
+<h4 id="win">Win</h4>
+<blockquote>
+<p>要选择对应的cuda版本的，如果没有GPU就要选择None</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch</span><br></pre></td></tr></table></figure>
+<h3 id="vscode配置python">VSCode配置python</h3>
+<p>参考官方链接 <a href="https://code.visualstudio.com/docs/python/python-tutorial#_prerequisites">https://code.visualstudio.com/docs/python/python-tutorial#_prerequisites</a>￼</p>
+<h4 id="下载安装vscode">下载安装VSCode</h4>
+<p>官网下载，附上链接 <a href="https://code.visualstudio.com">https://code.visualstudio.com</a>￼</p>
+<h4 id="下载python插件">下载python插件</h4>
+<p>在VSCode的应用商店中搜索Python，并下载 <img src="https://x.arcto.xyz/16oo5U/vscode下载python插件.jpg" alt="vscode下载python插件">￼</p>
+<h4 id="下载python解释器">下载Python解释器</h4>
+<p>这里的python解释器使用<strong>pytorch虚拟环境</strong>中的，见上文中“为PyTorch新建虚拟环境”。</p>
+<p>验证python是否安装</p>
+<pre><code>python3 --version</code></pre>
+<p>由于我使用pytorch环境下的python，需要先进入该环境。</p>
+<pre><code>conda activate pytorch</code></pre>
+<p><img src="https://x.arcto.xyz/RK3zzQ/验证python的安装.jpg" alt="验证python的安装">￼</p>
+<blockquote>
+<p>后来换了一台电脑下载的是miniconda，无所谓啦~</p>
+</blockquote>
+<h4 id="设置python解释器">设置python解释器</h4>
+<p>使用快捷键shift + command + P ，或者点击<strong>菜单栏</strong>中的<strong>查看</strong>里的<strong>命令面板</strong>， 打开命令面板。 输入<code>python:select interpreter</code> 选择python解释器。这里选择我要用的pytorch里的python3.6.2就好了。 <img src="https://x.arcto.xyz/T-xnZd/vscode设置python解释器.jpg" alt="vscode设置python解释器">￼</p>
+<p>Note：代码补全要用IntelliCode，不要用Pylance（要卸掉）</p>
+<h3 id="vscode代码自动补全">VSCode代码自动补全</h3>
+<p>下载插件：Visual Studio IntelliCode 注意：VS Code会在右下角推荐Pylance，不要下载</p>
+<p>在全局的setting.json中，找到以下有关editor.suggest设置为false的代码删掉</p>
+<pre><code>  &quot;editor.acceptSuggestionOnCommitCharacter&quot;: false,
+    &quot;editor.suggest.showClasses&quot;: false,
+    &quot;editor.suggest.showConstructors&quot;: false,
+    &quot;editor.suggest.showEvents&quot;: false,
+    &quot;editor.suggest.showFields&quot;: false,
+    &quot;editor.suggest.showFunctions&quot;: false,
+    &quot;editor.suggest.showVariables&quot;: false,
+    &quot;editor.suggest.showValues&quot;: false,
+    &quot;editor.suggest.showUnits&quot;: false,
+    &quot;editor.suggest.showTypeParameters&quot;: false,
+    &quot;editor.suggest.showSnippets&quot;: false,
+    &quot;editor.suggest.showReferences&quot;: false,
+    &quot;editor.suggest.showOperators&quot;: false,
+    &quot;editor.suggest.showModules&quot;: false,
+    &quot;editor.suggest.showProperties&quot;: false,
+    &quot;editor.suggest.showIssues&quot;: false,
+    &quot;editor.suggest.showMethods&quot;: false,
+    &quot;editor.suggest.showIcons&quot;: false,
+    &quot;editor.suggest.showInterfaces&quot;: false,
+    &quot;editor.suggest.showFolders&quot;: false,
+    &quot;editor.suggest.showFiles&quot;: false,
+    &quot;editor.suggest.snippetsPreventQuickSuggestions&quot;: false,
+    &quot;editor.suggest.showWords&quot;: false,
+    &quot;editor.suggest.showKeywords&quot;: false,
+    &quot;editor.suggest.showEnums&quot;: false,
+    &quot;editor.suggest.showEnumMembers&quot;: false,
+    &quot;editor.suggest.showConstants&quot;: false,
+    &quot;editor.suggest.filterGraceful&quot;: false,
+    &quot;editor.suggest.showStructs&quot;: false,
+    &quot;editor.suggest.showUsers&quot;: false,</code></pre>
+<p>将下面这行的null改为true，即将</p>
+<pre><code>&quot;editor.quickSuggestions&quot;: null,</code></pre>
+<p>改为</p>
+<pre><code>&quot;editor.quickSuggestions&quot;: true,</code></pre>
+<h5 id="如何打开全局的setting.json">如何打开全局的setting.json</h5>
+<p>点击 code =&gt; 首选项 =&gt; 设置，随便找一项设置，点击<strong>在setting.json中编辑</strong>，（再删掉新加的代码就好了），不知道有什么其他的好方法。</p>
+<h3 id="其他">其他</h3>
+<p>当然啦，PyCharm也是很好的选择~也推荐~</p>
+<h3 id="用conda安装opencv">用conda安装opencv</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda install opencv3 -c anaconda</span><br></pre></td></tr></table></figure>
+<p>c是channel的意思，要指定anaconda或者menpo做channel才行。</p>
+]]></content>
+      <tags>
+        <tag>配置环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;order (order_no, `uid`, addr_id, </title>
+    <url>/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/</url>
+    <content><![CDATA[<blockquote>
+<p>记录专业实践过程中踩的坑</p>
+</blockquote>
+<p>在订单表里添加记录的时候，显示报错如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;order (order_no, `uid`, addr_id, </span><br><span class="line">      amount, `type`, freight, </span><br><span class="line">      `status`&#x27; at line 1</span><br><span class="line">; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;order (order_no, `uid`, addr_id, </span><br><span class="line">      amount, `type`, freight, </span><br><span class="line">      `status`&#x27; at line 1v</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>经过排查，发现<code>order</code>是<code>sql</code>的保留字段（在排序的时候用到）；</p>
+<p>由于订单表的名字也为<code>order</code>，再加上mapper是由mybatis自动生成的，所以这个冲突需要手动解决一下。</p>
+<p>在<code>OrderMapper.xml</code>文件中，找到 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">order</span> (order_no, `uid`, addr_id, </span><br><span class="line">     amount, `type`, freight, </span><br><span class="line">     `status`, payment_time, delivery_time, </span><br><span class="line">     finish_time, close_time, updated, </span><br><span class="line">     created)</span><br></pre></td></tr></table></figure> 将其中的<code>order</code>加上<code></code> `即可 即 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> `<span class="keyword">order</span>` (order_no, `uid`, addr_id, </span><br><span class="line">     amount, `type`, freight, </span><br><span class="line">     `status`, payment_time, delivery_time, </span><br><span class="line">     finish_time, close_time, updated, </span><br><span class="line">     created)</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>错误记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git拉取远程分支到本地</title>
+    <url>/2021/03/24/git/</url>
+    <content><![CDATA[<blockquote>
+<p>参考： https://blog.csdn.net/carfge/article/details/79691360</p>
+</blockquote>
+<p>首先，进入本地仓库</p>
+<ol type="1">
+<li>将本地仓库与远程仓库建立链接</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git remote add origin git@github.com:user/repo.git</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>远程分支拉取到本地</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git fetch origin dev-op(远程分支名称)</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>在本地创建新分支dev并切换到该分支</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git checkout -b dev-op(本地分支名称) origin/dev-op(远程分支名称)</span><br></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li>把远程分支dev-op上的内容拉取到本地仓库</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git pull origin dev-op(远程分支名称)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/07/16/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>使用NexT主题的博客更新日志</title>
+    <url>/2021/08/05/next/</url>
+    <content><![CDATA[<blockquote>
+<p>写在前： 本小白使用的是Hexo和NexT主题搭建的博客 版本说明：hexo 5.4.0、hexo-theme-next 8.6.1</p>
+</blockquote>
+<h1 id="next初步">NexT初步</h1>
+<h2 id="next安装">NexT安装</h2>
+<blockquote>
+<p>🔗 https://github.com/next-theme/hexo-theme-next</p>
+</blockquote>
+<ul>
+<li>提倡使用npm安装</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd hexo-site</span><br><span class="line">npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
+<h2 id="next配置">NexT配置</h2>
+<blockquote>
+<p>🔗 https://theme-next.js.org/docs/getting-started/configuration</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 通过 npm 安装</span><br><span class="line">cp node_modules/hexo-theme-next/_config.yml _config.next.yml </span><br></pre></td></tr></table></figure>
+<h1 id="其他设置">其他设置</h1>
+<h2 id="中文设置">中文设置</h2>
+<p>在站点配置文件中， <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Site</span><br><span class="line">author: Christy</span><br><span class="line">language: zh-CN</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <tags>
+        <tag>博客更新</tag>
+        <tag>NexT主题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【论文阅读】Pose Recognition with Cascade Transformers</title>
+    <url>/2021/08/08/pose-recognition-with-cascade-transformers/</url>
+    <content><![CDATA[<blockquote>
+<p>写在前： 记录📝</p>
+</blockquote>
+<h2 id="相关信息">相关信息💻</h2>
+<blockquote>
+<p>论文发表在CVPR2021 发表单位：中国科学院大学、清华大学、圣迭戈加利福尼亚大学</p>
+</blockquote>
+<ul>
+<li>论文地址：<a href="http://arxiv.org/abs/2104.06976">http://arxiv.org/abs/2104.06976</a></li>
+<li>代码地址：<a href="https://github.com/mlpc-ucsd/PRTR">https://github.com/mlpc-ucsd/PRTR</a></li>
+</ul>
+<h2 id="主要创新点">主要创新点</h2>
+<ul>
+<li><strong>基于Transformer</strong>的人体姿态估计（论文中说是第一篇）</li>
+</ul>
+<h2 id="贡献点">贡献点💡</h2>
+<blockquote>
+<p>根据论文 1. 提出了一种通过构建级联Transformers的基于回归的人体姿态识别方法。 2. 两种类型的级联Transformer: - two-stage，第2个Transformer使用第1个Transformer检测到的图像patch - end-to-end，使用了spatial Transformer network (STN) 3. 关键点的可视化</p>
+</blockquote>
+<h2 id="方法">方法</h2>
+<p>两种Transformer如下：</p>
+<img src="https://x.arcto.xyz/r77JrM/prtr-2-stage.png" title="fig:" alt="prtr-2-stage">
+<center>
+[two-stage的]
+</center>
+<p><strong>two-stage</strong>： TRansformer (PRTR) 两阶段变体的姿态识别架构。 - 首先，利用全图图像特征和绝对位置编码，人体检测Transformer使用一组学习的人查询检测图中的人。 - 在过滤背景查询后，我们用预测框裁剪原始图像。 - 将裁剪后的图像和相对于相应边界框的位置编码一起输入一个关键点检测Transformer。 - 最后，通过<u>匈牙利算法</u>从一个更大的关键点查询集合中读出J个关键点。关键点检测Transformer以矢量化的方式处理所有非背景关键点proposals。h(0)表示假设(查询)，通过Transformer解码器将特征向量提炼为最终的预测y^。</p>
+<img src="https://x.arcto.xyz/6FD1so/prtr-end-to-end.png" title="fig:" alt="prtr-end-to-end">
+<center>
+[end-to-end的]
+</center>
+<p><strong>end-to-end</strong>：基于TRansformer (PRTR)端到端变体的姿态识别架构。对于端到端学习，我们没有在RGB图像级别上进行裁剪，而是对骨干生成的多层特征采用可微分双线性采样，为关键点检测Transformer提供了放大和多层次的特征。</p>
+<h3 id="人体检测transformer">人体检测Transformer</h3>
+<ul>
+<li>自顶向下的方式解决多人姿态识别问题，基于DEtection Transformer (DETR)，采用Transformer架构作为第一阶段人体检测的backbone。</li>
+<li>在编码器阶段，由CNN生成的图像特征被扁平化并送入Transformer编码器以生成上下文化的图像特征</li>
+<li>在解码器阶段，给定一组固定的学习到的query embedding（查询嵌入）作为输入，Transformer解码器根据图像特征的上下文推理目标之间的关系，并行输出所有的目标queries。</li>
+<li>使用<strong>分类头</strong>将目标分类为人或背景（空集），并使用4通道的<strong>回归头</strong>预测边界框。</li>
+</ul>
+<h3 id="关键点检测transformer">关键点检测Transformer</h3>
+<p>得到边界框后，对RGB图像进行裁剪，并使用另一个CNN主干来得到人的特征图。因为只有匹配的查询涉及计算关键点检测Transformer的损失，所以我们过滤掉了不匹配的查询。像人检测的过程中,我们使用的encoder-decoder架构Transformer预测并行的方式，但我们使用另一组查询(Q代表数量)。最后，一个分类头预测包括J种类型的关节、背景(∅)、2声道回归头输出每个关键点的坐标。</p>
+<p>由于PRTR推断出比ground truth(J代表数量)更大的预测数量，我们需要找到它们之间的匹配来计算损失。我们将该匹配问题表述为最优二部匹配问题，该问题可由<a href="https://zhuanlan.zhihu.com/p/96229700">匈牙利算法</a>有效地求解。具体来说，我们试图找到一个内射函数σ∈[J]→[Q]，它首先以离散的方式使匹配代价C最小:</p>
+<p><span class="math display">\[
+\mathcal{C}=\underset{\sigma}{\arg \min } \sum_{i}^{J} \mathcal{C}\left(y_{i}, \hat{y}_{\sigma(i)}\right)
+\]</span></p>
+<p>其中，<span class="math inline">\(\hat{y}_{\sigma(i)}\)</span> 代表与第i个关键点相匹配的预测。</p>
+<p>在训练阶段，我们混合使用分类概率和坐标偏差来匹配查询。例如，第i个关键点与其匹配的查询σ(i)的代价函数为：</p>
+<p><span class="math display">\[
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)+\left\|b_{i}-\hat{b}_{\sigma(i)}\right\|
+\]</span></p>
+<p>其中，<span class="math inline">\(\hat{p}_{\sigma(i)}\)</span> 是查询的类概率， <span class="math inline">\(c_{i}\)</span> 是第i个关键点的类标签。然而，在推断阶段，我们不能访问ground-truth关键点坐标，因此我们只使用分类概率将J原型关键点与查询匹配。所以，第i个关键点的匹配代价可以简单地表述为： <span class="math display">\[
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)
+\]</span></p>
+<p>二部匹配算法后，返回匹配的J个关键点作为预测。 模型的损失函数是通过对匹配查询，将方程2中的负概率替换为负对数似然<span class="math inline">\(-\log \hat{p}_{\sigma(i)}\left(c_{i}\right)\)</span>得到的。对于不匹配的查询，我们只反向传播分类损失。为了解决∅class造成的类失衡，我们将其对数概率项权重设为0.1。</p>
+<h3 id="使用-stn-的多层裁剪">使用 STN 的多层裁剪</h3>
+<p>在前一节中，我们介绍了一个两阶段的pipeline。然而，在端到端理念下，我们希望模型是端到端可调的，以利用人体检测和关键点识别任务之间的协同作用。为此，我们合并了<strong>STN</strong>，直接从第一个CNN骨干生成的特征图中裁剪出关键点检测Transformer所需的图像特征。这种裁剪操作不仅对特征映射是可微的，而且对边界框坐标也是可微的。</p>
+<p>例如，由<span class="math inline">\(b = \left(x_{\text {left }}, x_{\text {right }}, y_{\text {top }}, x_{\text {down }}\right)\)</span>生成的<span class="math inline">\(w × h\)</span>网格可以表示为:</p>
+<p><span class="math display">\[
+x_{i}=\frac{w-i}{w} x_{\mathrm{left}}+\frac{i}{w} x_{\mathrm{right}}
+\]</span></p>
+<p><span class="math display">\[
+y_{j}=\frac{h-j}{h} y_{\mathrm{top}}+\frac{j}{h} y_{\mathrm{down}}
+\]</span></p>
+<p>其中，<span class="math inline">\(b\)</span>相对于原始图像，<span class="math inline">\(w × h\)</span>为关键点检测Transformer所需的特征图尺寸。 为了减轻关键点识别中常见的分辨率挑战，我们使用<strong>双线性核</strong>将网格应用于CNN主干不同中间层生成的不同尺度的特征图。 用U表示原始的W × H特征图，可微采样过程可以表示为: <span class="math display">\[
+V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \left(0,1-\left|y_{j}-n\right|\right)
+\]</span></p>
+<p>在得到一系列相同大小的图像特征后，我们将它们连接成一个单一的特征图，用于关键点检测Transformer。这种多层裁剪变体<strong>图[end-to-end]</strong>所示。</p>
+<h2 id="实验">实验🧪</h2>
+<h3 id="实验设置">实验设置</h3>
+<h4 id="数据集">数据集</h4>
+<ul>
+<li>COCO Keypoint Detection task</li>
+<li>MPII Human Pose Dataset</li>
+</ul>
+<h4 id="评价标准">评价标准</h4>
+<ul>
+<li>Object Keypoint Similarity (OKS) for COCO</li>
+<li>Percentage of Correct Keypoints (PCK) for MPII</li>
+</ul>
+<h3 id="实验结果">实验结果</h3>
+<ul>
+<li>COCO dataset <img src="https://x.arcto.xyz/YElJVU/prtr-coco-result-1.png" alt="prtr-coco-result-1"> <img src="https://x.arcto.xyz/mQwSwv/prtr-coco-result-2.png" alt="prtr-coco-result-2"></li>
+<li>MPII val dataset <img src="https://x.arcto.xyz/CRnCCr/prtr-mpii-result.png" alt="prtr-mpii-result"></li>
+</ul>
+<h2 id="参考链接">参考链接🔗</h2>
+<ul>
+<li><a href="https://www.yuque.com/jinluzhang/researchblog/prtr">Pose Recognition with Cascade Transformers 论文笔记</a></li>
+</ul>
+<h3 id="回顾">回顾</h3>
+<ul>
+<li>End-to-end object detection with transformers（DETR）ECCV 2020</li>
+<li>Cascaded pose regression（step-by-step regression）</li>
+<li>Locality-constrained spatial transformer network for video crowd counting.(STN)</li>
+</ul>
+<blockquote>
+<p>⬆️这些还需要再去看看补充一下</p>
+</blockquote>
+<h3 id="什么是transformer">什么是Transformer</h3>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/82312421">十分钟理解Transformer</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/48508221">详解Transformer （Attention Is All You Need）</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>姿态估计</tag>
+        <tag>论文阅读</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【问题】A component required a bean of type &#39;com.cs.actionmall.mapper.UserMapper&#39; that could not be found.</title>
+    <url>/2020/10/24/%E3%80%90%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%E3%80%91mapper%E6%89%BE%E4%B8%8D%E5%88%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>记录专业实践使用SpringBoot后端开发遇到的问题</p>
+</blockquote>
+<p>报错显示</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Description:</span><br><span class="line"></span><br><span class="line">A component required a bean of type &#x27;com.cs.actionmall.mapper.UserMapper&#x27; that could not be found.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Action:</span><br><span class="line"></span><br><span class="line">Consider defining a bean of type &#x27;com.cs.actionmall.mapper.UserMapper&#x27; in your configuration.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Process finished with exit code 1</span><br></pre></td></tr></table></figure>
+<p>首先检查，<span class="citation" data-cites="Mapper注解">@Mapper注解</span></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>考虑缺少依赖，发现pom.xml文件中没有写如下部分</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>用的是mybatis不是mybatisplus，要用mybatis的依赖而不是mybatisplus的依赖</p>
+]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>问题记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>动态规划（一）</title>
+    <url>/2020/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="简介">简介</h1>
+<p>动态规划，Dynamic Programming，简称DP。</p>
+<h2 id="特点">特点</h2>
+<ul>
+<li>最优子结构</li>
+<li>重叠子问题</li>
+</ul>
+<h2 id="解题一般思路">解题一般思路</h2>
+<ol type="1">
+<li>分解子问题：子问题与原问题相同/相似，只是缩小了规模，“大而化小，小而化了”。</li>
+<li>确定状态：子问题各变量的一组取值</li>
+<li>确定边界：初始状态，或者边界条件的取值</li>
+<li>确定状态转移方程：递推的公式</li>
+</ol>
+<p>关键是确定状态转移方程，在什么条件下进行什么状态的转换。</p>
+<h2 id="dp-vs.-递归">DP vs. 递归</h2>
+<ul>
+<li>递归：自上而下，就会有重复的子问题</li>
+<li>DP：自下而上，用空间换时间</li>
+</ul>
+<h2 id="section">🌰</h2>
+<ul>
+<li>最长公共子序列LCS</li>
+<li>最长上升子序列</li>
+</ul>
+<h1 id="题目">题目</h1>
+<p>首先从最简单的开始，通过<strong>斐波那契数列</strong>来感受<strong>重叠子问题</strong>。</p>
+<h2 id="斐波那契数列">斐波那契数列</h2>
+<pre><code>F(0) = 0,   F(1) = 1
+F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.</code></pre>
+<p>给定 <code>N</code>，计算 <code>F(N)</code>。</p>
+<p>显然，这个问题用递归求解很简单。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (N == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (N == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> fib(N - <span class="number">1</span>) + fib(N - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>附上力扣的题目链接https://leetcode-cn.com/problems/fibonacci-number/</p>
+<p>假设<code>N=6</code>，画出递归树，可以发现有很多重复的子问题，也就是在求解的过程中进行了重复计算，增加了时间的开销。</p>
+<figure>
+<img src="https://x.arcto.xyz/i8wSqE/N为6的递归树.png" alt><figcaption>N为6的递归树</figcaption>
+</figure>
+<p>我们把重复计算的地方存下来，“用空间换时间”，避免重复的计算。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f[<span class="number">101</span>];</span><br><span class="line">    f[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    f[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">        f[i] = f[i - <span class="number">1</span>] + f[i - <span class="number">2</span>];</span><br><span class="line">        f[i] = f[i] % (<span class="number">1000000007</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> f[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>附上力扣题目链接https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/</p>
+<h2 id="爬楼梯"><a href="https://leetcode-cn.com/problems/climbing-stairs/">70. 爬楼梯</a></h2>
+<p>到达第n阶楼梯的方法数量 = 到达第n-1阶楼梯的方法总数 + 到达第n-2阶楼梯的方法总数 解释：最后一步可能走一个阶梯，也可能走两个阶梯 其实是一个斐波那契数列</p>
+<ul>
+<li>状态</li>
+</ul>
+<p><code>d[i]</code>表示达到第<code>i</code>阶的方法总数</p>
+<ul>
+<li><p>边界：</p>
+<p>d[0] = 1 实际上无这种情况，为递推定义的 d[1] = 1 n&gt;=2时，进行状态转移</p></li>
+<li><p>状态转移方程：</p></li>
+</ul>
+<p><code>d[n] = d[n - 1] + d[n - 2]</code></p>
+<p>解题代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> d[<span class="number">101</span>];</span><br><span class="line">    d[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    d[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        d[i] = d[i - <span class="number">1</span>] + d[i - <span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> d[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用最小花费爬楼梯"><a href="https://leetcode-cn.com/problems/min-cost-climbing-stairs/">746. 使用最小花费爬楼梯</a></h2>
+<ul>
+<li>分析过程</li>
+</ul>
+<p>对于每个阶梯，都有选和不选，两种情况。</p>
+<p>假设求d[9]，选择第9个阶梯，那么有两种情况：一是选择第7个阶梯，二是选择第8个阶梯。</p>
+<p>...依次做下去。</p>
+<figure>
+<img src="https://x.arcto.xyz/WT8s96/使用最小花费爬楼梯的分析.png" alt><figcaption>使用最小花费爬楼梯的分析</figcaption>
+</figure>
+<ul>
+<li>状态</li>
+</ul>
+<p><code>d[i]</code>代表到达<code>i</code>阶的最小花费，<code>i=0</code>和<code>i=1</code>的情况下特别处理</p>
+<ul>
+<li><p>边界</p>
+<p>n&lt;2的时候，取min(cost[0], cost[1]); d[0] = cost[0]; d[1] = cost[1];</p></li>
+<li><p>结果</p></li>
+</ul>
+<p>求的是到达n的前1阶或前2阶的最小值，即<code>min(d[costSize - 2], d[costSize - 1]);</code></p>
+<ul>
+<li>状态方程</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">d[i] = min(d[i - <span class="number">2</span>] + cost[i], d[i - <span class="number">1</span>] + cost[i]); <span class="comment">// 当 i &gt;=2 时</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>代码</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by Christy on 2020/7/25.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a &lt; b ? a : b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minCostClimbingStairs</span><span class="params">(<span class="keyword">int</span> *cost, <span class="keyword">int</span> costSize)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> *d = (<span class="keyword">int</span> *) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>) * costSize);</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">if</span> (costSize &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> min(cost[<span class="number">0</span>], cost[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    d[<span class="number">0</span>] = cost[<span class="number">0</span>];</span><br><span class="line">    d[<span class="number">1</span>] = cost[<span class="number">1</span>]; <span class="comment">// 这里不能写min(min(cost[0], cost[1]);</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; costSize; ++i) &#123;</span><br><span class="line">        d[i] = min(d[i - <span class="number">2</span>] + cost[i], d[i - <span class="number">1</span>] + cost[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> min(d[costSize - <span class="number">2</span>], d[costSize - <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="经典问题的状态转移方程">经典问题的状态转移方程</h1>
+<p><a href="https://www.cnblogs.com/tgycoder/p/5037559.html">动态规划问题 - 经典模型的状态转移方程</a></p>
+<h1 id="力扣上的一个关于dp的总结">力扣上的一个关于DP的总结</h1>
+<blockquote>
+<p>https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns#Decision-Making</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>04Google云计算技术</title>
+    <url>/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<blockquote>
+<p>为专业课复习用</p>
+</blockquote>
+<h2 id="简介">简介</h2>
+<h4 id="gfs">GFS</h4>
+<ol type="1">
+<li>Google File System</li>
+<li>支持海量存储</li>
+</ol>
+<h4 id="mapreduce">MapReduce</h4>
+<ol type="1">
+<li>用于大规模数据集的并行运算。</li>
+<li>主要功能：是提供了一个简单强大的接口，可以将计算自动的并发和分布执行。</li>
+<li>从两方面提升了系统：
+<ul>
+<li>失效的计算机问题。</li>
+<li>MapReduce之间传输的数据都是经过压缩的，节省了带宽</li>
+</ul></li>
+</ol>
+<h4 id="bigtable">BigTable</h4>
+<p>用来管理大规模<strong>结构化</strong>数据的分布式存储系统</p>
+<h2 id="google文件系统gfs">Google文件系统GFS</h2>
+<h3 id="系统架构">系统架构</h3>
+<ul>
+<li>Google GFS是一个基于分布式集群的大型分布式文件系统，为MapReduce计算框架提供低层数据存储和数据可靠性支撑</li>
+<li>GFS是一个构建在分布节点本地文件系统之上的一个<strong>逻辑文件系统</strong>，它将数据存储在物理上分布的每个节点上，但通过GFS将整个数据形成一个逻辑上整体的文件。</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/JX3mtT/04Google云计算技术_pic1.png" alt><figcaption>04Google云计算技术_pic1</figcaption>
+</figure>
+<h4 id="gfs的3个假设">GFS的3个假设</h4>
+<ol type="1">
+<li>硬件出错是正常而非异常
+<ul>
+<li>大量廉价、易损的硬件</li>
+<li>必须保持文件系统整体的可靠性</li>
+</ul></li>
+<li>主要负载是流数据读写
+<ul>
+<li>主要用于程序处理批量数据，而非用户的交互或随机读写</li>
+<li>主要是追加写（插入写非常少）</li>
+</ul></li>
+<li>需要存储大尺寸的文件
+<ul>
+<li>GB或TB量级</li>
+</ul></li>
+</ol>
+<h4 id="gfs的设计思想">GFS的设计思想🌿🌿</h4>
+<ol type="1">
+<li>将文件划分为若干块（Chunk）存储
+<ul>
+<li>固定大小64M</li>
+</ul></li>
+<li>通过冗余来提高可靠性
+<ul>
+<li>3个数据块服务器上存储副本</li>
+</ul></li>
+<li>通过单个master来协调数据访问、元数据存储
+<ul>
+<li>结构简单，容易保持元数据一致性</li>
+</ul></li>
+</ol>
+<h4 id="系统架构-1"><strong>系统架构</strong></h4>
+<figure>
+<img src="https://x.arcto.xyz/NpvBlE/GFS系统架构.png" alt><figcaption>GFS系统架构</figcaption>
+</figure>
+<blockquote>
+<p>⚠️Client与Master之间只有控制信息，无数据信息，减少主服务器的负载。</p>
+</blockquote>
+<h4 id="系统节点分为三类角色">系统节点分为三类角色🌿🌿🌿</h4>
+<p>Client 客户端</p>
+<ul>
+<li>提供给App的访问接口</li>
+<li>以库文件的形式提供</li>
+</ul>
+<p>Master 主服务器</p>
+<ul>
+<li>GFS的管理节点</li>
+<li>负责整个文件系统的管理</li>
+<li>🐰逻辑上只有一个</li>
+</ul>
+<p>Chunk Server 数据块服务器</p>
+<ul>
+<li>负责具体的存储工作</li>
+<li>🐰创建冗余，避免服务器崩溃</li>
+</ul>
+<h4 id="gfs的实现机制">GFS的实现机制</h4>
+<ol type="1">
+<li>客户端首先访问Master节点，获取交互的Chunk Server信息，然后访问这些Chunk Server，完成数据存取工作。这种设计方法实现了<strong>控制流和数据流</strong>的分离。</li>
+<li><strong>Client与Master之间只有控制流，而无数据流</strong>，极大地降低了Master的负载。</li>
+<li><strong>Client与Chunk Server之间直接传输数据流🌿</strong>，同时由于文件被分成多个Chunk进行分布式存储，Client可以同时访问多个Chunk Server，从而<strong>使得整个系统的I/O高度并行，系统整体性能得到提高</strong>。</li>
+</ol>
+<h4 id="gfs的读操作数据访问的过程">GFS的读操作/数据访问的过程 🌿</h4>
+<blockquote>
+<p>可以通过系统架构图来理解</p>
+</blockquote>
+<ol type="1">
+<li>在程序运行前，数据已经存储在GFS文件系统中；程序执行时，App告诉Master<strong>文件名或数据块索引</strong>是什么</li>
+<li>Master根据<strong>文件名</strong>或数据块索引在其文件目录空间中<strong>查找和定位</strong>该文件或数据块，并找到数据块在具体哪些<strong>Chunk Server</strong>上；将<strong>位置信息</strong>返回给App</li>
+<li>App根据返回的<strong>具体Chunk数据块位置信息</strong>，直接访问相应的CS</li>
+<li>App根据返回的<strong>具体Chunk数据块位置信息</strong>，直接读取指定位置的数据进行计算处理</li>
+</ol>
+<h4 id="gfs的特点">GFS的特点🌿</h4>
+<ol type="1">
+<li>采用<strong>中心服务器</strong>模式
+<ul>
+<li>可以方便地增加Chunk Server</li>
+<li>Master掌握系统内所有Chunk Server的情况，方便进行负载均衡</li>
+<li>不存在元数据的一致性问题</li>
+</ul></li>
+<li><strong>不缓存数据</strong>
+<ul>
+<li>文件操作大部分是流式读写，不存在大量重复读写，使用Cache对性能提高不大</li>
+<li>Chunk Server上数据存取使用本地文件系统</li>
+<li>从可行性看，Cache与实际数据的一致性维护也极其复杂</li>
+</ul></li>
+<li><strong>在用户态下实现</strong>
+<ul>
+<li>用户态下有多种调试工具,利于开发</li>
+<li>Master和Chunk Server都以进程方式运行，单个进程不影响整个操作系统</li>
+<li>GFS和操作系统运行在不同的空间，两者耦合性降低</li>
+</ul></li>
+</ol>
+<h3 id="容错机制">容错机制</h3>
+<h4 id="master容错">Master容错🌿🌿🌿</h4>
+<h5 id="三类元数据">三类元数据</h5>
+<ol type="1">
+<li>命名空间，即整个文件系统的目录结构 --- <strong>日志</strong></li>
+<li>Chunk与文件名的映射表 --- <strong>日志</strong></li>
+<li>Chunk副本的位置信息
+<ul>
+<li>一个Chunk默认有3个<strong>副本</strong></li>
+<li>直接保存在各个Chunk Server上</li>
+</ul></li>
+</ol>
+<h5 id="master故障">Master故障</h5>
+<p>当Master发生故障时，在磁盘数据保存完好的情况下，可以迅速恢复以上元数据</p>
+<p>为了防止Master彻底死机的情况，GFS还提供了Master远程的实时备份</p>
+<h4 id="chunk-server容错">Chunk Server容错</h4>
+<ol type="1">
+<li><p>GFS采用<strong>副本</strong>的方式实现Chunk Server的容错</p></li>
+<li><p>每一个Chunk有多个存储副本（默认为三个）</p></li>
+<li><p>对于每一个Chunk，<strong>必须将所有的副本全部写入成功</strong>，才视为成功写入</p></li>
+<li><p>相关的副本出现丢失或不可恢复等情况，Master自动将该副本<strong>复制</strong>到其他Chunk Server</p></li>
+<li><p>GFS中的每一个文件被划分成多个Chunk，Chunk的默认大小是<strong>64MB</strong></p>
+<h3 id="系统管理技术"><strong>系统管理技术</strong></h3>
+<ul>
+<li>大规模集群安装技术
+<ul>
+<li>GFS集群中通常有<strong>非常多的节点</strong>，需要相应的技术支撑</li>
+</ul></li>
+<li>故障检测技术
+<ul>
+<li>GFS构建在<strong>不可靠廉价计算机</strong>之上的文件系统，由于节点数目众多，故障发生十分频繁</li>
+</ul></li>
+<li>节点动态加入技术
+<ul>
+<li>新的Chunk Server加入，只需裸机加入，大大减少GFS维护工作量</li>
+</ul></li>
+<li>节能技术
+<ul>
+<li>Google采用了多种机制降低服务器能耗，如采用蓄电池代替昂贵的UPS</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="分布式数据处理mapreduce">分布式数据处理MapReduce</h2>
+<h3 id="产生背景">产生背景</h3>
+<ul>
+<li>Google拥有<strong>海量数据</strong>，并且需要<strong>快速处理</strong>。</li>
+<li>大数据<strong>分而治之</strong>
+<ul>
+<li>任务划分</li>
+<li>结果合并</li>
+</ul></li>
+</ul>
+<h4 id="mapreduce-1">MapReduce</h4>
+<ul>
+<li>一个软件架构，一种处理海量数据的<strong>并行编程模式</strong>。</li>
+<li>与传统的分布式程序设计相比，MapReduce封装了<strong>并行处理、容错处理、本地化计算、负载均衡</strong>等细节，还提供了一个<strong>简单而强大的接口</strong>。</li>
+<li>MapReduce把对数据集的大规模操作，<strong>分发给一个主节点管理下的各分节点</strong>共同完成，通过这种方式<strong>实现任务的可靠执行与容错机制</strong>。</li>
+</ul>
+<h3 id="编程模型">编程模型</h3>
+<h4 id="map函数"><strong>Map函数</strong></h4>
+<p>对一部分原始数据进行指定的操作。每个Map操作都针对不同的原始数据，因此Map与Map之间是互相独立的，这使得它们可以充分并行化。</p>
+<h4 id="reduce操作"><strong>Reduce操作</strong></h4>
+<p>对每个Map所产生的一部分中间结果进行合并操作，每个Reduce所处理的Map中间结果是互不交叉的，所有Reduce产生的最终结果经过简单连接就形成了完整的结果集.</p>
+<h4 id="编程模型-1">编程模型</h4>
+<p>两个主要的函数🌿🌿🌿</p>
+<pre><code>Map: (in_key, in_value) -&gt; &#123;(keyj, valuej) | j = 1…k&#125;
+Reduce: (key, [value1,…,valuem]) -&gt; (key, final_value) </code></pre>
+<h5 id="map"><strong>Map</strong></h5>
+<ul>
+<li>输入参数：<code>in_key, in_value</code>，指明了Map需要处理的原始数据</li>
+<li>输出结果：一组<code>k-v</code>对，中间结果</li>
+</ul>
+<h5 id="reduce">Reduce</h5>
+<ul>
+<li>输入参数：<code>key, [value1,…,valuem]</code></li>
+<li>工作：<strong>对这些对应相同key的value值进行归并处理</strong></li>
+<li>输出结果：<code>（key, final_value）</code>，所有Reduce的结果并在一起就是最终结果</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/CavNpa/04Google云计算技术_pic2.png" alt><figcaption>04Google云计算技术_pic2</figcaption>
+</figure>
+<h3 id="实现机制">实现机制</h3>
+<figure>
+<img src="https://x.arcto.xyz/2bq2bY/04Google云计算技术_pic3.png" alt><figcaption>04Google云计算技术_pic3</figcaption>
+</figure>
+<h4 id="google-mapreduce并行处理的基本过程"><strong>Google MapReduce并行处理的基本过程</strong></h4>
+<ol type="1">
+<li>有一个待处理的大数据，被划分为<strong>大小相同的数据块</strong>(如64MB),及与此相应的用户作业程序</li>
+<li>系统中有一个负责调度的<strong>主节点</strong>(Master),以及数据Map和Reduce<strong>工作节点</strong>(Worker)</li>
+<li>用户作业程序提交给主节点</li>
+<li><strong>主节点</strong>为作业程序寻找和配备可用的<strong>Map节点</strong>，并将程序传送给map节点</li>
+<li>主节点也为作业程序寻找和配备可用的<strong>Reduce节点</strong>，并将程序传送给Reduce节点</li>
+<li>主节点启动每个Map节点执行程序，每个map节点尽可能读取数据进行计算</li>
+<li>每个Map节点处理读取的数据块,并做一些数据整理工作(combining, sorting等)并将中间结果存放在本地；<strong>同时通知主节点计算任务完成并告知中间结果数据存储位置</strong></li>
+<li>主节点等所有Map节点计算完成后，开始启动Reduce节点运行；Reduce节点从主节点所掌握的中间结果数据位置信息，<strong>远程读取</strong>这些数据</li>
+<li>Reduce节点计算结果汇总输出到一个结果文件即获得整个处理结果</li>
+</ol>
+<h4 id="容错机制-1">容错机制🌿</h4>
+<p>MapReduce通过<strong>重新执行失效的地方</strong>来实现容错。</p>
+<h5 id="master失效"><strong>Master失效</strong></h5>
+<p>Master会周期性地设置检查点（checkpoint），并导出Master的数据。一旦某个任务失效，系统就从最近的一个检查点恢复并重新执行。</p>
+<p>由于只有一个Master在运行，如果Master失效了，则只能终止整个MapReduce程序的运行并重新开始。</p>
+<h5 id="worker失效"><strong>Worker失效</strong></h5>
+<p>Master会<strong>周期性地给Worker发送ping命令</strong>，如果没有Worker的应答，则Master认为Worker失效，终止对这个Worker的任务调度，把失效Worker的任务调度到其他Worker上重新执行。</p>
+<h3 id="案例分析">案例分析</h3>
+<h4 id="案例一----单词排序">案例一----单词排序</h4>
+<p>怎样通过MapReduce完成排序工作，使其有序（字典序）呢？</p>
+<p><strong>步骤</strong></p>
+<ol type="1">
+<li><p>对原始的数据进行分割（Split），得到N个不同的数据分块 。</p></li>
+<li><p>对每一个数据分块都启动一个Map进行处理。</p>
+<p>采用<strong>桶排序</strong>的方法，每个Map中按照首字母将字符串分配到26个不同的桶中。</p></li>
+<li><p>对于Map之后得到的中间结果，启动26个Reduce。</p>
+<p>按照首字母将Map中不同桶中的字符串集合放置到相应的Reduce中进行处理。</p></li>
+</ol>
+<h4 id="案例二----单词计数">案例二----单词计数</h4>
+<p>给定一个巨大的文本（如1TB），如何计算单词出现的数目？</p>
+<p><strong>步骤</strong></p>
+<p>定义Map和Reduce函数</p>
+<pre><code>Map(K, V)&#123;    
+    For each word w in V       
+        Collect(w, 1);
+&#125;
+
+Reduce(K, V[])&#123;
+    int count = 0;
+    For each v in V
+        count += v    
+    Collect(K, count);
+&#125;</code></pre>
+<ol type="1">
+<li>自动对文本进行分割</li>
+<li>在分割之后的每一对&lt;key,value&gt;使用用户定义的Map进行处理，再生成新的&lt;key,value&gt;对</li>
+<li>对输出的结果集归拢、排序(系统自动完成）</li>
+<li>通过Reduce操作生成最后结果</li>
+</ol>
+<h2 id="分布式结构化数据表bigtable">分布式结构化数据表Bigtable</h2>
+<h3 id="设计动机与目标">设计动机与目标</h3>
+<h4 id="设计动机">设计动机</h4>
+<ol type="1">
+<li>需要存储的数据种类繁多</li>
+<li>海量的服务请求</li>
+<li>商用数据库无法满足需求</li>
+</ol>
+<h4 id="基本目标">基本目标</h4>
+<ul>
+<li>广泛的适用性 —— 为了满足一系列Google产品而并非特定产品的存储要求</li>
+<li>很强的可扩展性 —— 随时可以加入或撤销服务器</li>
+<li>高可用性 —— 确保几乎所有的情况下系统都可用</li>
+<li>简单性 —— 底层系统的简单性既可以减少系统出错的概率，也为上层应用的开发带来便利</li>
+</ul>
+<h3 id="数据模型">数据模型</h3>
+<h4 id="bigtable数据的存储格式">Bigtable数据的存储格式</h4>
+<p>Bigtable是一个<strong>分布式多维映射表</strong>，表中的数据通过一个<strong>行关键字（Row Key）、一个列关键字（Column Key）以及一个时间戳（Time Stamp）进行索引</strong>🌿🌿🌿🌿🌿</p>
+<blockquote>
+<p>🐰Bigtable可以看成<code>key-value</code>的形式，其中的<code>key</code>是行关键字+列关键字+时间戳</p>
+</blockquote>
+<p><strong>Bigtable的存储逻辑</strong>可以表示为：</p>
+<p><code>(row:string, column:string, time:int64)→string</code></p>
+<figure>
+<img src="https://x.arcto.xyz/gKBXqX/04Google云计算技术_pic4.png" alt><figcaption>04Google云计算技术_pic4</figcaption>
+</figure>
+<ul>
+<li>行(Row)
+<ul>
+<li>大小不超过64KB的任意字符串。表中的数据都是根据行关键字进行排序的。</li>
+<li>com.cnn.www就是一个行关键字，指明一行存储数据。URL地址倒排可以使同一地址域的网页将被存储在表中连续的位置,便于查找</li>
+<li>🐰倒排？ 域名层次划分</li>
+</ul></li>
+<li>子表(Tablet)
+<ul>
+<li>一个大表可能太大，不利于存储管理，<strong>将在水平方向上被分为多个子表</strong></li>
+</ul></li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/Xfvpqe/04Google云计算技术_pic5.png" alt><figcaption>04Google云计算技术_pic5</figcaption>
+</figure>
+<ul>
+<li>列(Column)
+<ul>
+<li>特定含义的数据的集合。</li>
+<li><strong>BigTable将列关键字组织成为“列族”(column family),每个族中的数据属于同一类别,</strong>如anchor是一个列族，其下可有不同的表示一个个超链接的列关键字。</li>
+<li>一个列族下的数据会被压缩在一起存放。</li>
+<li>一个<strong>列关键字可表示为: 族名：限定词(family:qualifier)</strong></li>
+<li>content、anchor都是族名；而cnnsi.com和my.look.ca则是anchor族中的限定词。</li>
+</ul></li>
+<li>时间戳(time stamp)
+<ul>
+<li>很多时候同一个URL的网页会不断更新，而Google需要保存不同时间的网页数据，因此需要使用时间戳来加以区分。</li>
+<li>🐰时间戳 <code>int64</code>，两种生成方式：
+<ul>
+<li>系统默认（创建）</li>
+<li>用户定义（要求唯一）</li>
+</ul></li>
+<li>为了简化不同版本的数据管理，BigTable提供给了两种设置：
+<ul>
+<li>保留<strong>最近的n个</strong>版本数据</li>
+<li>保留<strong>限定时间内</strong>的所有不同版本数据</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="小结行列时间戳">小结——行、列、时间戳</h4>
+<h5 id="行">行</h5>
+<ul>
+<li>Bigtable的行关键字可以是任意的字符串，但是<strong>大小不能够超过64KB</strong></li>
+<li>表中数据都是根据<strong>行关键字</strong>进行排序的，排序使用的是<strong>词典序</strong></li>
+<li>同一地址域的网页会被存储在表中的<strong>连续位置</strong></li>
+</ul>
+<h5 id="列">列</h5>
+<ul>
+<li>将其组织成所谓的<strong>列族（Column Family）</strong></li>
+<li><strong>族名必须有意义</strong>，限定词则可以任意选定</li>
+<li>组织的数据结构清晰明了，含义也很清楚</li>
+<li>族同时也是Bigtable中<strong>访问控制（Access Control）的基本单元</strong></li>
+</ul>
+<h5 id="时间戳">时间戳</h5>
+<ul>
+<li>Google的很多服务比如网页检索和用户的个性化设置等都需要保存不同时间的数据，这些不同的数据版本必须通过时间戳来区分。</li>
+<li>Bigtable中的时间戳是64位整型数，具体的赋值方式可以用户自行定义</li>
+</ul>
+<h5 id="无数据校验">无数据校验</h5>
+<ul>
+<li><p><strong>每行都可存储任意数目的列</strong></p>
+<ul>
+<li>BigTable不对列的最少数目进行约束</li>
+</ul></li>
+<li><p><strong>任意类型的数据均可存储</strong></p>
+<ul>
+<li>BigTable将所有数据均看作为字符串</li>
+</ul></li>
+<li><p><strong>数据的有效性校验由构建于其上的应用系统完成</strong></p>
+<p>🐰BigTable不进行数据的有效性校验</p></li>
+</ul>
+<h3 id="系统架构-2">系统架构</h3>
+<h4 id="bigtable的基本架构">Bigtable的基本架构</h4>
+<figure>
+<img src="https://x.arcto.xyz/Geu_Sp/04Google云计算技术_pic6.png" alt><figcaption>04Google云计算技术_pic6</figcaption>
+</figure>
+<h4 id="bigtable中chubby的主要作用">Bigtable中Chubby的主要作用🌿</h4>
+<ol type="1">
+<li>选取并保证同一时间内只有一个主服务器（Master Server）。</li>
+<li>获取子表的位置信息。</li>
+<li>保存Bigtable的模式信息及访问控制列表。</li>
+</ol>
+<p>子表服务器</p>
+<h4 id="sstable格式的基本示意">SSTable格式的基本示意</h4>
+<p>**_SSTable_是Google为Bigtable设计的内部数据存储格式。**🌿🌿🌿🌿🌿</p>
+<p>所有的SSTable文件都存储在<strong>GFS</strong>上，用户可以通过<strong>键</strong>来查询相应的<strong>值</strong>。</p>
+<figure>
+<img src="https://x.arcto.xyz/KDGzCa/04Google云计算技术_pic7.png" alt><figcaption>04Google云计算技术_pic7</figcaption>
+</figure>
+<figure>
+<img src="https://x.arcto.xyz/jCjPvF/04Google云计算技术_pic8.png" alt><figcaption>04Google云计算技术_pic8</figcaption>
+</figure>
+<h4 id="子表实际组成">子表实际组成</h4>
+<ul>
+<li><p>不同子表的SSTable可以共享</p></li>
+<li><p>每个子表服务器上<strong>仅保存一个日志文件</strong></p>
+<blockquote>
+<p>🐰共享日志，每个子表服务器上的日志是共享日志的一个片段</p>
+</blockquote></li>
+<li><p>Bigtable规定将日志的内容按照键值进行排序</p></li>
+<li><p>每个子表服务器上保存的子表数量可以从几十到上千不等，通常情况下是100个左右</p></li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/wl9dZ_/04Google云计算技术_pic9.png" alt><figcaption>04Google云计算技术_pic9</figcaption>
+</figure>
+<h4 id="子表地址组成">子表地址组成</h4>
+<p>Bigtable系统的内部采用的是一种<strong>类似B+树的三层查询体系</strong></p>
+<figure>
+<img src="https://x.arcto.xyz/llbA3k/04Google云计算技术_pic10.png" alt><figcaption>04Google云计算技术_pic10</figcaption>
+</figure>
+<blockquote>
+<p>🐰元数据表：</p>
+<p>根子表（保存其他子表的位置） + 其他元数据子表（保存用户子表的位置信息）</p>
+</blockquote>
+<h4 id="bigtable-数据存储及读写操作">Bigtable 数据存储及读/写操作</h4>
+<p><strong>较新</strong>的数据存储在内存中一个称为<strong>内存表</strong>（Memtable）的有序缓冲里，</p>
+<p>较早的数据则以<strong>SSTable格式</strong>保存在GFS中。</p>
+<figure>
+<img src="https://x.arcto.xyz/T1Sil-/04Google云计算技术_pic11.png" alt><figcaption>04Google云计算技术_pic11</figcaption>
+</figure>
+<blockquote>
+<p>🐰内存表（SSTable的缓存），达到阈值后冻结，经过次压缩变成SSTable，Bigtable再创建一个新的内存表</p>
+</blockquote>
+<h4 id="三种形式压缩之间的关系">三种形式压缩之间的关系</h4>
+<figure>
+<img src="https://x.arcto.xyz/W1OHTC/04Google云计算技术_pic12.png" alt><figcaption>04Google云计算技术_pic12</figcaption>
+</figure>
+<blockquote>
+<p>🐰</p>
+<p>内存表的空间有限，达到阈值后 ---- 次压缩</p>
+<p>合并压缩 --- 定期进行</p>
+<p>主压缩 --- 定期进行</p>
+<p>主压缩成一个SSTable后，前面被压缩的都会被删除</p>
+</blockquote>
+<h3 id="性能优化">性能优化</h3>
+<h4 id="局部性群组locality-group">局部性群组(Locality Group)</h4>
+<p>Bigtable允许用户将原本并不存储在一起的数据以<strong>列族</strong>为单位，根据需要组织在一个单独的SSTable中，以构成一个局部性群组。</p>
+<figure>
+<img src="https://x.arcto.xyz/7dOEy2/04Google云计算技术_pic13.png" alt><figcaption>04Google云计算技术_pic13</figcaption>
+</figure>
+<blockquote>
+<p>用户可以只看自己感兴趣的内容。 对于一些较小的且会被经常读取的局部性群组，明显地改善读取效率。</p>
+</blockquote>
+<h4 id="压缩">压缩</h4>
+<p>压缩可以有效地节省空间，Bigtable中的压缩被应用于很多场合。</p>
+<p>压缩可以被用在构成局部性群组的SSTable中，可以选择是否对个人的局部性群组的SSTable进行压缩。</p>
+<p><strong>两步压缩</strong></p>
+<ol type="1">
+<li>利用Bentley &amp; McIlroy方式（<strong>BMDiff</strong>）在大的扫描窗口将<strong>常见的长</strong>串进行压缩</li>
+<li>采取Zippy技术进行<strong>快速压缩</strong>，它在一个16KB大小的扫描窗口内寻找重复数据，这个过程非常快</li>
+</ol>
+<blockquote>
+<p>压缩的本质：寻找重复数据，用少的字节代替</p>
+</blockquote>
+<h4 id="布隆过滤器">布隆过滤器</h4>
+<p>一个很长的<strong>二进制向量</strong>和一系列<strong>随机映射函数</strong></p>
+<h5 id="优点">优点</h5>
+<ul>
+<li>布隆过滤器的速度快，省空间</li>
+<li>不会将一个存在的子表判定为不存在</li>
+</ul>
+<h5 id="缺点">缺点</h5>
+<ul>
+<li>在某些情况下它会将不存在的子表判断为存在</li>
+</ul>
+<h2 id="小结">小结</h2>
+<h3 id="google的云计算应用均依赖于四个基础组件">Google的云计算应用均依赖于四个基础组件</h3>
+<ul>
+<li>分布式文件存储，GFS</li>
+<li>并行数据处理模型MapReduce</li>
+<li>分布式锁Chubby</li>
+<li>结构化数据表BigTable</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/uRXaVe/04Google云计算技术_pic14.png" alt><figcaption>04Google云计算技术_pic14</figcaption>
+</figure>
+<h3 id="chubby的作用">Chubby的作用</h3>
+<ul>
+<li>为GFS提供锁服务，选择Master节点；记录Master的相关描述信息</li>
+<li>通过独占锁记录Chunk Server的活跃情况</li>
+<li>为BigTable提供锁服务，记录子表元信息（如子表文件信息、子表分配信息、子表服务器信息）</li>
+</ul>
+<h3 id="gfs的作用">GFS的作用</h3>
+<ul>
+<li><p>存储BigTable的子表文件</p>
+<blockquote>
+<p>子表：SSTable和日志文件</p>
+</blockquote></li>
+<li><p>为第三方应用提供大尺寸文件存储功能</p></li>
+<li><p>文件读操作流程</p>
+<ul>
+<li>API与Master通信，获取文件元信息</li>
+<li>根据指定的读取位置和读取长度，API发起并发操作，分别从若干ChunkServer上读取数据</li>
+<li>API组装所得数据，返回结果</li>
+</ul></li>
+</ul>
+<h3 id="bigtable的作用">BigTable的作用</h3>
+<ul>
+<li><p>为Google云计算应用（或第三方应用）提供数据<strong>结构化</strong>存储功能</p>
+<blockquote>
+<p>结构化 --- 字符串的形式存储</p>
+</blockquote></li>
+<li><p>类似于数据库</p>
+<blockquote>
+<p>没有事务处理的能力</p>
+</blockquote></li>
+<li><p>为应用提供简单数据查询功能（不支持联合查询）</p></li>
+<li><p>为MapReduce提供数据源或数据结果存储</p></li>
+</ul>
+<h3 id="mapreduce的作用">MapReduce的作用</h3>
+<ul>
+<li>对BigTable中的数据进行并行计算处理（如统计、归类等）</li>
+<li>使用BigTable或GFS存储计算结果</li>
+</ul>
+<h2 id="应用场景分析">应用场景分析</h2>
+<h3 id="应用场景分析1-google网站流量分析">应用场景分析1—— Google网站流量分析</h3>
+<h4 id="基本功能">基本功能</h4>
+<ul>
+<li>统计网站的基本数据，包括会话、综合浏览量、点击量和字节流量等等</li>
+<li>分析网站页面关注度，帮助企业调整或增删页面</li>
+<li>分析用户浏览路径，优化页面布局</li>
+<li>分析用户访问来源链接，提高广告投资回报</li>
+</ul>
+<h4 id="应用的特征">应用的特征</h4>
+<p>海量数据 --- 需要存储海量的用户行为数据（如点击时间、位置等） 海量用户 --- 需要为任意多的网站提供流量分析</p>
+<h4 id="技术路线">技术路线</h4>
+<p>使用BigTable存储和检索数据，使用MapReduce统计数据</p>
+<h4 id="bigtable中的表设计">BigTable中的表设计</h4>
+<p><strong>原始点击数据表</strong></p>
+<p>行键：点击时间</p>
+<p>列键：网站URL、网站名称、用户IP地址、来源URL、目标URL…… 目前尺寸约200TB</p>
+<figure>
+<img src="https://x.arcto.xyz/3wNF8r/04Google云计算技术_pic15.png" alt><figcaption>04Google云计算技术_pic15</figcaption>
+</figure>
+<p><strong>统计数据表</strong></p>
+<p>行键：网站URL<strong>（倒排）</strong></p>
+<p>列键：点击次数（如记录最近一个月每日的访问次数等）、页面关注度（如记录网站页面的访问比率）、来源网站（如记录TOP10）、目标网站（如记录TOP10）…</p>
+<p>每个列中记录的内容是字符串，Analytics在查询后需要解析字符串获得统计结果</p>
+<p>可根据统计内容的增多来增加新的列</p>
+<p>目前尺寸约20TB</p>
+<h4 id="业务流程分析">业务流程分析</h4>
+<figure>
+<img src="https://x.arcto.xyz/vTff_7/04Google云计算技术_pic16.png" alt><figcaption>04Google云计算技术_pic16</figcaption>
+</figure>
+<h4 id="数据采集">数据采集</h4>
+<ul>
+<li><p>数据来源</p>
+<ul>
+<li>页面内嵌脚本</li>
+<li>点击行为脚本</li>
+</ul></li>
+<li><p>应用服务器获取到数据后，存入BigTable</p></li>
+<li><p>数据存储流程</p>
+<figure>
+<img src="https://x.arcto.xyz/19yqGK/04Google云计算技术_pic17.png" alt><figcaption>04Google云计算技术_pic17</figcaption>
+</figure></li>
+</ul>
+<h4 id="数据处理">数据处理</h4>
+<ul>
+<li><p>例如，统计网站(如xxx.com)过去一周网页访问比例</p></li>
+<li><p>数据处理流程</p>
+<figure>
+<img src="https://x.arcto.xyz/y-toLe/04Google云计算技术_pic18.png" alt><figcaption>04Google云计算技术_pic18</figcaption>
+</figure></li>
+<li><p>Map操作</p>
+<p>假设过去一周查询结果文件在GFS中包含M个Chunk，那么Master寻找M个空闲的Worker，分别处理这M个Chunk，得到每个网站中页面的访问次数</p></li>
+<li><p>自动排序</p>
+<p>对M个中间结果进行排序</p></li>
+<li><p>Reduce操作</p>
+<p>假设含N个网站，那么可以分配N台Worker分别处理单个网站的数据</p></li>
+<li><p>写入数据</p></li>
+<li><p>应用程序将分析结果写入统计数据表</p></li>
+</ul>
+<h4 id="数据查询">数据查询</h4>
+<p>从数据统计表中查询xxx.com行 获取对应列的数据，解析，得到并展示最终结果</p>
+<h3 id="应用场景分析2google搜索">应用场景分析2——Google搜索</h3>
+<h4 id="google搜索的总体业务流程">Google搜索的总体业务流程</h4>
+<ol type="1">
+<li>数据采集: Spider</li>
+<li>数据整理
+<ul>
+<li>生成各类子表，如音乐表、生活搜索表、学术搜索表等</li>
+<li>压缩数据表，清洗失效数据</li>
+</ul></li>
+<li>数据检索</li>
+</ol>
+<h4 id="数据采集-1">数据采集</h4>
+<ul>
+<li>通过若干Spider在网络上搜集数据</li>
+<li>使用BigTable存储数据 行键：倒排的URL 列键：网站名称、语言、HTML描述、图片、链接…… 时间戳：记录不同时刻的网页快照</li>
+</ul>
+<h4 id="数据整理google学术搜索">数据整理（Google学术搜索）</h4>
+<ul>
+<li><p><strong>数据抽取</strong></p>
+<ul>
+<li>寻找包含学术（论文）信息的网页数据，并结构化存储</li>
+<li>学术（论文）信息抽取（分析参考文献、摘要等）</li>
+<li>可能的技术方案：MapReduce+BigTable</li>
+</ul></li>
+<li><p><strong>数据统计</strong></p>
+<ul>
+<li>基于抽取的数据进行统计分析（如分析被引用次数等）</li>
+<li>可能的技术方案MapReduce+BigTable</li>
+</ul></li>
+<li><p><strong>学术信息BigTable</strong> 行键：论文标题 列键：作者、主题词、摘要、参考文献、期刊信息、被引用次数、下载链接……</p></li>
+<li><p><strong>如何获取论文统计数据（如论文引用次数）</strong></p>
+<p><strong>步骤</strong></p>
+<ul>
+<li>分析论文信息表，MapReduce</li>
+<li>归纳排序</li>
+<li>Reduce操作</li>
+</ul></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>分布式系统与云计算概论</tag>
+      </tags>
+  </entry>
+</search>

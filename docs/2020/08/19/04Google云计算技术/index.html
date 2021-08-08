@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"999795.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="为专业课复习用  简介 GFS  Google File System 支持海量存储  MapReduce  用于大规模数据集的并行运算。 主要功能：是提供了一个简单强大的接口，可以将计算自动的并发和分布执行。 从两方面提升了系统：  失效的计算机问题。 MapReduce之间传输的数据都是经过压缩的，节省了带宽   BigTable 用来管理大规模结构化数据的分布式存储系统 Google文件系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04Google云计算技术">
+<meta property="og:url" content="https://999795.xyz/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="一杯西瓜汁er🍉">
+<meta property="og:description" content="为专业课复习用  简介 GFS  Google File System 支持海量存储  MapReduce  用于大规模数据集的并行运算。 主要功能：是提供了一个简单强大的接口，可以将计算自动的并发和分布执行。 从两方面提升了系统：  失效的计算机问题。 MapReduce之间传输的数据都是经过压缩的，节省了带宽   BigTable 用来管理大规模结构化数据的分布式存储系统 Google文件系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://x.arcto.xyz/JX3mtT/04Google云计算技术_pic1.png">
+<meta property="og:image" content="https://x.arcto.xyz/NpvBlE/GFS系统架构.png">
+<meta property="og:image" content="https://x.arcto.xyz/CavNpa/04Google云计算技术_pic2.png">
+<meta property="og:image" content="https://x.arcto.xyz/2bq2bY/04Google云计算技术_pic3.png">
+<meta property="og:image" content="https://x.arcto.xyz/gKBXqX/04Google云计算技术_pic4.png">
+<meta property="og:image" content="https://x.arcto.xyz/Xfvpqe/04Google云计算技术_pic5.png">
+<meta property="og:image" content="https://x.arcto.xyz/Geu_Sp/04Google云计算技术_pic6.png">
+<meta property="og:image" content="https://x.arcto.xyz/KDGzCa/04Google云计算技术_pic7.png">
+<meta property="og:image" content="https://x.arcto.xyz/jCjPvF/04Google云计算技术_pic8.png">
+<meta property="og:image" content="https://x.arcto.xyz/wl9dZ_/04Google云计算技术_pic9.png">
+<meta property="og:image" content="https://x.arcto.xyz/llbA3k/04Google云计算技术_pic10.png">
+<meta property="og:image" content="https://x.arcto.xyz/T1Sil-/04Google云计算技术_pic11.png">
+<meta property="og:image" content="https://x.arcto.xyz/W1OHTC/04Google云计算技术_pic12.png">
+<meta property="og:image" content="https://x.arcto.xyz/7dOEy2/04Google云计算技术_pic13.png">
+<meta property="og:image" content="https://x.arcto.xyz/uRXaVe/04Google云计算技术_pic14.png">
+<meta property="og:image" content="https://x.arcto.xyz/3wNF8r/04Google云计算技术_pic15.png">
+<meta property="og:image" content="https://x.arcto.xyz/vTff_7/04Google云计算技术_pic16.png">
+<meta property="og:image" content="https://x.arcto.xyz/19yqGK/04Google云计算技术_pic17.png">
+<meta property="og:image" content="https://x.arcto.xyz/y-toLe/04Google云计算技术_pic18.png">
+<meta property="article:published_time" content="2020-08-19T18:00:00.000Z">
+<meta property="article:modified_time" content="2021-08-08T09:22:39.442Z">
+<meta property="article:author" content="Christy">
+<meta property="article:tag" content="分布式系统与云计算概论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://x.arcto.xyz/JX3mtT/04Google云计算技术_pic1.png">
+
+
+<link rel="canonical" href="https://999795.xyz/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://999795.xyz/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/","path":"2020/08/19/04Google云计算技术/","title":"04Google云计算技术"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>04Google云计算技术 | 一杯西瓜汁er🍉</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">一杯西瓜汁er🍉</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gfs"><span class="nav-number">1.0.1.</span> <span class="nav-text">GFS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapreduce"><span class="nav-number">1.0.2.</span> <span class="nav-text">MapReduce</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bigtable"><span class="nav-number">1.0.3.</span> <span class="nav-text">BigTable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#google%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9Fgfs"><span class="nav-number">2.</span> <span class="nav-text">Google文件系统GFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gfs%E7%9A%843%E4%B8%AA%E5%81%87%E8%AE%BE"><span class="nav-number">2.1.1.</span> <span class="nav-text">GFS的3个假设</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gfs%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3"><span class="nav-number">2.1.2.</span> <span class="nav-text">GFS的设计思想🌿🌿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84-1"><span class="nav-number">2.1.3.</span> <span class="nav-text">系统架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%8A%82%E7%82%B9%E5%88%86%E4%B8%BA%E4%B8%89%E7%B1%BB%E8%A7%92%E8%89%B2"><span class="nav-number">2.1.4.</span> <span class="nav-text">系统节点分为三类角色🌿🌿🌿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gfs%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">2.1.5.</span> <span class="nav-text">GFS的实现机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gfs%E7%9A%84%E8%AF%BB%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">2.1.6.</span> <span class="nav-text">GFS的读操作&#x2F;数据访问的过程 🌿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gfs%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.7.</span> <span class="nav-text">GFS的特点🌿</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E9%94%99%E6%9C%BA%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text">容错机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#master%E5%AE%B9%E9%94%99"><span class="nav-number">2.2.1.</span> <span class="nav-text">Master容错🌿🌿🌿</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E7%B1%BB%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">三类元数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#master%E6%95%85%E9%9A%9C"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">Master故障</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chunk-server%E5%AE%B9%E9%94%99"><span class="nav-number">2.2.2.</span> <span class="nav-text">Chunk Server容错</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF"><span class="nav-number">2.3.</span> <span class="nav-text">系统管理技术</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86mapreduce"><span class="nav-number">3.</span> <span class="nav-text">分布式数据处理MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E8%83%8C%E6%99%AF"><span class="nav-number">3.1.</span> <span class="nav-text">产生背景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mapreduce-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">MapReduce</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">编程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#map%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.1.</span> <span class="nav-text">Map函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduce%E6%93%8D%E4%BD%9C"><span class="nav-number">3.2.2.</span> <span class="nav-text">Reduce操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">编程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#map"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#reduce"><span class="nav-number">3.2.3.2.</span> <span class="nav-text">Reduce</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">3.3.</span> <span class="nav-text">实现机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#google-mapreduce%E5%B9%B6%E8%A1%8C%E5%A4%84%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%87%E7%A8%8B"><span class="nav-number">3.3.1.</span> <span class="nav-text">Google MapReduce并行处理的基本过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E9%94%99%E6%9C%BA%E5%88%B6-1"><span class="nav-number">3.3.2.</span> <span class="nav-text">容错机制🌿</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#master%E5%A4%B1%E6%95%88"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">Master失效</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#worker%E5%A4%B1%E6%95%88"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">Worker失效</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.4.</span> <span class="nav-text">案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%B8%80----%E5%8D%95%E8%AF%8D%E6%8E%92%E5%BA%8F"><span class="nav-number">3.4.1.</span> <span class="nav-text">案例一----单词排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E4%BA%8C----%E5%8D%95%E8%AF%8D%E8%AE%A1%E6%95%B0"><span class="nav-number">3.4.2.</span> <span class="nav-text">案例二----单词计数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE%E8%A1%A8bigtable"><span class="nav-number">4.</span> <span class="nav-text">分布式结构化数据表Bigtable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8A%A8%E6%9C%BA%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="nav-number">4.1.</span> <span class="nav-text">设计动机与目标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E5%8A%A8%E6%9C%BA"><span class="nav-number">4.1.1.</span> <span class="nav-text">设计动机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9B%AE%E6%A0%87"><span class="nav-number">4.1.2.</span> <span class="nav-text">基本目标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bigtable%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.2.1.</span> <span class="nav-text">Bigtable数据的存储格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93%E8%A1%8C%E5%88%97%E6%97%B6%E9%97%B4%E6%88%B3"><span class="nav-number">4.2.2.</span> <span class="nav-text">小结——行、列、时间戳</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8C"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%97"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E6%88%B3"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">时间戳</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%97%A0%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C"><span class="nav-number">4.2.2.4.</span> <span class="nav-text">无数据校验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84-2"><span class="nav-number">4.3.</span> <span class="nav-text">系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bigtable%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="nav-number">4.3.1.</span> <span class="nav-text">Bigtable的基本架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bigtable%E4%B8%ADchubby%E7%9A%84%E4%B8%BB%E8%A6%81%E4%BD%9C%E7%94%A8"><span class="nav-number">4.3.2.</span> <span class="nav-text">Bigtable中Chubby的主要作用🌿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sstable%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%A4%BA%E6%84%8F"><span class="nav-number">4.3.3.</span> <span class="nav-text">SSTable格式的基本示意</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90%E8%A1%A8%E5%AE%9E%E9%99%85%E7%BB%84%E6%88%90"><span class="nav-number">4.3.4.</span> <span class="nav-text">子表实际组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90%E8%A1%A8%E5%9C%B0%E5%9D%80%E7%BB%84%E6%88%90"><span class="nav-number">4.3.5.</span> <span class="nav-text">子表地址组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bigtable-%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%8F%8A%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C"><span class="nav-number">4.3.6.</span> <span class="nav-text">Bigtable 数据存储及读&#x2F;写操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E5%BD%A2%E5%BC%8F%E5%8E%8B%E7%BC%A9%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.3.7.</span> <span class="nav-text">三种形式压缩之间的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="nav-number">4.4.</span> <span class="nav-text">性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7%E7%BE%A4%E7%BB%84locality-group"><span class="nav-number">4.4.1.</span> <span class="nav-text">局部性群组(Locality Group)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9"><span class="nav-number">4.4.2.</span> <span class="nav-text">压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">4.4.3.</span> <span class="nav-text">布隆过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">4.4.3.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">4.4.3.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#google%E7%9A%84%E4%BA%91%E8%AE%A1%E7%AE%97%E5%BA%94%E7%94%A8%E5%9D%87%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%9B%9B%E4%B8%AA%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">Google的云计算应用均依赖于四个基础组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chubby%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">Chubby的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gfs%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">5.3.</span> <span class="nav-text">GFS的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bigtable%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">5.4.</span> <span class="nav-text">BigTable的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mapreduce%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">5.5.</span> <span class="nav-text">MapReduce的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">6.</span> <span class="nav-text">应用场景分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%901-google%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="nav-number">6.1.</span> <span class="nav-text">应用场景分析1—— Google网站流量分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD"><span class="nav-number">6.1.1.</span> <span class="nav-text">基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">6.1.2.</span> <span class="nav-text">应用的特征</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E8%B7%AF%E7%BA%BF"><span class="nav-number">6.1.3.</span> <span class="nav-text">技术路线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bigtable%E4%B8%AD%E7%9A%84%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">6.1.4.</span> <span class="nav-text">BigTable中的表设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">6.1.5.</span> <span class="nav-text">业务流程分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86"><span class="nav-number">6.1.6.</span> <span class="nav-text">数据采集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">6.1.7.</span> <span class="nav-text">数据处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2"><span class="nav-number">6.1.8.</span> <span class="nav-text">数据查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%902google%E6%90%9C%E7%B4%A2"><span class="nav-number">6.2.</span> <span class="nav-text">应用场景分析2——Google搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#google%E6%90%9C%E7%B4%A2%E7%9A%84%E6%80%BB%E4%BD%93%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B"><span class="nav-number">6.2.1.</span> <span class="nav-text">Google搜索的总体业务流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86-1"><span class="nav-number">6.2.2.</span> <span class="nav-text">数据采集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%95%B4%E7%90%86google%E5%AD%A6%E6%9C%AF%E6%90%9C%E7%B4%A2"><span class="nav-number">6.2.3.</span> <span class="nav-text">数据整理（Google学术搜索）</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Christy"
+      src="/upload/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Christy</p>
+  <div class="site-description" itemprop="description">保持热情:)</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/christy99cc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;christy99cc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/upload/avatar.jpg">
+      <meta itemprop="name" content="Christy">
+      <meta itemprop="description" content="保持热情:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杯西瓜汁er🍉">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04Google云计算技术
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-19 18:00:00" itemprop="dateCreated datePublished" datetime="2020-08-19T18:00:00+00:00">2020-08-19</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>为专业课复习用</p>
+</blockquote>
+<h2 id="简介">简介</h2>
+<h4 id="gfs">GFS</h4>
+<ol type="1">
+<li>Google File System</li>
+<li>支持海量存储</li>
+</ol>
+<h4 id="mapreduce">MapReduce</h4>
+<ol type="1">
+<li>用于大规模数据集的并行运算。</li>
+<li>主要功能：是提供了一个简单强大的接口，可以将计算自动的并发和分布执行。</li>
+<li>从两方面提升了系统：
+<ul>
+<li>失效的计算机问题。</li>
+<li>MapReduce之间传输的数据都是经过压缩的，节省了带宽</li>
+</ul></li>
+</ol>
+<h4 id="bigtable">BigTable</h4>
+<p>用来管理大规模<strong>结构化</strong>数据的分布式存储系统</p>
+<h2 id="google文件系统gfs">Google文件系统GFS</h2>
+<h3 id="系统架构">系统架构</h3>
+<ul>
+<li>Google GFS是一个基于分布式集群的大型分布式文件系统，为MapReduce计算框架提供低层数据存储和数据可靠性支撑</li>
+<li>GFS是一个构建在分布节点本地文件系统之上的一个<strong>逻辑文件系统</strong>，它将数据存储在物理上分布的每个节点上，但通过GFS将整个数据形成一个逻辑上整体的文件。</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/JX3mtT/04Google云计算技术_pic1.png" alt><figcaption>04Google云计算技术_pic1</figcaption>
+</figure>
+<h4 id="gfs的3个假设">GFS的3个假设</h4>
+<ol type="1">
+<li>硬件出错是正常而非异常
+<ul>
+<li>大量廉价、易损的硬件</li>
+<li>必须保持文件系统整体的可靠性</li>
+</ul></li>
+<li>主要负载是流数据读写
+<ul>
+<li>主要用于程序处理批量数据，而非用户的交互或随机读写</li>
+<li>主要是追加写（插入写非常少）</li>
+</ul></li>
+<li>需要存储大尺寸的文件
+<ul>
+<li>GB或TB量级</li>
+</ul></li>
+</ol>
+<h4 id="gfs的设计思想">GFS的设计思想🌿🌿</h4>
+<ol type="1">
+<li>将文件划分为若干块（Chunk）存储
+<ul>
+<li>固定大小64M</li>
+</ul></li>
+<li>通过冗余来提高可靠性
+<ul>
+<li>3个数据块服务器上存储副本</li>
+</ul></li>
+<li>通过单个master来协调数据访问、元数据存储
+<ul>
+<li>结构简单，容易保持元数据一致性</li>
+</ul></li>
+</ol>
+<h4 id="系统架构-1"><strong>系统架构</strong></h4>
+<figure>
+<img src="https://x.arcto.xyz/NpvBlE/GFS系统架构.png" alt><figcaption>GFS系统架构</figcaption>
+</figure>
+<blockquote>
+<p>⚠️Client与Master之间只有控制信息，无数据信息，减少主服务器的负载。</p>
+</blockquote>
+<h4 id="系统节点分为三类角色">系统节点分为三类角色🌿🌿🌿</h4>
+<p>Client 客户端</p>
+<ul>
+<li>提供给App的访问接口</li>
+<li>以库文件的形式提供</li>
+</ul>
+<p>Master 主服务器</p>
+<ul>
+<li>GFS的管理节点</li>
+<li>负责整个文件系统的管理</li>
+<li>🐰逻辑上只有一个</li>
+</ul>
+<p>Chunk Server 数据块服务器</p>
+<ul>
+<li>负责具体的存储工作</li>
+<li>🐰创建冗余，避免服务器崩溃</li>
+</ul>
+<h4 id="gfs的实现机制">GFS的实现机制</h4>
+<ol type="1">
+<li>客户端首先访问Master节点，获取交互的Chunk Server信息，然后访问这些Chunk Server，完成数据存取工作。这种设计方法实现了<strong>控制流和数据流</strong>的分离。</li>
+<li><strong>Client与Master之间只有控制流，而无数据流</strong>，极大地降低了Master的负载。</li>
+<li><strong>Client与Chunk Server之间直接传输数据流🌿</strong>，同时由于文件被分成多个Chunk进行分布式存储，Client可以同时访问多个Chunk Server，从而<strong>使得整个系统的I/O高度并行，系统整体性能得到提高</strong>。</li>
+</ol>
+<h4 id="gfs的读操作数据访问的过程">GFS的读操作/数据访问的过程 🌿</h4>
+<blockquote>
+<p>可以通过系统架构图来理解</p>
+</blockquote>
+<ol type="1">
+<li>在程序运行前，数据已经存储在GFS文件系统中；程序执行时，App告诉Master<strong>文件名或数据块索引</strong>是什么</li>
+<li>Master根据<strong>文件名</strong>或数据块索引在其文件目录空间中<strong>查找和定位</strong>该文件或数据块，并找到数据块在具体哪些<strong>Chunk Server</strong>上；将<strong>位置信息</strong>返回给App</li>
+<li>App根据返回的<strong>具体Chunk数据块位置信息</strong>，直接访问相应的CS</li>
+<li>App根据返回的<strong>具体Chunk数据块位置信息</strong>，直接读取指定位置的数据进行计算处理</li>
+</ol>
+<h4 id="gfs的特点">GFS的特点🌿</h4>
+<ol type="1">
+<li>采用<strong>中心服务器</strong>模式
+<ul>
+<li>可以方便地增加Chunk Server</li>
+<li>Master掌握系统内所有Chunk Server的情况，方便进行负载均衡</li>
+<li>不存在元数据的一致性问题</li>
+</ul></li>
+<li><strong>不缓存数据</strong>
+<ul>
+<li>文件操作大部分是流式读写，不存在大量重复读写，使用Cache对性能提高不大</li>
+<li>Chunk Server上数据存取使用本地文件系统</li>
+<li>从可行性看，Cache与实际数据的一致性维护也极其复杂</li>
+</ul></li>
+<li><strong>在用户态下实现</strong>
+<ul>
+<li>用户态下有多种调试工具,利于开发</li>
+<li>Master和Chunk Server都以进程方式运行，单个进程不影响整个操作系统</li>
+<li>GFS和操作系统运行在不同的空间，两者耦合性降低</li>
+</ul></li>
+</ol>
+<h3 id="容错机制">容错机制</h3>
+<h4 id="master容错">Master容错🌿🌿🌿</h4>
+<h5 id="三类元数据">三类元数据</h5>
+<ol type="1">
+<li>命名空间，即整个文件系统的目录结构 --- <strong>日志</strong></li>
+<li>Chunk与文件名的映射表 --- <strong>日志</strong></li>
+<li>Chunk副本的位置信息
+<ul>
+<li>一个Chunk默认有3个<strong>副本</strong></li>
+<li>直接保存在各个Chunk Server上</li>
+</ul></li>
+</ol>
+<h5 id="master故障">Master故障</h5>
+<p>当Master发生故障时，在磁盘数据保存完好的情况下，可以迅速恢复以上元数据</p>
+<p>为了防止Master彻底死机的情况，GFS还提供了Master远程的实时备份</p>
+<h4 id="chunk-server容错">Chunk Server容错</h4>
+<ol type="1">
+<li><p>GFS采用<strong>副本</strong>的方式实现Chunk Server的容错</p></li>
+<li><p>每一个Chunk有多个存储副本（默认为三个）</p></li>
+<li><p>对于每一个Chunk，<strong>必须将所有的副本全部写入成功</strong>，才视为成功写入</p></li>
+<li><p>相关的副本出现丢失或不可恢复等情况，Master自动将该副本<strong>复制</strong>到其他Chunk Server</p></li>
+<li><p>GFS中的每一个文件被划分成多个Chunk，Chunk的默认大小是<strong>64MB</strong></p>
+<h3 id="系统管理技术"><strong>系统管理技术</strong></h3>
+<ul>
+<li>大规模集群安装技术
+<ul>
+<li>GFS集群中通常有<strong>非常多的节点</strong>，需要相应的技术支撑</li>
+</ul></li>
+<li>故障检测技术
+<ul>
+<li>GFS构建在<strong>不可靠廉价计算机</strong>之上的文件系统，由于节点数目众多，故障发生十分频繁</li>
+</ul></li>
+<li>节点动态加入技术
+<ul>
+<li>新的Chunk Server加入，只需裸机加入，大大减少GFS维护工作量</li>
+</ul></li>
+<li>节能技术
+<ul>
+<li>Google采用了多种机制降低服务器能耗，如采用蓄电池代替昂贵的UPS</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="分布式数据处理mapreduce">分布式数据处理MapReduce</h2>
+<h3 id="产生背景">产生背景</h3>
+<ul>
+<li>Google拥有<strong>海量数据</strong>，并且需要<strong>快速处理</strong>。</li>
+<li>大数据<strong>分而治之</strong>
+<ul>
+<li>任务划分</li>
+<li>结果合并</li>
+</ul></li>
+</ul>
+<h4 id="mapreduce-1">MapReduce</h4>
+<ul>
+<li>一个软件架构，一种处理海量数据的<strong>并行编程模式</strong>。</li>
+<li>与传统的分布式程序设计相比，MapReduce封装了<strong>并行处理、容错处理、本地化计算、负载均衡</strong>等细节，还提供了一个<strong>简单而强大的接口</strong>。</li>
+<li>MapReduce把对数据集的大规模操作，<strong>分发给一个主节点管理下的各分节点</strong>共同完成，通过这种方式<strong>实现任务的可靠执行与容错机制</strong>。</li>
+</ul>
+<h3 id="编程模型">编程模型</h3>
+<h4 id="map函数"><strong>Map函数</strong></h4>
+<p>对一部分原始数据进行指定的操作。每个Map操作都针对不同的原始数据，因此Map与Map之间是互相独立的，这使得它们可以充分并行化。</p>
+<h4 id="reduce操作"><strong>Reduce操作</strong></h4>
+<p>对每个Map所产生的一部分中间结果进行合并操作，每个Reduce所处理的Map中间结果是互不交叉的，所有Reduce产生的最终结果经过简单连接就形成了完整的结果集.</p>
+<h4 id="编程模型-1">编程模型</h4>
+<p>两个主要的函数🌿🌿🌿</p>
+<pre><code>Map: (in_key, in_value) -&gt; &#123;(keyj, valuej) | j = 1…k&#125;
+Reduce: (key, [value1,…,valuem]) -&gt; (key, final_value) </code></pre>
+<h5 id="map"><strong>Map</strong></h5>
+<ul>
+<li>输入参数：<code>in_key, in_value</code>，指明了Map需要处理的原始数据</li>
+<li>输出结果：一组<code>k-v</code>对，中间结果</li>
+</ul>
+<h5 id="reduce">Reduce</h5>
+<ul>
+<li>输入参数：<code>key, [value1,…,valuem]</code></li>
+<li>工作：<strong>对这些对应相同key的value值进行归并处理</strong></li>
+<li>输出结果：<code>（key, final_value）</code>，所有Reduce的结果并在一起就是最终结果</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/CavNpa/04Google云计算技术_pic2.png" alt><figcaption>04Google云计算技术_pic2</figcaption>
+</figure>
+<h3 id="实现机制">实现机制</h3>
+<figure>
+<img src="https://x.arcto.xyz/2bq2bY/04Google云计算技术_pic3.png" alt><figcaption>04Google云计算技术_pic3</figcaption>
+</figure>
+<h4 id="google-mapreduce并行处理的基本过程"><strong>Google MapReduce并行处理的基本过程</strong></h4>
+<ol type="1">
+<li>有一个待处理的大数据，被划分为<strong>大小相同的数据块</strong>(如64MB),及与此相应的用户作业程序</li>
+<li>系统中有一个负责调度的<strong>主节点</strong>(Master),以及数据Map和Reduce<strong>工作节点</strong>(Worker)</li>
+<li>用户作业程序提交给主节点</li>
+<li><strong>主节点</strong>为作业程序寻找和配备可用的<strong>Map节点</strong>，并将程序传送给map节点</li>
+<li>主节点也为作业程序寻找和配备可用的<strong>Reduce节点</strong>，并将程序传送给Reduce节点</li>
+<li>主节点启动每个Map节点执行程序，每个map节点尽可能读取数据进行计算</li>
+<li>每个Map节点处理读取的数据块,并做一些数据整理工作(combining, sorting等)并将中间结果存放在本地；<strong>同时通知主节点计算任务完成并告知中间结果数据存储位置</strong></li>
+<li>主节点等所有Map节点计算完成后，开始启动Reduce节点运行；Reduce节点从主节点所掌握的中间结果数据位置信息，<strong>远程读取</strong>这些数据</li>
+<li>Reduce节点计算结果汇总输出到一个结果文件即获得整个处理结果</li>
+</ol>
+<h4 id="容错机制-1">容错机制🌿</h4>
+<p>MapReduce通过<strong>重新执行失效的地方</strong>来实现容错。</p>
+<h5 id="master失效"><strong>Master失效</strong></h5>
+<p>Master会周期性地设置检查点（checkpoint），并导出Master的数据。一旦某个任务失效，系统就从最近的一个检查点恢复并重新执行。</p>
+<p>由于只有一个Master在运行，如果Master失效了，则只能终止整个MapReduce程序的运行并重新开始。</p>
+<h5 id="worker失效"><strong>Worker失效</strong></h5>
+<p>Master会<strong>周期性地给Worker发送ping命令</strong>，如果没有Worker的应答，则Master认为Worker失效，终止对这个Worker的任务调度，把失效Worker的任务调度到其他Worker上重新执行。</p>
+<h3 id="案例分析">案例分析</h3>
+<h4 id="案例一----单词排序">案例一----单词排序</h4>
+<p>怎样通过MapReduce完成排序工作，使其有序（字典序）呢？</p>
+<p><strong>步骤</strong></p>
+<ol type="1">
+<li><p>对原始的数据进行分割（Split），得到N个不同的数据分块 。</p></li>
+<li><p>对每一个数据分块都启动一个Map进行处理。</p>
+<p>采用<strong>桶排序</strong>的方法，每个Map中按照首字母将字符串分配到26个不同的桶中。</p></li>
+<li><p>对于Map之后得到的中间结果，启动26个Reduce。</p>
+<p>按照首字母将Map中不同桶中的字符串集合放置到相应的Reduce中进行处理。</p></li>
+</ol>
+<h4 id="案例二----单词计数">案例二----单词计数</h4>
+<p>给定一个巨大的文本（如1TB），如何计算单词出现的数目？</p>
+<p><strong>步骤</strong></p>
+<p>定义Map和Reduce函数</p>
+<pre><code>Map(K, V)&#123;    
+    For each word w in V       
+        Collect(w, 1);
+&#125;
+
+Reduce(K, V[])&#123;
+    int count = 0;
+    For each v in V
+        count += v    
+    Collect(K, count);
+&#125;</code></pre>
+<ol type="1">
+<li>自动对文本进行分割</li>
+<li>在分割之后的每一对&lt;key,value&gt;使用用户定义的Map进行处理，再生成新的&lt;key,value&gt;对</li>
+<li>对输出的结果集归拢、排序(系统自动完成）</li>
+<li>通过Reduce操作生成最后结果</li>
+</ol>
+<h2 id="分布式结构化数据表bigtable">分布式结构化数据表Bigtable</h2>
+<h3 id="设计动机与目标">设计动机与目标</h3>
+<h4 id="设计动机">设计动机</h4>
+<ol type="1">
+<li>需要存储的数据种类繁多</li>
+<li>海量的服务请求</li>
+<li>商用数据库无法满足需求</li>
+</ol>
+<h4 id="基本目标">基本目标</h4>
+<ul>
+<li>广泛的适用性 —— 为了满足一系列Google产品而并非特定产品的存储要求</li>
+<li>很强的可扩展性 —— 随时可以加入或撤销服务器</li>
+<li>高可用性 —— 确保几乎所有的情况下系统都可用</li>
+<li>简单性 —— 底层系统的简单性既可以减少系统出错的概率，也为上层应用的开发带来便利</li>
+</ul>
+<h3 id="数据模型">数据模型</h3>
+<h4 id="bigtable数据的存储格式">Bigtable数据的存储格式</h4>
+<p>Bigtable是一个<strong>分布式多维映射表</strong>，表中的数据通过一个<strong>行关键字（Row Key）、一个列关键字（Column Key）以及一个时间戳（Time Stamp）进行索引</strong>🌿🌿🌿🌿🌿</p>
+<blockquote>
+<p>🐰Bigtable可以看成<code>key-value</code>的形式，其中的<code>key</code>是行关键字+列关键字+时间戳</p>
+</blockquote>
+<p><strong>Bigtable的存储逻辑</strong>可以表示为：</p>
+<p><code>(row:string, column:string, time:int64)→string</code></p>
+<figure>
+<img src="https://x.arcto.xyz/gKBXqX/04Google云计算技术_pic4.png" alt><figcaption>04Google云计算技术_pic4</figcaption>
+</figure>
+<ul>
+<li>行(Row)
+<ul>
+<li>大小不超过64KB的任意字符串。表中的数据都是根据行关键字进行排序的。</li>
+<li>com.cnn.www就是一个行关键字，指明一行存储数据。URL地址倒排可以使同一地址域的网页将被存储在表中连续的位置,便于查找</li>
+<li>🐰倒排？ 域名层次划分</li>
+</ul></li>
+<li>子表(Tablet)
+<ul>
+<li>一个大表可能太大，不利于存储管理，<strong>将在水平方向上被分为多个子表</strong></li>
+</ul></li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/Xfvpqe/04Google云计算技术_pic5.png" alt><figcaption>04Google云计算技术_pic5</figcaption>
+</figure>
+<ul>
+<li>列(Column)
+<ul>
+<li>特定含义的数据的集合。</li>
+<li><strong>BigTable将列关键字组织成为“列族”(column family),每个族中的数据属于同一类别,</strong>如anchor是一个列族，其下可有不同的表示一个个超链接的列关键字。</li>
+<li>一个列族下的数据会被压缩在一起存放。</li>
+<li>一个<strong>列关键字可表示为: 族名：限定词(family:qualifier)</strong></li>
+<li>content、anchor都是族名；而cnnsi.com和my.look.ca则是anchor族中的限定词。</li>
+</ul></li>
+<li>时间戳(time stamp)
+<ul>
+<li>很多时候同一个URL的网页会不断更新，而Google需要保存不同时间的网页数据，因此需要使用时间戳来加以区分。</li>
+<li>🐰时间戳 <code>int64</code>，两种生成方式：
+<ul>
+<li>系统默认（创建）</li>
+<li>用户定义（要求唯一）</li>
+</ul></li>
+<li>为了简化不同版本的数据管理，BigTable提供给了两种设置：
+<ul>
+<li>保留<strong>最近的n个</strong>版本数据</li>
+<li>保留<strong>限定时间内</strong>的所有不同版本数据</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="小结行列时间戳">小结——行、列、时间戳</h4>
+<h5 id="行">行</h5>
+<ul>
+<li>Bigtable的行关键字可以是任意的字符串，但是<strong>大小不能够超过64KB</strong></li>
+<li>表中数据都是根据<strong>行关键字</strong>进行排序的，排序使用的是<strong>词典序</strong></li>
+<li>同一地址域的网页会被存储在表中的<strong>连续位置</strong></li>
+</ul>
+<h5 id="列">列</h5>
+<ul>
+<li>将其组织成所谓的<strong>列族（Column Family）</strong></li>
+<li><strong>族名必须有意义</strong>，限定词则可以任意选定</li>
+<li>组织的数据结构清晰明了，含义也很清楚</li>
+<li>族同时也是Bigtable中<strong>访问控制（Access Control）的基本单元</strong></li>
+</ul>
+<h5 id="时间戳">时间戳</h5>
+<ul>
+<li>Google的很多服务比如网页检索和用户的个性化设置等都需要保存不同时间的数据，这些不同的数据版本必须通过时间戳来区分。</li>
+<li>Bigtable中的时间戳是64位整型数，具体的赋值方式可以用户自行定义</li>
+</ul>
+<h5 id="无数据校验">无数据校验</h5>
+<ul>
+<li><p><strong>每行都可存储任意数目的列</strong></p>
+<ul>
+<li>BigTable不对列的最少数目进行约束</li>
+</ul></li>
+<li><p><strong>任意类型的数据均可存储</strong></p>
+<ul>
+<li>BigTable将所有数据均看作为字符串</li>
+</ul></li>
+<li><p><strong>数据的有效性校验由构建于其上的应用系统完成</strong></p>
+<p>🐰BigTable不进行数据的有效性校验</p></li>
+</ul>
+<h3 id="系统架构-2">系统架构</h3>
+<h4 id="bigtable的基本架构">Bigtable的基本架构</h4>
+<figure>
+<img src="https://x.arcto.xyz/Geu_Sp/04Google云计算技术_pic6.png" alt><figcaption>04Google云计算技术_pic6</figcaption>
+</figure>
+<h4 id="bigtable中chubby的主要作用">Bigtable中Chubby的主要作用🌿</h4>
+<ol type="1">
+<li>选取并保证同一时间内只有一个主服务器（Master Server）。</li>
+<li>获取子表的位置信息。</li>
+<li>保存Bigtable的模式信息及访问控制列表。</li>
+</ol>
+<p>子表服务器</p>
+<h4 id="sstable格式的基本示意">SSTable格式的基本示意</h4>
+<p>**_SSTable_是Google为Bigtable设计的内部数据存储格式。**🌿🌿🌿🌿🌿</p>
+<p>所有的SSTable文件都存储在<strong>GFS</strong>上，用户可以通过<strong>键</strong>来查询相应的<strong>值</strong>。</p>
+<figure>
+<img src="https://x.arcto.xyz/KDGzCa/04Google云计算技术_pic7.png" alt><figcaption>04Google云计算技术_pic7</figcaption>
+</figure>
+<figure>
+<img src="https://x.arcto.xyz/jCjPvF/04Google云计算技术_pic8.png" alt><figcaption>04Google云计算技术_pic8</figcaption>
+</figure>
+<h4 id="子表实际组成">子表实际组成</h4>
+<ul>
+<li><p>不同子表的SSTable可以共享</p></li>
+<li><p>每个子表服务器上<strong>仅保存一个日志文件</strong></p>
+<blockquote>
+<p>🐰共享日志，每个子表服务器上的日志是共享日志的一个片段</p>
+</blockquote></li>
+<li><p>Bigtable规定将日志的内容按照键值进行排序</p></li>
+<li><p>每个子表服务器上保存的子表数量可以从几十到上千不等，通常情况下是100个左右</p></li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/wl9dZ_/04Google云计算技术_pic9.png" alt><figcaption>04Google云计算技术_pic9</figcaption>
+</figure>
+<h4 id="子表地址组成">子表地址组成</h4>
+<p>Bigtable系统的内部采用的是一种<strong>类似B+树的三层查询体系</strong></p>
+<figure>
+<img src="https://x.arcto.xyz/llbA3k/04Google云计算技术_pic10.png" alt><figcaption>04Google云计算技术_pic10</figcaption>
+</figure>
+<blockquote>
+<p>🐰元数据表：</p>
+<p>根子表（保存其他子表的位置） + 其他元数据子表（保存用户子表的位置信息）</p>
+</blockquote>
+<h4 id="bigtable-数据存储及读写操作">Bigtable 数据存储及读/写操作</h4>
+<p><strong>较新</strong>的数据存储在内存中一个称为<strong>内存表</strong>（Memtable）的有序缓冲里，</p>
+<p>较早的数据则以<strong>SSTable格式</strong>保存在GFS中。</p>
+<figure>
+<img src="https://x.arcto.xyz/T1Sil-/04Google云计算技术_pic11.png" alt><figcaption>04Google云计算技术_pic11</figcaption>
+</figure>
+<blockquote>
+<p>🐰内存表（SSTable的缓存），达到阈值后冻结，经过次压缩变成SSTable，Bigtable再创建一个新的内存表</p>
+</blockquote>
+<h4 id="三种形式压缩之间的关系">三种形式压缩之间的关系</h4>
+<figure>
+<img src="https://x.arcto.xyz/W1OHTC/04Google云计算技术_pic12.png" alt><figcaption>04Google云计算技术_pic12</figcaption>
+</figure>
+<blockquote>
+<p>🐰</p>
+<p>内存表的空间有限，达到阈值后 ---- 次压缩</p>
+<p>合并压缩 --- 定期进行</p>
+<p>主压缩 --- 定期进行</p>
+<p>主压缩成一个SSTable后，前面被压缩的都会被删除</p>
+</blockquote>
+<h3 id="性能优化">性能优化</h3>
+<h4 id="局部性群组locality-group">局部性群组(Locality Group)</h4>
+<p>Bigtable允许用户将原本并不存储在一起的数据以<strong>列族</strong>为单位，根据需要组织在一个单独的SSTable中，以构成一个局部性群组。</p>
+<figure>
+<img src="https://x.arcto.xyz/7dOEy2/04Google云计算技术_pic13.png" alt><figcaption>04Google云计算技术_pic13</figcaption>
+</figure>
+<blockquote>
+<p>用户可以只看自己感兴趣的内容。 对于一些较小的且会被经常读取的局部性群组，明显地改善读取效率。</p>
+</blockquote>
+<h4 id="压缩">压缩</h4>
+<p>压缩可以有效地节省空间，Bigtable中的压缩被应用于很多场合。</p>
+<p>压缩可以被用在构成局部性群组的SSTable中，可以选择是否对个人的局部性群组的SSTable进行压缩。</p>
+<p><strong>两步压缩</strong></p>
+<ol type="1">
+<li>利用Bentley &amp; McIlroy方式（<strong>BMDiff</strong>）在大的扫描窗口将<strong>常见的长</strong>串进行压缩</li>
+<li>采取Zippy技术进行<strong>快速压缩</strong>，它在一个16KB大小的扫描窗口内寻找重复数据，这个过程非常快</li>
+</ol>
+<blockquote>
+<p>压缩的本质：寻找重复数据，用少的字节代替</p>
+</blockquote>
+<h4 id="布隆过滤器">布隆过滤器</h4>
+<p>一个很长的<strong>二进制向量</strong>和一系列<strong>随机映射函数</strong></p>
+<h5 id="优点">优点</h5>
+<ul>
+<li>布隆过滤器的速度快，省空间</li>
+<li>不会将一个存在的子表判定为不存在</li>
+</ul>
+<h5 id="缺点">缺点</h5>
+<ul>
+<li>在某些情况下它会将不存在的子表判断为存在</li>
+</ul>
+<h2 id="小结">小结</h2>
+<h3 id="google的云计算应用均依赖于四个基础组件">Google的云计算应用均依赖于四个基础组件</h3>
+<ul>
+<li>分布式文件存储，GFS</li>
+<li>并行数据处理模型MapReduce</li>
+<li>分布式锁Chubby</li>
+<li>结构化数据表BigTable</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/uRXaVe/04Google云计算技术_pic14.png" alt><figcaption>04Google云计算技术_pic14</figcaption>
+</figure>
+<h3 id="chubby的作用">Chubby的作用</h3>
+<ul>
+<li>为GFS提供锁服务，选择Master节点；记录Master的相关描述信息</li>
+<li>通过独占锁记录Chunk Server的活跃情况</li>
+<li>为BigTable提供锁服务，记录子表元信息（如子表文件信息、子表分配信息、子表服务器信息）</li>
+</ul>
+<h3 id="gfs的作用">GFS的作用</h3>
+<ul>
+<li><p>存储BigTable的子表文件</p>
+<blockquote>
+<p>子表：SSTable和日志文件</p>
+</blockquote></li>
+<li><p>为第三方应用提供大尺寸文件存储功能</p></li>
+<li><p>文件读操作流程</p>
+<ul>
+<li>API与Master通信，获取文件元信息</li>
+<li>根据指定的读取位置和读取长度，API发起并发操作，分别从若干ChunkServer上读取数据</li>
+<li>API组装所得数据，返回结果</li>
+</ul></li>
+</ul>
+<h3 id="bigtable的作用">BigTable的作用</h3>
+<ul>
+<li><p>为Google云计算应用（或第三方应用）提供数据<strong>结构化</strong>存储功能</p>
+<blockquote>
+<p>结构化 --- 字符串的形式存储</p>
+</blockquote></li>
+<li><p>类似于数据库</p>
+<blockquote>
+<p>没有事务处理的能力</p>
+</blockquote></li>
+<li><p>为应用提供简单数据查询功能（不支持联合查询）</p></li>
+<li><p>为MapReduce提供数据源或数据结果存储</p></li>
+</ul>
+<h3 id="mapreduce的作用">MapReduce的作用</h3>
+<ul>
+<li>对BigTable中的数据进行并行计算处理（如统计、归类等）</li>
+<li>使用BigTable或GFS存储计算结果</li>
+</ul>
+<h2 id="应用场景分析">应用场景分析</h2>
+<h3 id="应用场景分析1-google网站流量分析">应用场景分析1—— Google网站流量分析</h3>
+<h4 id="基本功能">基本功能</h4>
+<ul>
+<li>统计网站的基本数据，包括会话、综合浏览量、点击量和字节流量等等</li>
+<li>分析网站页面关注度，帮助企业调整或增删页面</li>
+<li>分析用户浏览路径，优化页面布局</li>
+<li>分析用户访问来源链接，提高广告投资回报</li>
+</ul>
+<h4 id="应用的特征">应用的特征</h4>
+<p>海量数据 --- 需要存储海量的用户行为数据（如点击时间、位置等） 海量用户 --- 需要为任意多的网站提供流量分析</p>
+<h4 id="技术路线">技术路线</h4>
+<p>使用BigTable存储和检索数据，使用MapReduce统计数据</p>
+<h4 id="bigtable中的表设计">BigTable中的表设计</h4>
+<p><strong>原始点击数据表</strong></p>
+<p>行键：点击时间</p>
+<p>列键：网站URL、网站名称、用户IP地址、来源URL、目标URL…… 目前尺寸约200TB</p>
+<figure>
+<img src="https://x.arcto.xyz/3wNF8r/04Google云计算技术_pic15.png" alt><figcaption>04Google云计算技术_pic15</figcaption>
+</figure>
+<p><strong>统计数据表</strong></p>
+<p>行键：网站URL<strong>（倒排）</strong></p>
+<p>列键：点击次数（如记录最近一个月每日的访问次数等）、页面关注度（如记录网站页面的访问比率）、来源网站（如记录TOP10）、目标网站（如记录TOP10）…</p>
+<p>每个列中记录的内容是字符串，Analytics在查询后需要解析字符串获得统计结果</p>
+<p>可根据统计内容的增多来增加新的列</p>
+<p>目前尺寸约20TB</p>
+<h4 id="业务流程分析">业务流程分析</h4>
+<figure>
+<img src="https://x.arcto.xyz/vTff_7/04Google云计算技术_pic16.png" alt><figcaption>04Google云计算技术_pic16</figcaption>
+</figure>
+<h4 id="数据采集">数据采集</h4>
+<ul>
+<li><p>数据来源</p>
+<ul>
+<li>页面内嵌脚本</li>
+<li>点击行为脚本</li>
+</ul></li>
+<li><p>应用服务器获取到数据后，存入BigTable</p></li>
+<li><p>数据存储流程</p>
+<figure>
+<img src="https://x.arcto.xyz/19yqGK/04Google云计算技术_pic17.png" alt><figcaption>04Google云计算技术_pic17</figcaption>
+</figure></li>
+</ul>
+<h4 id="数据处理">数据处理</h4>
+<ul>
+<li><p>例如，统计网站(如xxx.com)过去一周网页访问比例</p></li>
+<li><p>数据处理流程</p>
+<figure>
+<img src="https://x.arcto.xyz/y-toLe/04Google云计算技术_pic18.png" alt><figcaption>04Google云计算技术_pic18</figcaption>
+</figure></li>
+<li><p>Map操作</p>
+<p>假设过去一周查询结果文件在GFS中包含M个Chunk，那么Master寻找M个空闲的Worker，分别处理这M个Chunk，得到每个网站中页面的访问次数</p></li>
+<li><p>自动排序</p>
+<p>对M个中间结果进行排序</p></li>
+<li><p>Reduce操作</p>
+<p>假设含N个网站，那么可以分配N台Worker分别处理单个网站的数据</p></li>
+<li><p>写入数据</p></li>
+<li><p>应用程序将分析结果写入统计数据表</p></li>
+</ul>
+<h4 id="数据查询">数据查询</h4>
+<p>从数据统计表中查询xxx.com行 获取对应列的数据，解析，得到并展示最终结果</p>
+<h3 id="应用场景分析2google搜索">应用场景分析2——Google搜索</h3>
+<h4 id="google搜索的总体业务流程">Google搜索的总体业务流程</h4>
+<ol type="1">
+<li>数据采集: Spider</li>
+<li>数据整理
+<ul>
+<li>生成各类子表，如音乐表、生活搜索表、学术搜索表等</li>
+<li>压缩数据表，清洗失效数据</li>
+</ul></li>
+<li>数据检索</li>
+</ol>
+<h4 id="数据采集-1">数据采集</h4>
+<ul>
+<li>通过若干Spider在网络上搜集数据</li>
+<li>使用BigTable存储数据 行键：倒排的URL 列键：网站名称、语言、HTML描述、图片、链接…… 时间戳：记录不同时刻的网页快照</li>
+</ul>
+<h4 id="数据整理google学术搜索">数据整理（Google学术搜索）</h4>
+<ul>
+<li><p><strong>数据抽取</strong></p>
+<ul>
+<li>寻找包含学术（论文）信息的网页数据，并结构化存储</li>
+<li>学术（论文）信息抽取（分析参考文献、摘要等）</li>
+<li>可能的技术方案：MapReduce+BigTable</li>
+</ul></li>
+<li><p><strong>数据统计</strong></p>
+<ul>
+<li>基于抽取的数据进行统计分析（如分析被引用次数等）</li>
+<li>可能的技术方案MapReduce+BigTable</li>
+</ul></li>
+<li><p><strong>学术信息BigTable</strong> 行键：论文标题 列键：作者、主题词、摘要、参考文献、期刊信息、被引用次数、下载链接……</p></li>
+<li><p><strong>如何获取论文统计数据（如论文引用次数）</strong></p>
+<p><strong>步骤</strong></p>
+<ul>
+<li>分析论文信息表，MapReduce</li>
+<li>归纳排序</li>
+<li>Reduce操作</li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Christy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://999795.xyz/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/" title="04Google云计算技术">https://999795.xyz/2020/08/19/04Google云计算技术/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8E%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E8%AE%BA/" rel="tag"><i class="fa fa-tag"></i> 分布式系统与云计算概论</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/18/03%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0/" rel="prev" title="03大数据概述">
+                  <i class="fa fa-chevron-left"></i> 03大数据概述
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/" rel="next" title="05Amazon云计算AWS">
+                  05Amazon云计算AWS <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">24k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">22 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+  <script async src="/js/cursor/love.min.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"999795.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="写在前： 记录📝  相关信息💻  论文发表在CVPR2021 发表单位：中国科学院大学、清华大学、圣迭戈加利福尼亚大学   论文地址：http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2104.06976 代码地址：https:&#x2F;&#x2F;github.com&#x2F;mlpc-ucsd&#x2F;PRTR  主要创新点  基于Transformer的人体姿态估计（论文中说是第一篇）  贡献点💡  根据论文 1. 提出了一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文阅读】Pose Recognition with Cascade Transformers">
+<meta property="og:url" content="https://999795.xyz/2021/08/08/pose-recognition-with-cascade-transformers/index.html">
+<meta property="og:site_name" content="一杯西瓜汁er🍉">
+<meta property="og:description" content="写在前： 记录📝  相关信息💻  论文发表在CVPR2021 发表单位：中国科学院大学、清华大学、圣迭戈加利福尼亚大学   论文地址：http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2104.06976 代码地址：https:&#x2F;&#x2F;github.com&#x2F;mlpc-ucsd&#x2F;PRTR  主要创新点  基于Transformer的人体姿态估计（论文中说是第一篇）  贡献点💡  根据论文 1. 提出了一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://x.arcto.xyz/r77JrM/prtr-2-stage.png">
+<meta property="og:image" content="https://x.arcto.xyz/6FD1so/prtr-end-to-end.png">
+<meta property="og:image" content="https://x.arcto.xyz/YElJVU/prtr-coco-result-1.png">
+<meta property="og:image" content="https://x.arcto.xyz/mQwSwv/prtr-coco-result-2.png">
+<meta property="og:image" content="https://x.arcto.xyz/CRnCCr/prtr-mpii-result.png">
+<meta property="article:published_time" content="2021-08-08T08:30:00.000Z">
+<meta property="article:modified_time" content="2021-08-08T09:22:39.442Z">
+<meta property="article:author" content="Christy">
+<meta property="article:tag" content="姿态估计">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://x.arcto.xyz/r77JrM/prtr-2-stage.png">
+
+
+<link rel="canonical" href="https://999795.xyz/2021/08/08/pose-recognition-with-cascade-transformers/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://999795.xyz/2021/08/08/pose-recognition-with-cascade-transformers/","path":"2021/08/08/pose-recognition-with-cascade-transformers/","title":"【论文阅读】Pose Recognition with Cascade Transformers"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【论文阅读】Pose Recognition with Cascade Transformers | 一杯西瓜汁er🍉</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">一杯西瓜汁er🍉</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">相关信息💻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%88%9B%E6%96%B0%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">主要创新点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">贡献点💡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%BD%93%E6%A3%80%E6%B5%8Btransformer"><span class="nav-number">4.1.</span> <span class="nav-text">人体检测Transformer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E7%82%B9%E6%A3%80%E6%B5%8Btransformer"><span class="nav-number">4.2.</span> <span class="nav-text">关键点检测Transformer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-stn-%E7%9A%84%E5%A4%9A%E5%B1%82%E8%A3%81%E5%89%AA"><span class="nav-number">4.3.</span> <span class="nav-text">使用 STN 的多层裁剪</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">5.</span> <span class="nav-text">实验🧪</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="nav-number">5.1.</span> <span class="nav-text">实验设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">5.1.1.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E6%A0%87%E5%87%86"><span class="nav-number">5.1.2.</span> <span class="nav-text">评价标准</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">5.2.</span> <span class="nav-text">实验结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">参考链接🔗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE"><span class="nav-number">6.1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFtransformer"><span class="nav-number">6.2.</span> <span class="nav-text">什么是Transformer</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Christy"
+      src="/upload/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Christy</p>
+  <div class="site-description" itemprop="description">保持热情:)</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/christy99cc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;christy99cc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2021/08/08/pose-recognition-with-cascade-transformers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/upload/avatar.jpg">
+      <meta itemprop="name" content="Christy">
+      <meta itemprop="description" content="保持热情:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杯西瓜汁er🍉">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【论文阅读】Pose Recognition with Cascade Transformers
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-08 08:30:00" itemprop="dateCreated datePublished" datetime="2021-08-08T08:30:00+00:00">2021-08-08</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>写在前： 记录📝</p>
+</blockquote>
+<h2 id="相关信息">相关信息💻</h2>
+<blockquote>
+<p>论文发表在CVPR2021 发表单位：中国科学院大学、清华大学、圣迭戈加利福尼亚大学</p>
+</blockquote>
+<ul>
+<li>论文地址：<a target="_blank" rel="noopener" href="http://arxiv.org/abs/2104.06976">http://arxiv.org/abs/2104.06976</a></li>
+<li>代码地址：<a target="_blank" rel="noopener" href="https://github.com/mlpc-ucsd/PRTR">https://github.com/mlpc-ucsd/PRTR</a></li>
+</ul>
+<h2 id="主要创新点">主要创新点</h2>
+<ul>
+<li><strong>基于Transformer</strong>的人体姿态估计（论文中说是第一篇）</li>
+</ul>
+<h2 id="贡献点">贡献点💡</h2>
+<blockquote>
+<p>根据论文 1. 提出了一种通过构建级联Transformers的基于回归的人体姿态识别方法。 2. 两种类型的级联Transformer: - two-stage，第2个Transformer使用第1个Transformer检测到的图像patch - end-to-end，使用了spatial Transformer network (STN) 3. 关键点的可视化</p>
+</blockquote>
+<h2 id="方法">方法</h2>
+<p>两种Transformer如下：</p>
+<img src="https://x.arcto.xyz/r77JrM/prtr-2-stage.png" title="fig:" alt="prtr-2-stage">
+<center>
+[two-stage的]
+</center>
+<p><strong>two-stage</strong>： TRansformer (PRTR) 两阶段变体的姿态识别架构。 - 首先，利用全图图像特征和绝对位置编码，人体检测Transformer使用一组学习的人查询检测图中的人。 - 在过滤背景查询后，我们用预测框裁剪原始图像。 - 将裁剪后的图像和相对于相应边界框的位置编码一起输入一个关键点检测Transformer。 - 最后，通过<u>匈牙利算法</u>从一个更大的关键点查询集合中读出J个关键点。关键点检测Transformer以矢量化的方式处理所有非背景关键点proposals。h(0)表示假设(查询)，通过Transformer解码器将特征向量提炼为最终的预测y^。</p>
+<img src="https://x.arcto.xyz/6FD1so/prtr-end-to-end.png" title="fig:" alt="prtr-end-to-end">
+<center>
+[end-to-end的]
+</center>
+<p><strong>end-to-end</strong>：基于TRansformer (PRTR)端到端变体的姿态识别架构。对于端到端学习，我们没有在RGB图像级别上进行裁剪，而是对骨干生成的多层特征采用可微分双线性采样，为关键点检测Transformer提供了放大和多层次的特征。</p>
+<h3 id="人体检测transformer">人体检测Transformer</h3>
+<ul>
+<li>自顶向下的方式解决多人姿态识别问题，基于DEtection Transformer (DETR)，采用Transformer架构作为第一阶段人体检测的backbone。</li>
+<li>在编码器阶段，由CNN生成的图像特征被扁平化并送入Transformer编码器以生成上下文化的图像特征</li>
+<li>在解码器阶段，给定一组固定的学习到的query embedding（查询嵌入）作为输入，Transformer解码器根据图像特征的上下文推理目标之间的关系，并行输出所有的目标queries。</li>
+<li>使用<strong>分类头</strong>将目标分类为人或背景（空集），并使用4通道的<strong>回归头</strong>预测边界框。</li>
+</ul>
+<h3 id="关键点检测transformer">关键点检测Transformer</h3>
+<p>得到边界框后，对RGB图像进行裁剪，并使用另一个CNN主干来得到人的特征图。因为只有匹配的查询涉及计算关键点检测Transformer的损失，所以我们过滤掉了不匹配的查询。像人检测的过程中,我们使用的encoder-decoder架构Transformer预测并行的方式，但我们使用另一组查询(Q代表数量)。最后，一个分类头预测包括J种类型的关节、背景(∅)、2声道回归头输出每个关键点的坐标。</p>
+<p>由于PRTR推断出比ground truth(J代表数量)更大的预测数量，我们需要找到它们之间的匹配来计算损失。我们将该匹配问题表述为最优二部匹配问题，该问题可由<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/96229700">匈牙利算法</a>有效地求解。具体来说，我们试图找到一个内射函数σ∈[J]→[Q]，它首先以离散的方式使匹配代价C最小:</p>
+<p><span class="math display">\[
+\mathcal{C}=\underset{\sigma}{\arg \min } \sum_{i}^{J} \mathcal{C}\left(y_{i}, \hat{y}_{\sigma(i)}\right)
+\]</span></p>
+<p>其中，<span class="math inline">\(\hat{y}_{\sigma(i)}\)</span> 代表与第i个关键点相匹配的预测。</p>
+<p>在训练阶段，我们混合使用分类概率和坐标偏差来匹配查询。例如，第i个关键点与其匹配的查询σ(i)的代价函数为：</p>
+<p><span class="math display">\[
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)+\left\|b_{i}-\hat{b}_{\sigma(i)}\right\|
+\]</span></p>
+<p>其中，<span class="math inline">\(\hat{p}_{\sigma(i)}\)</span> 是查询的类概率， <span class="math inline">\(c_{i}\)</span> 是第i个关键点的类标签。然而，在推断阶段，我们不能访问ground-truth关键点坐标，因此我们只使用分类概率将J原型关键点与查询匹配。所以，第i个关键点的匹配代价可以简单地表述为： <span class="math display">\[
+\mathcal{C}_{i}=-\hat{p}_{\sigma(i)}\left(c_{i}\right)
+\]</span></p>
+<p>二部匹配算法后，返回匹配的J个关键点作为预测。 模型的损失函数是通过对匹配查询，将方程2中的负概率替换为负对数似然<span class="math inline">\(-\log \hat{p}_{\sigma(i)}\left(c_{i}\right)\)</span>得到的。对于不匹配的查询，我们只反向传播分类损失。为了解决∅class造成的类失衡，我们将其对数概率项权重设为0.1。</p>
+<h3 id="使用-stn-的多层裁剪">使用 STN 的多层裁剪</h3>
+<p>在前一节中，我们介绍了一个两阶段的pipeline。然而，在端到端理念下，我们希望模型是端到端可调的，以利用人体检测和关键点识别任务之间的协同作用。为此，我们合并了<strong>STN</strong>，直接从第一个CNN骨干生成的特征图中裁剪出关键点检测Transformer所需的图像特征。这种裁剪操作不仅对特征映射是可微的，而且对边界框坐标也是可微的。</p>
+<p>例如，由<span class="math inline">\(b = \left(x_{\text {left }}, x_{\text {right }}, y_{\text {top }}, x_{\text {down }}\right)\)</span>生成的<span class="math inline">\(w × h\)</span>网格可以表示为:</p>
+<p><span class="math display">\[
+x_{i}=\frac{w-i}{w} x_{\mathrm{left}}+\frac{i}{w} x_{\mathrm{right}}
+\]</span></p>
+<p><span class="math display">\[
+y_{j}=\frac{h-j}{h} y_{\mathrm{top}}+\frac{j}{h} y_{\mathrm{down}}
+\]</span></p>
+<p>其中，<span class="math inline">\(b\)</span>相对于原始图像，<span class="math inline">\(w × h\)</span>为关键点检测Transformer所需的特征图尺寸。 为了减轻关键点识别中常见的分辨率挑战，我们使用<strong>双线性核</strong>将网格应用于CNN主干不同中间层生成的不同尺度的特征图。 用U表示原始的W × H特征图，可微采样过程可以表示为: <span class="math display">\[
+V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \left(0,1-\left|y_{j}-n\right|\right)
+\]</span></p>
+<p>在得到一系列相同大小的图像特征后，我们将它们连接成一个单一的特征图，用于关键点检测Transformer。这种多层裁剪变体<strong>图[end-to-end]</strong>所示。</p>
+<h2 id="实验">实验🧪</h2>
+<h3 id="实验设置">实验设置</h3>
+<h4 id="数据集">数据集</h4>
+<ul>
+<li>COCO Keypoint Detection task</li>
+<li>MPII Human Pose Dataset</li>
+</ul>
+<h4 id="评价标准">评价标准</h4>
+<ul>
+<li>Object Keypoint Similarity (OKS) for COCO</li>
+<li>Percentage of Correct Keypoints (PCK) for MPII</li>
+</ul>
+<h3 id="实验结果">实验结果</h3>
+<ul>
+<li>COCO dataset <img src="https://x.arcto.xyz/YElJVU/prtr-coco-result-1.png" alt="prtr-coco-result-1"> <img src="https://x.arcto.xyz/mQwSwv/prtr-coco-result-2.png" alt="prtr-coco-result-2"></li>
+<li>MPII val dataset <img src="https://x.arcto.xyz/CRnCCr/prtr-mpii-result.png" alt="prtr-mpii-result"></li>
+</ul>
+<h2 id="参考链接">参考链接🔗</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.yuque.com/jinluzhang/researchblog/prtr">Pose Recognition with Cascade Transformers 论文笔记</a></li>
+</ul>
+<h3 id="回顾">回顾</h3>
+<ul>
+<li>End-to-end object detection with transformers（DETR）ECCV 2020</li>
+<li>Cascaded pose regression（step-by-step regression）</li>
+<li>Locality-constrained spatial transformer network for video crowd counting.(STN)</li>
+</ul>
+<blockquote>
+<p>⬆️这些还需要再去看看补充一下</p>
+</blockquote>
+<h3 id="什么是transformer">什么是Transformer</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/82312421">十分钟理解Transformer</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48508221">详解Transformer （Attention Is All You Need）</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Christy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://999795.xyz/2021/08/08/pose-recognition-with-cascade-transformers/" title="【论文阅读】Pose Recognition with Cascade Transformers">https://999795.xyz/2021/08/08/pose-recognition-with-cascade-transformers/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 姿态估计</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/05/next/" rel="prev" title="使用NexT主题的博客更新日志">
+                  <i class="fa fa-chevron-left"></i> 使用NexT主题的博客更新日志
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">24k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">22 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+  <script async src="/js/cursor/love.min.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+</body>
+</html>
