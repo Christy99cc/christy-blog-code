@@ -20,29 +20,29 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"999795.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="记录专业实践过程中踩的坑  在订单表里添加记录的时候，显示报错如下： 12345678cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right">
+<meta name="description" content="写在前： 记录📝  相关信息💻  论文在ICCV2021 发表单位：上海交通大学、香港中文大学、商汤科技   论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2107.11291 代码地址：https:&#x2F;&#x2F;github.com&#x2F;Jeff-sjtu&#x2F;res-loglikelihood-regression   读完这篇文章有点一头雾水，一是很长一段时间没有进行论文的阅读了，二是感觉里面充">
 <meta property="og:type" content="article">
-<meta property="og:title" content="bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;order (order_no, &#96;uid&#96;, addr_id, ">
-<meta property="og:url" content="https://999795.xyz/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/index.html">
+<meta property="og:title" content="【论文阅读】Human Pose Regression with Residual Log-likelihood Estimation">
+<meta property="og:url" content="https://999795.xyz/2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/index.html">
 <meta property="og:site_name" content="一杯西瓜汁er🍉">
-<meta property="og:description" content="记录专业实践过程中踩的坑  在订单表里添加记录的时候，显示报错如下： 12345678cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right">
+<meta property="og:description" content="写在前： 记录📝  相关信息💻  论文在ICCV2021 发表单位：上海交通大学、香港中文大学、商汤科技   论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2107.11291 代码地址：https:&#x2F;&#x2F;github.com&#x2F;Jeff-sjtu&#x2F;res-loglikelihood-regression   读完这篇文章有点一头雾水，一是很长一段时间没有进行论文的阅读了，二是感觉里面充">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-12-13T16:00:00.000Z">
+<meta property="article:published_time" content="2021-08-08T12:00:00.000Z">
 <meta property="article:modified_time" content="2021-08-08T12:59:24.224Z">
 <meta property="article:author" content="Christy">
-<meta property="article:tag" content="SpringBoot">
-<meta property="article:tag" content="错误记录">
+<meta property="article:tag" content="姿态估计">
+<meta property="article:tag" content="论文阅读">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://999795.xyz/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/">
+<link rel="canonical" href="https://999795.xyz/2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://999795.xyz/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/","path":"2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/","title":"bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id, "}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://999795.xyz/2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/","path":"2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/","title":"【论文阅读】Human Pose Regression with Residual Log-likelihood Estimation"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id,  | 一杯西瓜汁er🍉</title>
+<title>【论文阅读】Human Pose Regression with Residual Log-likelihood Estimation | 一杯西瓜汁er🍉</title>
   
 
 
@@ -135,7 +135,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -148,6 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">相关信息💻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cite"><span class="nav-number">2.</span> <span class="nav-text">CITE🔗</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -486,7 +487,7 @@ if(canvas.getContext){
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/">
+    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/upload/avatar.jpg">
@@ -499,7 +500,7 @@ if(canvas.getContext){
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order (order_no, `uid`, addr_id, 
+          【论文阅读】Human Pose Regression with Residual Log-likelihood Estimation
         </h1>
 
         <div class="post-meta-container">
@@ -510,7 +511,7 @@ if(canvas.getContext){
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-12-13 16:00:00" itemprop="dateCreated datePublished" datetime="2020-12-13T16:00:00+00:00">2020-12-13</time>
+      <time title="创建时间：2021-08-08 12:00:00" itemprop="dateCreated datePublished" datetime="2021-08-08T12:00:00+00:00">2021-08-08</time>
     </span>
 
   
@@ -521,7 +522,7 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>932</span>
+      <span>352</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -540,13 +541,23 @@ if(canvas.getContext){
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>记录专业实践过程中踩的坑</p>
+<p>写在前： 记录📝</p>
 </blockquote>
-<p>在订单表里添加记录的时候，显示报错如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;order (order_no, `uid`, addr_id, </span><br><span class="line">      amount, `type`, freight, </span><br><span class="line">      `status`&#x27; at line 1</span><br><span class="line">; bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#x27;order (order_no, `uid`, addr_id, </span><br><span class="line">      amount, `type`, freight, </span><br><span class="line">      `status`&#x27; at line 1v</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>经过排查，发现<code>order</code>是<code>sql</code>的保留字段（在排序的时候用到）；</p>
-<p>由于订单表的名字也为<code>order</code>，再加上mapper是由mybatis自动生成的，所以这个冲突需要手动解决一下。</p>
-<p>在<code>OrderMapper.xml</code>文件中，找到 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">order</span> (order_no, `uid`, addr_id, </span><br><span class="line">     amount, `type`, freight, </span><br><span class="line">     `status`, payment_time, delivery_time, </span><br><span class="line">     finish_time, close_time, updated, </span><br><span class="line">     created)</span><br></pre></td></tr></table></figure> 将其中的<code>order</code>加上<code></code> `即可 即 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> `<span class="keyword">order</span>` (order_no, `uid`, addr_id, </span><br><span class="line">     amount, `type`, freight, </span><br><span class="line">     `status`, payment_time, delivery_time, </span><br><span class="line">     finish_time, close_time, updated, </span><br><span class="line">     created)</span><br></pre></td></tr></table></figure></p>
+<h2 id="相关信息">相关信息💻</h2>
+<blockquote>
+<p>论文在ICCV2021 发表单位：上海交通大学、香港中文大学、商汤科技</p>
+</blockquote>
+<ul>
+<li>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2107.11291">https://arxiv.org/abs/2107.11291</a></li>
+<li>代码地址：<a target="_blank" rel="noopener" href="https://github.com/Jeff-sjtu/res-loglikelihood-regression">https://github.com/Jeff-sjtu/res-loglikelihood-regression</a></li>
+</ul>
+<blockquote>
+<p>读完这篇文章有点一头雾水，一是很长一段时间没有进行论文的阅读了，二是感觉里面充斥着大量的统计知识。</p>
+<p>偶然在网上遇到了别人写得很不错的笔记，这几天也正在更新，放在这里。</p>
+<p>身为这个领域的小白，多学习，看看别人都是怎么思考的。</p>
+</blockquote>
+<h2 id="cite">CITE🔗</h2>
+<p>遇到的别人写得很不错的笔记 - <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/395521994">论文笔记及思考：Human Pose Regression with Residual Log-likelihood Estimation(ICCV 2021 Oral)</a></p>
 
     </div>
 
@@ -564,7 +575,7 @@ if(canvas.getContext){
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://999795.xyz/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/" title="bad SQL grammar []; nested exception is java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#39;order (order_no, &#96;uid&#96;, addr_id, ">https://999795.xyz/2020/12/13/bad-sql-grammar-nested-exception-is-java.sql.sqlsyntaxerrorexception-you-have-an-error-in-your-sql-syntax-check-the-manual-that-corresponds-to-your-mysql-server-version-for-the-right-syntax-to-use-near-order-order_no-uid-addr_id/</a>
+      <a href="https://999795.xyz/2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/" title="【论文阅读】Human Pose Regression with Residual Log-likelihood Estimation">https://999795.xyz/2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -573,22 +584,19 @@ if(canvas.getContext){
 </div>
 
           <div class="post-tags">
-              <a href="/tags/SpringBoot/" rel="tag"><i class="fa fa-tag"></i> SpringBoot</a>
-              <a href="/tags/%E9%94%99%E8%AF%AF%E8%AE%B0%E5%BD%95/" rel="tag"><i class="fa fa-tag"></i> 错误记录</a>
+              <a href="/tags/%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 姿态估计</a>
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/12/06/anaconda-vscode-pytorch/" rel="prev" title="Anaconda+VSCode+PyTorch的配置">
-                  <i class="fa fa-chevron-left"></i> Anaconda+VSCode+PyTorch的配置
+                <a href="/2021/08/08/pose-recognition-with-cascade-transformers/" rel="prev" title="【论文阅读】Pose Recognition with Cascade Transformers">
+                  <i class="fa fa-chevron-left"></i> 【论文阅读】Pose Recognition with Cascade Transformers
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/03/24/git/" rel="next" title="git拉取远程分支到本地">
-                  git拉取远程分支到本地 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
