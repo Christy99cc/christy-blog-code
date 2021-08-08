@@ -30,11 +30,16 @@ jobs:
     - name: Install all dependencies
       run: npm install
 
+    - name: Install Pandoc
+      run: curl -s -L https://github.com/jgm/pandoc/releases/download/2.9.2/pandoc-2.9.2-linux-amd64.tar.gz | tar xvzf - -C $RUNNER_TOOL_CACHE/
+
     - name: Clean
       run: rm -rf ./docs
     
     - name: Build
-      run: npm run build # The build command of your project
+      run: | 
+        export PATH="$PATH:$RUNNER_TOOL_CACHE/pandoc-2.9.2/bin"
+        npm run build # The build command of your project
       
     - name: Commit files
       run: |
