@@ -7,7 +7,6 @@ tags:
 categories: ''
 
 ---
-
 【更新中...】
 
 > 写在前：
@@ -119,7 +118,7 @@ $$
 这种组卷积不仅消除了无关关节的干扰，而且消除了冗余，减少了所需模型参数的数量。直接对Eq. 1中的关键点热图求和也是有好处的，因为分组CNN操作允许在像素级有不同的权重，有利于学习端到端模型。根据我们的PTM聚合关键点热图的可视化结果如图1所示。
 
 
-[DCPose-fig-1](https://x.arcto.xyz/jXv5_y/DCPose-fig-1.png)
+![DCPose-fig-1](https://x.arcto.xyz/jXv5_y/DCPose-fig-1.png)
 
 <center> 图1：姿势时间合并(PTM)网络的说明 </center>
 
