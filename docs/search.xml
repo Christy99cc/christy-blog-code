@@ -669,7 +669,9 @@
 <li><p>[39]用时间卷积扩展HRNet[33]，提出3DHRNet，成功地联合处理姿态估计和跟踪。</p></li>
 </ul>
 <h2 id="方法">方法</h2>
-<p><a href="https://x.arcto.xyz/e4lkt7/DCPose-fig-2.png">DCPose-fig-2</a></p>
+<figure>
+<img src="https://x.arcto.xyz/e4lkt7/DCPose-fig-2.png" alt><figcaption>DCPose-fig-2</figcaption>
+</figure>
 <p>该论文提出的DCPose的pipeline如图2所示。 为了改进当前帧<span class="math inline">\(F_{c}\)</span>的关键点检测，我们利用了来自前一帧<span class="math inline">\(F_{p}\)</span>和未来帧<span class="math inline">\(F_{n}\)</span>的额外时间信息。<span class="math inline">\(F_{p}\)</span>和<span class="math inline">\(F_{n}\)</span>是从一个帧窗口<span class="math inline">\([c-T, c+T]\)</span>中选取的，其中<span class="math inline">\(p \in[c-T, c)\)</span>和<span class="math inline">\(n \in(c, c+T]\)</span>分别表示帧索引。 <span class="math inline">\(F_{c}\)</span>中的每个人的边界框首先由人体检测器获得。每个边界框被放大25%，并进一步用于在<span class="math inline">\(F_{p}\)</span>和<span class="math inline">\(F_{n}\)</span>中裁剪同一个人。因此，视频中的个体<span class="math inline">\(i\)</span>将由裁剪的视频段组成，我们将其表示为<span class="math inline">\(\operatorname{Clip}_{i}(p, c, n)\)</span> 。然后，将<span class="math inline">\(\operatorname{Clip}_{i}(p, c, n)\)</span>送入骨干网络，该骨干网络用于输出初步关键点热图估计<span class="math inline">\(\mathbf{h}_{i}(p, c, n)\)</span>。然后，姿势热图<span class="math inline">\(\mathbf{h}_{i}(p, c, n)\)</span>通过两个模块网络（姿态时间合并(PTM)和姿态剩余融合(PRF)）并行处理。 PTM输出我<span class="math inline">\(\Phi_{i}(p, c, n)\)</span>，对空间聚合进行编码； PRF计算<span class="math inline">\(\Psi_{i}(p, c, n)\)</span>，它捕获两个方向上的姿态残差。</p>
 <p>两个特征张量<span class="math inline">\(\Phi_{i}(p, c, n)\)</span>和<span class="math inline">\(\Psi_{i}(p, c, n)\)</span>同时输入到姿态校正网络(PCN)，在初始姿态估计的基础上进行优化和改进。接下来，我们将详细介绍这三个关键组成部分。</p>
 <h3 id="姿态时间合并">姿态时间合并</h3>

@@ -69,7 +69,7 @@ categories: ''
 
 ## 方法
 
-[DCPose-fig-2](https://x.arcto.xyz/e4lkt7/DCPose-fig-2.png)
+![DCPose-fig-2](https://x.arcto.xyz/e4lkt7/DCPose-fig-2.png)
 
 该论文提出的DCPose的pipeline如图2所示。
 为了改进当前帧$F_{c}$的关键点检测，我们利用了来自前一帧$F_{p}$和未来帧$F_{n}$的额外时间信息。$F_{p}$和$F_{n}$是从一个帧窗口$[c-T, c+T]$中选取的，其中$p \in[c-T, c)$和$n \in(c, c+T]$分别表示帧索引。
