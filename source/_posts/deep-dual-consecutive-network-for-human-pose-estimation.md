@@ -215,21 +215,21 @@ $$
 
 ## 实验🧪
 
-## 实验设置
+### 实验设置
 
-### 数据集
+#### 数据集
 
 - PoseTrack2017
 
 - PoseTrack2018
 
-## 实验结果
+### 实验结果
 
-### PoseTrack2017数据集上的结果
+#### PoseTrack2017数据集上的结果
 
 ![DCPose-result-posetrack2017](https://x.arcto.xyz/OuXrLL/DCPose-result-posetrack2017.png)
 
-### PoseTrack2018数据集上的结果
+#### PoseTrack2018数据集上的结果
 
 ![DCPose-result-posetrack2018-1](https://x.arcto.xyz/WrMQp2/DCPose-result-posetrack2018-1.png)
 
