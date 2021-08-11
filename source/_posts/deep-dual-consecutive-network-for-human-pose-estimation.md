@@ -8,33 +8,40 @@ categories: ''
 
 ---
 
+
 > 写在前：
->
+> 
 > 记录📝
->
+> 
 > 翻译
+> 
 
 ## 相关信息💻
 
 > 论文在CVPR2021
->
+> 
 > 作者单位：浙江工商大学、南洋理工大学、浙江大学
 
-* DCPose
-* 论文地址：[https://arxiv.org/abs/2103.07254](https://arxiv.org/abs/2103.07254)
-* 代码地址：[https://github.com/Pose-Group/DCPose](https://github.com/Pose-Group/DCPose)
+
+- DCPose
+
+- 论文地址：[https://arxiv.org/abs/2103.07254](https://arxiv.org/abs/2103.07254) 
+
+- 代码地址：[https://github.com/Pose-Group/DCPose](https://github.com/Pose-Group/DCPose)
 
 ## 贡献点💡
 
 1. 提出一种新的双连续姿态估计框架。DCPose有效地融合了跨帧的双向时序线索，便于视频中的多人姿态估计任务。
+
 2. 在DCPose中设计了3个模块网络，以有效利用时间上下文:
-   * 一种新的姿态时间合并网络，有效地跨帧聚合关键点和识别搜索范围
-   * 一个姿态残差融合网络，有效地计算跨帧的加权姿态残差
-   * 一个姿态矫正网络，利用改进的搜索范围和位姿残差信息更新位姿估计
+    - 一种新的姿态时间合并网络，有效地跨帧聚合关键点和识别搜索范围
+    - 一个姿态残差融合网络，有效地计算跨帧的加权姿态残差
+    - 一个姿态矫正网络，利用改进的搜索范围和位姿残差信息更新位姿估计
+
 3. 在PoseTrack2017和PoseTrack2018多帧人体姿态估计挑战中取得了SOTA
 
-## 摘要🤓
 
+## 摘要🤓
 复杂情况下的多帧人体姿态估计具有挑战性。尽管最先进的人体关节检测器已经在静态图像上显示了显著的结果，但当我们将这些模型应用到视频序列时，它们的性能就会出现不足。普遍的缺点包括不能处理运动模糊、视频散焦或姿态遮挡，这是由于无法捕捉视频帧之间的时间依赖性。另一方面，直接使用传统的递归神经网络在空间上下文建模中会带来经验上的困难，特别是在处理姿态遮挡时。
 在本文中，我们提出了一种新的多帧人体姿态估计框架，利用视频帧之间丰富的时间线索来促进关键点检测。在我们的框架中设计了三个模块化组件。姿态时间合并模块对关键点时空上下文进行编码以生成有效的搜索范围，而姿态残差融合模块在两个方向上计算加权姿态残差。然后通过我们的姿势校正网络进行处理，以有效地精炼姿势估计。在大规模基准数据集PoseTrack2017和PoseTrack2018的多帧人体姿态估计挑战中，达到SOTA。我们已经发布了我们的代码，希望能启发未来的研究。
 
@@ -44,63 +51,73 @@ categories: ''
 
 框架大致可以分为两类：
 
-* 自顶向下
-* 自下而上
+- 自顶向下
+
+- 自下而上
 
 ### 基于视频的多人姿态估计
 
 直接将现有的图像级方法应用于视频序列会产生不满意的预测，主要是因为无法捕获视频帧之间的时间依赖性。因此，这些模型不能处理在视频输入中经常遇到的运动模糊、视频散焦或姿态遮挡。
 
-* \[28, 31, 42\]计算每个连续帧之间的密集光流，并且流表示为对齐预测提供额外的线索。然而，运动模糊、离焦或遮挡现象会阻碍光流计算并影响性能。
-* \[25\]用卷积lstm替代\[41\]的卷积姿态机，用于建模时间信息和空间上下文。这哥主要缺点是受到遮挡的严重影响。
-* \[3\]提出通过一个扭曲机制从稀疏标记的视频中学习一个有效的视频姿态检测器，并被证明是非常成功的，在posetrack排行榜上占据了很长一段时间。
-* \[39\]用时间卷积扩展HRNet\[33\]，提出3DHRNet，成功地联合处理姿态估计和跟踪。
+- [28, 31, 42]计算每个连续帧之间的密集光流，并且流表示为对齐预测提供额外的线索。然而，运动模糊、离焦或遮挡现象会阻碍光流计算并影响性能。
+
+- [25]用卷积lstm替代[41]的卷积姿态机，用于建模时间信息和空间上下文。这哥主要缺点是受到遮挡的严重影响。
+
+- [3]提出通过一个扭曲机制从稀疏标记的视频中学习一个有效的视频姿态检测器，并被证明是非常成功的，在posetrack排行榜上占据了很长一段时间。
+
+- [39]用时间卷积扩展HRNet[33]，提出3DHRNet，成功地联合处理姿态估计和跟踪。
+
 
 ## 方法
 
 ![DCPose-fig-2](https://x.arcto.xyz/e4lkt7/DCPose-fig-2.png)
 
 该论文提出的DCPose的pipeline如图2所示。
-为了改进当前帧$F_{c}$的关键点检测，我们利用了来自前一帧$F_{p}$和未来帧$F_{n}$的额外时间信息。$F_{p}$和$F_{n}$是从一个帧窗口$\[c-T, c+T\]$中选取的，其中$p \\in\[c-T, c)$和$n \\in(c, c+T\]$分别表示帧索引。
-$F_{c}$中的每个人的边界框首先由人体检测器获得。每个边界框被放大25%，并进一步用于在$F_{p}$和$F_{n}$中裁剪同一个人。因此，视频中的个体$i$将由裁剪的视频段组成，我们将其表示为$\\operatorname{Clip}_{i}(p, c, n)$ 。然后，将$\\operatorname{Clip}_{i}(p, c, n)$送入骨干网络，该骨干网络用于输出初步关键点热图估计$\\mathbf{h}_{i}(p, c, n)$。然后，姿势热图$\\mathbf{h}_{i}(p, c, n)$通过两个模块网络（姿态时间合并(PTM)和姿态剩余融合(PRF)）并行处理。
-PTM输出我$\\Phi_{i}(p, c, n)$，对空间聚合进行编码；
-PRF计算$\\Psi_{i}(p, c, n)$，它捕获两个方向上的姿态残差。
+为了改进当前帧$F_{c}$的关键点检测，我们利用了来自前一帧$F_{p}$和未来帧$F_{n}$的额外时间信息。$F_{p}$和$F_{n}$是从一个帧窗口$[c-T, c+T]$中选取的，其中$p \in[c-T, c)$和$n \in(c, c+T]$分别表示帧索引。
+$F_{c}$中的每个人的边界框首先由人体检测器获得。每个边界框被放大25%，并进一步用于在$F_{p}$和$F_{n}$中裁剪同一个人。因此，视频中的个体$i$将由裁剪的视频段组成，我们将其表示为$\operatorname{Clip}_{i}(p, c, n)$ 。然后，将$\operatorname{Clip}_{i}(p, c, n)$送入骨干网络，该骨干网络用于输出初步关键点热图估计$\mathbf{h}_{i}(p, c, n)$。然后，姿势热图$\mathbf{h}_{i}(p, c, n)$通过两个模块网络（姿态时间合并(PTM)和姿态剩余融合(PRF)）并行处理。
+PTM输出我$\Phi_{i}(p, c, n)$，对空间聚合进行编码；
+PRF计算$\Psi_{i}(p, c, n)$，它捕获两个方向上的姿态残差。
 
-两个特征张量$\\Phi_{i}(p, c, n)$和$\\Psi_{i}(p, c, n)$同时输入到姿态校正网络(PCN)，在初始姿态估计的基础上进行优化和改进。接下来，我们将详细介绍这三个关键组成部分。
+两个特征张量$\Phi_{i}(p, c, n)$和$\Psi_{i}(p, c, n)$同时输入到姿态校正网络(PCN)，在初始姿态估计的基础上进行优化和改进。接下来，我们将详细介绍这三个关键组成部分。
 
 ### 姿态时间合并
 
 姿势时间合并(PTM)的动机来自以下观察和启发。
 
-* 1)尽管现有的姿态估计方法(如\[33,12\])在视频上性能下降，但我们观察到它们的预测仍然为逼近关键点空间位置提供有用的信息。
-* 2)另一个启发是关于时间一致性的，即个体的姿势不会在非常少的帧间隔(通常是每帧1/60到1/25秒)中发生戏剧性和突然的变化。
+- 1)尽管现有的姿态估计方法(如[33,12])在视频上性能下降，但我们观察到它们的预测仍然为逼近关键点空间位置提供有用的信息。
+
+- 2)另一个启发是关于时间一致性的，即个体的姿势不会在非常少的帧间隔(通常是每帧1/60到1/25秒)中发生戏剧性和突然的变化。
 
 因此，我们设计PTM来编码基于初始预测(来自骨干网络)的关键点空间上下文，提供一个压缩的搜索范围，便于在有限范围内的位姿预测的细化和校正。
 
-对于第i个人，骨干网络返回初始关键点热图$\\mathbf{h}_{i}(p)$，$\\mathbf{h}_{i}(c)$，$\\mathbf{h}_{i}(n)$。简单地说，我们可以通过直接求和$\\mathbf{H}_{i}(p, c, n)=\\mathbf{h}_{i}(p)+\\mathbf{h}_{i}(c)+\\mathbf{h}_{i}(n)$的方式来合并它们。然而，我们期望从$F_{p}$和$F_{n}$中提取的额外信息与它们到当前帧$F_{c}$的时间距离成反比。
+
+对于第i个人，骨干网络返回初始关键点热图$\mathbf{h}_{i}(p)$，$\mathbf{h}_{i}(c)$，$\mathbf{h}_{i}(n)$。简单地说，我们可以通过直接求和$\mathbf{H}_{i}(p, c, n)=\mathbf{h}_{i}(p)+\mathbf{h}_{i}(c)+\mathbf{h}_{i}(n)$的方式来合并它们。然而，我们期望从$F_{p}$和$F_{n}$中提取的额外信息与它们到当前帧$F_{c}$的时间距离成反比。
 用公式表示为:
 
 $$
-\\mathbf{H}(p, c, n)=\\frac{n-c}{n-p} \\mathbf{h}_{i}(p)+\\mathbf{h}_{i}(c)+\\frac{c-p}{n-p} \\mathbf{h}_{i}(n)
+\mathbf{H}(p, c, n)=\frac{n-c}{n-p} \mathbf{h}_{i}(p)+\mathbf{h}_{i}(c)+\frac{c-p}{n-p} \mathbf{h}_{i}(n)
 $$
 
 其中，$p,c,N$是帧索引，我们显式地为**时间上更接近当前帧的帧分配更高的权重**。
 
+
 卷积运算用于调整(特征)权重的，我们利用卷积神经网络来实际实现上述公式的思想。但是，在计算单个节点合并关键点热图时，将所有节点通道都包括在内，会造成冗余。
 
-例如，在编码左手腕的空间上下文的时候，在不同时间涉及头部、脚踝等其他关节，很可能没有任何轴承，甚至可能产生混淆。因此，对于每个关节，我们只包含它自己特定的时间信息来计算它的合并关键点热图。这是通过一组卷积实现的。我们根据关节重新组合关键点热图$\\mathbf{h}_{i}(p), \\mathbf{h}_{i}(c), \\mathbf{h}_{i}(n)$，并将其叠加成一个特征张量$\\phi_{i}$，即
+例如，在编码左手腕的空间上下文的时候，在不同时间涉及头部、脚踝等其他关节，很可能没有任何轴承，甚至可能产生混淆。因此，对于每个关节，我们只包含它自己特定的时间信息来计算它的合并关键点热图。这是通过一组卷积实现的。我们根据关节重新组合关键点热图$\mathbf{h}_{i}(p), \mathbf{h}_{i}(c), \mathbf{h}_{i}(n)$，并将其叠加成一个特征张量$\phi_{i}$，即
 
 $$
-\\phi_{i}(p, c, n)=\\bigoplus_{j=1}^{N} \\frac{n-c}{n-p} \\mathbf{h}_{i}^{j}(p) \\oplus \\mathbf{h}_{i}^{j}(c) \\oplus \\frac{c-p}{n-p} \\mathbf{h}_{i}^{j}(n)
+\phi_{i}(p, c, n)=\bigoplus_{j=1}^{N} \frac{n-c}{n-p} \mathbf{h}_{i}^{j}(p) \oplus \mathbf{h}_{i}^{j}(c) \oplus \frac{c-p}{n-p} \mathbf{h}_{i}^{j}(n)
 $$
 
-其中，$\\oplus$ 表示连接操作，上标j索引为N个关节中的第j个关节。然后，特征张量$\\phi_{i}$被送入一堆$3 \\times 3$的残差块（改编自RSN中的残差步块）中，生成合并的关键点热图$\\Phi_{i}(p, c, n)$如下
+其中，$\oplus$ 表示连接操作，上标j索引为N个关节中的第j个关节。然后，特征张量$\phi_{i}$被送入一堆$3 \times 3$的残差块（改编自RSN中的残差步块）中，生成合并的关键点热图$\Phi_{i}(p, c, n)$如下
+
 
 $$
-\\phi_{i}(p, c, n) \\underset{\\text { residual blocks }}{\\stackrel{\\text { stack of } 3 \\times 3}{\\longrightarrow}} \\Phi_{i}(p, c, n)
+\phi_{i}(p, c, n) \underset{\text { residual blocks }}{\stackrel{\text { stack of } 3 \times 3}{\longrightarrow}} \Phi_{i}(p, c, n)
 $$
 
 这种组卷积不仅消除了无关关节的干扰，而且消除了冗余，减少了所需模型参数的数量。直接对Eq. 1中的关键点热图求和也是有好处的，因为分组CNN操作允许在像素级有不同的权重，有利于学习端到端模型。根据我们的PTM聚合关键点热图的可视化结果如图1所示。
+
 
 ![DCPose-fig-1](https://x.arcto.xyz/jXv5_y/DCPose-fig-1.png)
 
@@ -113,81 +130,84 @@ $$
 (c)-left:右手腕的合并关键点热图，由我们的PTM网络通过编码关键点空间上下文生成。颜色强度编码空间聚集。
 (c)-right:合并关键点热图的放大视图。
 
+
+
 ### 姿态残差融合
 
-与PTM中关键点热图的空间聚集类似，我们的姿态残差融合(PRF)分支旨在计算姿态残差，这将作为额外的有利时间线索。给定关键点热图$\\mathbf{h}_{i}(p), \\mathbf{h}_{i}(c), \\mathbf{h}_{i}(n)$，我们计算姿态残差特征如下：
+与PTM中关键点热图的空间聚集类似，我们的姿态残差融合(PRF)分支旨在计算姿态残差，这将作为额外的有利时间线索。给定关键点热图$\mathbf{h}_{i}(p), \mathbf{h}_{i}(c), \mathbf{h}_{i}(n)$，我们计算姿态残差特征如下：
 
 $$
-\\psi_{i}(p, c)=\\mathbf{h}_{i}(c)-\\mathbf{h}_{i}(p)
-$$
-
-$$
-\\psi_{i}(c, n)=\\mathbf{h}_{i}(n)-\\mathbf{h}_{i}(c)
+\psi_{i}(p, c)=\mathbf{h}_{i}(c)-\mathbf{h}_{i}(p)
 $$
 
 $$
-\\begin{aligned}
-\\psi_{i} &=\\psi_{i}(p, c) \\oplus \\psi_{i}(c, n) \\
-& \\oplus \\frac{n-c}{n-p} \\psi_{i}(p, c) \\oplus \\frac{c-p}{n-p} \\psi_{i}(c, n)
-\\end{aligned}
+\psi_{i}(c, n)=\mathbf{h}_{i}(n)-\mathbf{h}_{i}(c)
 $$
 
-$\\psi_{i}$融合原始的姿态残差$\\psi_{i}(p, c)$，$\\psi_{i}(c, n)$，以及它们的加权版本（权重是根据时间距离得到的）。与PTM类似，$\\psi_{i}$也经过一堆$3 \\times 3$的残差块处理，得到最终的姿态残差特征$\\Psi_{i}(p, c, n)$如下：
+$$
+\begin{aligned}
+\psi_{i} &=\psi_{i}(p, c) \oplus \psi_{i}(c, n) \\
+& \oplus \frac{n-c}{n-p} \psi_{i}(p, c) \oplus \frac{c-p}{n-p} \psi_{i}(c, n)
+\end{aligned}
+$$
+
+$\psi_{i}$融合原始的姿态残差$\psi_{i}(p, c)$，$\psi_{i}(c, n)$，以及它们的加权版本（权重是根据时间距离得到的）。与PTM类似，$\psi_{i}$也经过一堆$3 \times 3$的残差块处理，得到最终的姿态残差特征$\Psi_{i}(p, c, n)$如下：
 
 $$
-\\psi_{i}(p, c, n) \\underset{\\text { residual blocks }}{\\stackrel{\\text { stack of } 3 \\times 3}{\\longrightarrow}} \\Psi_{i}(p, c, n)
+\psi_{i}(p, c, n) \underset{\text { residual blocks }}{\stackrel{\text { stack of } 3 \times 3}{\longrightarrow}} \Psi_{i}(p, c, n)
 $$
 
 ### 姿态矫正网络
 
-给定合并的关键点热图$\\Phi_{i}(p, c, n)$和姿态残差特征张量$\\Psi_{i}(p, c, n)$，我们的姿态校正网络被用来精炼初始关键点热图的估计$h_{i}(c)$，产生调整后的最终关键点热图。
+给定合并的关键点热图$\Phi_{i}(p, c, n)$和姿态残差特征张量$\Psi_{i}(p, c, n)$，我们的姿态校正网络被用来精炼初始关键点热图的估计$h_{i}(c)$，产生调整后的最终关键点热图。
 
-首先，姿态残差特征张量$\\Psi_{i}(p, c, n)$作为5个并行的具有不同扩张率$d \\in{3,6,9,12,15}$的卷积层的输入。这个计算给出了后续可变形卷积层的五个核的五组偏移量。偏移量计算公式为:
+首先，姿态残差特征张量$\Psi_{i}(p, c, n)$作为5个并行的具有不同扩张率$d \in\{3,6,9,12,15\}$的卷积层的输入。这个计算给出了后续可变形卷积层的五个核的五组偏移量。偏移量计算公式为:
 
 $$
-\\Phi_{i}(p, c, n) \\oplus \\Psi_{i}(p, c, n) \\underset{\\text { residual blocks }}{\\stackrel{\\text { stack of } 3 \\times 3}{\\longrightarrow}} \\underset{\\text {convolution layers }}{\\stackrel{\\text { dilation rate } d}{\\longrightarrow}} O_{i, d}
+\Phi_{i}(p, c, n) \oplus \Psi_{i}(p, c, n) \underset{\text { residual blocks }}{\stackrel{\text { stack of } 3 \times 3}{\longrightarrow}} \underset{\text {convolution layers }}{\stackrel{\text { dilation rate } d}{\longrightarrow}} O_{i, d}
 $$
 
 不同的扩张率对应不同的有效感受野大小，扩张率越大，感受野的范围越大。较小的膨胀率聚关注局部的表现，这对于捕捉微妙的运动上下文更加敏感。相反，使用大的膨胀率允许我们对全局表示进行编码，并捕获更大空间范围的相关信息。除了偏移量计算，我们将合并关键点热图提供给相似的卷积层，得到5组掩模$M_{d}$为
 
 $$
-\\Phi_{i}(p, c, n) \\oplus \\Psi_{i}(p, c, n) \\underset{\\text { residual blocks }}{\\stackrel{\\text { stack of } 3 \\times 3}{\\longrightarrow}} \\underset{\\text {convolution layers }}{\\stackrel{\\text { dilation rate } d}{\\longrightarrow}} M_{i, d}
+\Phi_{i}(p, c, n) \oplus \Psi_{i}(p, c, n) \underset{\text { residual blocks }}{\stackrel{\text { stack of } 3 \times 3}{\longrightarrow}} \underset{\text {convolution layers }}{\stackrel{\text { dilation rate } d}{\longrightarrow}} M_{i, d}
 $$
 
 在offset $O$和mask $M$计算中，两种膨胀卷积结构的参数是独立的。掩码Md可以看作是卷积核的权矩阵。
 
+
 我们通过可变形卷积$V2$网络（DCN v2）在不同的膨胀率d实现位姿校正模块。
 
 DCN v2接受以下输入：
-
-1. 合并关键点热图$\\Phi_{i}(p, c, n)$
+1. 合并关键点热图$\Phi_{i}(p, c, n)$
 2. 核偏移$O_{i, d}$
 3. 掩模$M_{i, d}$
 
 并输出膨胀率d时第i个人的姿态热图:
 $$
-\\left(\\Phi_{i}(p, c, n), O_{i, d}, M_{i, d}\\right) \\underset{\\text {DCN v2}}{\\stackrel{\\text { dilation rate } d}{\\longrightarrow}} \\mathbf{H}_{i, d}(c)
+\left(\Phi_{i}(p, c, n), O_{i, d}, M_{i, d}\right) \underset{\text {DCN v2}}{\stackrel{\text { dilation rate } d}{\longrightarrow}} \mathbf{H}_{i, d}(c)
 $$
 
 对5个膨胀率的5个输出进行汇总并归一化，得出第i个人的最终姿态预测：
 
 $$
-\\sum_{d \\in{3,6,9,12,15}} \\mathbf{H}_{i, d}(c) \\stackrel{\\text { normalization }}{\\longrightarrow} \\mathbf{H}_{i}(c)
+\sum_{d \in\{3,6,9,12,15\}} \mathbf{H}_{i, d}(c) \stackrel{\text { normalization }}{\longrightarrow} \mathbf{H}_{i}(c)
 $$
 
 最后，对每个人$i$执行上述程序。通过有效地利用DCPose框架中的来自$F_{p}$和$F_{n}$的额外线索，最终的姿态热图得到增强和改进。
+
 
 ### 实现细节
 
 #### BackBone
 
-* 我们采用最先进的深度高分辨率网络(HRNet-W48\[33\])作为我们的骨干关节检测器，因为它在单图像姿态估计方面的优越性能将有利于我们的方法。
+- 我们采用最先进的深度高分辨率网络(HRNet-W48[33])作为我们的骨干关节检测器，因为它在单图像姿态估计方面的优越性能将有利于我们的方法。
+
 
 #### 损失函数
-
 使用标准姿态估计损失函数作为我们的代价函数。训练的目的是最小化所有关节的预测和Ground Truth热图之间的总欧氏距离或$L2$距离。代价函数定义为
 $$
-L=\\frac{1}{N} * \\sum_{j=1}^{N} v_{j} *|G(j)-P(j)|^{2}
+L=\frac{1}{N} * \sum_{j=1}^{N} v_{j} *\|G(j)-P(j)\|^{2}
 $$
 
 其中，$G(j),P(j),vj$分别表示关节j的Ground Truth热图、预测热图和可见性，训练时关节总数设为N = 15。地面真实热图是通过以关节位置为中心的2D高斯生成的。
@@ -198,8 +218,9 @@ $$
 
 #### 数据集
 
-* PoseTrack2017
-* PoseTrack2018
+- PoseTrack2017
+
+- PoseTrack2018
 
 ### 实验结果
 
@@ -210,6 +231,7 @@ $$
 #### PoseTrack2018数据集上的结果
 
 ![DCPose-result-posetrack2018-1](https://x.arcto.xyz/WrMQp2/DCPose-result-posetrack2018-1.png)
+
 
 ![DCPose-result-posetrack2018-2](https://x.arcto.xyz/Mhzyyj/DCPose-result-posetrack2018-2.png)
 
