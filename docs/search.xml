@@ -782,7 +782,7 @@ L=\\frac{1}{N} * \\sum_{j=1}^{N} v_{j} *|G(j)-P(j)|^{2}
 <p>在本文中，我们提出了一种双连续网络用于多帧人的姿态估计，该网络在基准数据集上显著优于现有的先进方法。我们设计了一个姿态时间合并和姿态残差融合模块，允许从相邻帧中提取丰富的辅助信息，为定位关键点提供本地化和姿态残差校正搜索范围。我们的姿态校正网络使用多个有效的接受域来优化这个搜索范围内的姿态估计，取得了显著的改进，并且能够处理复杂的场景。</p>
 ]]></content>
       <tags>
-        <tag>文献阅读</tag>
+        <tag>论文阅读</tag>
         <tag>姿态估计</tag>
       </tags>
   </entry>
@@ -857,8 +857,8 @@ L=\\frac{1}{N} * \\sum_{j=1}^{N} v_{j} *|G(j)-P(j)|^{2}
 <p>遇到的别人写得很不错的笔记 - <a href="https://zhuanlan.zhihu.com/p/395521994">论文笔记及思考：Human Pose Regression with Residual Log-likelihood Estimation(ICCV 2021 Oral)</a></p>
 ]]></content>
       <tags>
-        <tag>姿态估计</tag>
         <tag>论文阅读</tag>
+        <tag>姿态估计</tag>
       </tags>
   </entry>
   <entry>
@@ -1007,8 +1007,8 @@ V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \lef
 </ul>
 ]]></content>
       <tags>
-        <tag>姿态估计</tag>
         <tag>论文阅读</tag>
+        <tag>姿态估计</tag>
       </tags>
   </entry>
   <entry>

@@ -2,7 +2,7 @@
 title: "【论文阅读】Deep Dual Consecutive Network for Human Pose Estimation"
 date: 2021-08-10T18:00:00Z
 tags:
-- 文献阅读
+- 论文阅读
 - 姿态估计
 categories: ''
 
