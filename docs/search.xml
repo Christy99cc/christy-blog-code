@@ -1049,11 +1049,14 @@ V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \lef
 <h2 id="相关工作">相关工作🤔</h2>
 <h3 id="人体姿态估计">人体姿态估计</h3>
 <h3 id="神经结构搜索nas">神经结构搜索（NAS）</h3>
-<h4 id="图片级任务的nas">图片级任务的NAS</h4>
-<h4 id="视频级任务的nas">视频级任务的NAS</h4>
-<h4 id="单张图姿态估计的nas">单张图姿态估计的NAS</h4>
-<p><strong>小结</strong>： 我们的工作与现有的NAS工作有三个不同之处。 1. 首次将NAS应用于<strong>视频</strong>姿态估计</p>
-<ol start="2" type="1">
+<ul>
+<li><p>图片级任务的NAS</p></li>
+<li><p>视频级任务的NAS</p></li>
+<li><p>单张图姿态估计的NAS</p></li>
+</ul>
+<p><strong>小结</strong>： 我们的工作与现有的NAS工作有三个不同之处。</p>
+<ol type="1">
+<li><p>首次将NAS应用于<strong>视频</strong>姿态估计</p></li>
 <li><p>现有的图像级和视频级任务并不会同时搜索不同的架构，但我们的工作搜索框架专用模型，以便进一步利用NAS在视频姿态估计中的能力。</p></li>
 <li><p>提出了新的时空搜索空间。</p></li>
 </ol>
@@ -1112,6 +1115,14 @@ H^{t}= \begin{cases}\mathcal{T}\left(I^{t}, H^{t-1} ;\left\{\theta_{\lambda}, \o
 <img src="https://x.arcto.xyz/m9uDUP/vipnas-fig-3.png" alt><figcaption>vipnas-fig-3</figcaption>
 </figure>
 <h4 id="自动计算分配">自动计算分配</h4>
+<p>如上所述，不同框架的子网络(T-ViPNets)不一定共享相同的架构。在ViPNAS中，不同的模型复杂度被自动分配给不同的框架。 我们的目标是寻找一组子网络架构(<span class="math inline">\(\left\{\operatorname{arch}^{t}\right\}_{t=1: T}\)</span>)，在总体计算复杂度(Flops)约束C下优化总体平均精度(AP):</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\max _{\text {arch }: T} \sum_{t=1}^{T} \operatorname{AP}\left(\mathcal{T}\left(I^{t}, H^{t-1} ;\left\{\theta_{\mathcal{T}}, \operatorname{arch}^{t}\right\}\right)\right) \\
+&amp;\text { s.t. } \quad \sum_{t=1}^{T} \text { Flops }\left(\operatorname{arch}^{t}\right) \leq \mathrm{C}
+\end{aligned}
+\]</span></p>
+<p>在搜索过程中，随机抽样满足给定约束的子网络，并评估验证集上的准确性。在Flops约束下，验证集上AP值最高的抽样子网络作为T-ViPNets。</p>
 <h2 id="实验">实验🧪</h2>
 <h3 id="数据集">数据集</h3>
 <ul>
