@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"999795.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="写在前： 记录📝 在仔细阅读之前，搜索发现了已经有人翻译or解释过此篇文章，也当作借鉴，链接🔗放在文章靠后的位置。  亮点💡  提出在视频中探索时间特征的融合以及自动计算分配（文中说是第一个提出的）  相关信息💻  论文在：CVPR2021 作者单位：香港中文大学、商汤科技、香港大学、SenseTime Research and Tetras.AI、悉尼大学   简称 论文地址：http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search">
+<meta property="og:url" content="https://999795.xyz/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/index.html">
+<meta property="og:site_name" content="一杯西瓜汁er🍉">
+<meta property="og:description" content="写在前： 记录📝 在仔细阅读之前，搜索发现了已经有人翻译or解释过此篇文章，也当作借鉴，链接🔗放在文章靠后的位置。  亮点💡  提出在视频中探索时间特征的融合以及自动计算分配（文中说是第一个提出的）  相关信息💻  论文在：CVPR2021 作者单位：香港中文大学、商汤科技、香港大学、SenseTime Research and Tetras.AI、悉尼大学   简称 论文地址：http">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://x.arcto.xyz/8Xk_Vw/vipnas-fig-1.png">
+<meta property="og:image" content="https://x.arcto.xyz/KpsoY8/vipnas-fig-2.png">
+<meta property="og:image" content="https://x.arcto.xyz/3WYNEQ/vipnas-fig-a1.png">
+<meta property="og:image" content="https://x.arcto.xyz/DLESLr/vipnas-fig-a2.png">
+<meta property="og:image" content="https://x.arcto.xyz/Bmoxmz/vipnas-fig-a3.png">
+<meta property="og:image" content="https://x.arcto.xyz/s7qWEK/vipnas-fig-a4.png">
+<meta property="og:image" content="https://x.arcto.xyz/PwEc9E/vipnas-fig-a5.png">
+<meta property="og:image" content="https://x.arcto.xyz/m9uDUP/vipnas-fig-3.png">
+<meta property="og:image" content="https://x.arcto.xyz/tZ4DQV/vipnas-tab-1.png">
+<meta property="og:image" content="https://x.arcto.xyz/AJec0p/vipnas-tab-2.png">
+<meta property="article:published_time" content="2021-08-17T18:35:00.000Z">
+<meta property="article:modified_time" content="2021-08-17T18:37:56.489Z">
+<meta property="article:author" content="Christy">
+<meta property="article:tag" content="论文阅读">
+<meta property="article:tag" content="姿态估计">
+<meta property="article:tag" content="NAS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://x.arcto.xyz/8Xk_Vw/vipnas-fig-1.png">
+
+
+<link rel="canonical" href="https://999795.xyz/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://999795.xyz/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/","path":"2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/","title":"【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search | 一杯西瓜汁er🍉</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">一杯西瓜汁er🍉</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%AE%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">亮点💡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">相关信息💻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">贡献点💡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">4.</span> <span class="nav-text">摘要🤓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">相关工作🤔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%BD%93%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1"><span class="nav-number">6.1.</span> <span class="nav-text">人体姿态估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BB%93%E6%9E%84%E6%90%9C%E7%B4%A2nas"><span class="nav-number">6.2.</span> <span class="nav-text">神经结构搜索（NAS）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E7%BA%A7%E4%BB%BB%E5%8A%A1%E7%9A%84nas"><span class="nav-number">6.2.1.</span> <span class="nav-text">图片级任务的NAS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E7%BA%A7%E4%BB%BB%E5%8A%A1%E7%9A%84nas"><span class="nav-number">6.2.2.</span> <span class="nav-text">视频级任务的NAS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E5%BC%A0%E5%9B%BE%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1%E7%9A%84nas"><span class="nav-number">6.2.3.</span> <span class="nav-text">单张图姿态估计的NAS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#overview"><span class="nav-number">7.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E7%BA%A7%E6%90%9C%E7%B4%A2%E7%A9%BA%E9%97%B4"><span class="nav-number">7.2.</span> <span class="nav-text">空间级搜索空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E7%BA%A7%E6%90%9C%E7%B4%A2%E7%A9%BA%E9%97%B4"><span class="nav-number">7.3.</span> <span class="nav-text">时间级搜索空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vipnas%E7%9A%84%E8%AE%AD%E7%BB%83%E5%92%8C%E6%90%9C%E7%B4%A2"><span class="nav-number">7.4.</span> <span class="nav-text">ViPNAS的训练和搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#s-vipnet%E7%9A%84%E8%AE%AD%E7%BB%83%E5%92%8C%E6%90%9C%E7%B4%A2"><span class="nav-number">7.4.1.</span> <span class="nav-text">S-ViPNet的训练和搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#t-vipnet%E7%9A%84%E8%AE%AD%E7%BB%83"><span class="nav-number">7.4.2.</span> <span class="nav-text">T-ViPNet的训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%AE%A1%E7%AE%97%E5%88%86%E9%85%8D"><span class="nav-number">7.4.3.</span> <span class="nav-text">自动计算分配</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">8.</span> <span class="nav-text">实验🧪</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">8.1.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%86%E8%8A%82"><span class="nav-number">8.2.</span> <span class="nav-text">细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vipnas%E7%94%A8%E4%BA%8E%E9%AB%98%E6%95%88%E7%9A%84%E8%A7%86%E9%A2%91%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1"><span class="nav-number">8.3.</span> <span class="nav-text">ViPNAS用于高效的视频姿态估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vipnas%E7%94%A8%E4%BA%8E%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E7%9A%84%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1"><span class="nav-number">8.4.</span> <span class="nav-text">ViPNAS用于基于图像的姿态估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C"><span class="nav-number">8.5.</span> <span class="nav-text">消融实验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">9.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cite"><span class="nav-number">10.</span> <span class="nav-text">CITE🔗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%A3...%E4%BB%80%E4%B9%88%E6%98%AFnas"><span class="nav-number">11.</span> <span class="nav-text">那...什么是NAS？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Christy"
+      src="/upload/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Christy</p>
+  <div class="site-description" itemprop="description">保持热情:)</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/christy99cc" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;christy99cc" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/upload/avatar.jpg">
+      <meta itemprop="name" content="Christy">
+      <meta itemprop="description" content="保持热情:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杯西瓜汁er🍉">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-17 18:35:00" itemprop="dateCreated datePublished" datetime="2021-08-17T18:35:00+00:00">2021-08-17</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>写在前：</p>
+<p>记录📝</p>
+<p>在仔细阅读之前，搜索发现了已经有人翻译or解释过此篇文章，也当作借鉴，链接🔗放在文章靠后的位置。</p>
+</blockquote>
+<h2 id="亮点">亮点💡</h2>
+<ul>
+<li>提出在视频中探索时间特征的融合以及自动计算分配（文中说是第一个提出的）</li>
+</ul>
+<h2 id="相关信息">相关信息💻</h2>
+<blockquote>
+<p>论文在：CVPR2021</p>
+<p>作者单位：香港中文大学、商汤科技、香港大学、SenseTime Research and Tetras.AI、悉尼大学</p>
+</blockquote>
+<ul>
+<li><p>简称</p></li>
+<li><p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.10154">https://arxiv.org/abs/2105.10154</a></p></li>
+<li><p>代码地址：<a target="_blank" rel="noopener" href="https://github.com/luminxu/ViPNAS">https://github.com/luminxu/ViPNAS</a></p></li>
+</ul>
+<h2 id="贡献点">贡献点💡</h2>
+<ol type="1">
+<li>提出了一种新的用于视频姿态估计的时空神经结构搜索(NAS)框架，称为ViPNAS</li>
+<li>ViPNAS学会在跨帧的总计算复杂度约束下为不同的帧分配计算资源(例如Flops)</li>
+<li>ViPNAS自动搜索时间连接，即融合模块和位置。在视频姿态估计的任务中，我们在CPU<strong>实时</strong>性能(&gt;25FPS)下达到了SOTA。</li>
+</ol>
+<h2 id="摘要">摘要🤓</h2>
+<h2 id="介绍">介绍</h2>
+<ul>
+<li><p>轻量模型：在本文中，我们的目标是构建一个轻量级的姿态估计器，达到SOTA并显著降低模型复杂性。</p></li>
+<li><p>针对现状提出问题：低维特征高维特征，如何融合？什么时候融合？</p></li>
+<li><p>解决：NAS（网络搜索结构），提出ViPNAS。</p></li>
+</ul>
+<p>我们提出了一种新的用于视频姿态估计的时空NAS框架，称为ViPNAS。对于空间层面的搜索，我们通过五个维度(深度、宽度、核大小、组数和注意力)来优化神经结构。对于时间层面的搜索，我们共同搜索三个方面的设计:1)特征融合阶段，2)特征融合操作，3)计算在视频帧间的分配。空间层次和时间层次的搜索通过一个单一的框架共同优化。给定多个帧上的总Flops作为约束，我们可以有效地跨不同视频帧分配计算，以优化性能。</p>
+<figure>
+<img src="https://x.arcto.xyz/8Xk_Vw/vipnas-fig-1.png" alt><figcaption>vipnas-fig-1</figcaption>
+</figure>
+<p>图1所示。PoseTrack2018验证集的速度-精度权衡。该文章提出的ViPNAS的精度可与最先进的网络相媲美，它可以在<strong>显著降低计算量</strong>的情况下实现<strong>CPU实时</strong>。</p>
+<h2 id="相关工作">相关工作🤔</h2>
+<h3 id="人体姿态估计">人体姿态估计</h3>
+<h3 id="神经结构搜索nas">神经结构搜索（NAS）</h3>
+<h4 id="图片级任务的nas">图片级任务的NAS</h4>
+<h4 id="视频级任务的nas">视频级任务的NAS</h4>
+<h4 id="单张图姿态估计的nas">单张图姿态估计的NAS</h4>
+<p><strong>小结</strong>： 我们的工作与现有的NAS工作有三个不同之处。 1. 首次将NAS应用于<strong>视频</strong>姿态估计</p>
+<ol start="2" type="1">
+<li><p>现有的图像级和视频级任务并不会同时搜索不同的架构，但我们的工作搜索框架专用模型，以便进一步利用NAS在视频姿态估计中的能力。</p></li>
+<li><p>提出了新的时空搜索空间。</p></li>
+</ol>
+<p>为了充分利用时间信息，我们在将前一帧的特征融合到当前帧时，寻找最优的组合，这是之前工作没有探索的。该方法还继承了once-for-all的优点，即只训练一次，获得多个子网，有效地降低了搜索成本。</p>
+<h2 id="方法">方法</h2>
+<h3 id="overview">Overview</h3>
+<figure>
+<img src="https://x.arcto.xyz/KpsoY8/vipnas-fig-2.png" alt><figcaption>vipnas-fig-2</figcaption>
+</figure>
+<p>视频姿态估计的目的是在每一帧中定位人的人体部位(也称为关键点或关节)。</p>
+<p>本文在在线姿态传播范式的基础上，提出了一种高效视频姿态估计框架(ViPNAS)。如图2所示。每<span class="math inline">\(T + 1\)</span>帧选取第一帧作为关键帧。<strong>对于关键帧</strong>，采用高精度空间视频姿态估计网络(S-ViPNet)对人体姿态进行定位。我们遵循常用的设置，使用热图将关节位置编码为高斯峰。<strong>对于非关键帧</strong>，采用轻量级时间视频姿态估计网络(T-ViPNet)进行姿态传播。在T-ViPNet中，利用CNN的某些层提取当前帧的特征，然后利用时间特征融合模块将当前帧的特征与最后一帧的热图进行融合。融合的特征然后由T-ViPNet的剩余CNN层处理，以获得热图。预测的热图对每个关节的像素似然进行编码，作为指导后续帧关键点定位的信息线索。传播一直持续到下一个关键帧。 ViPNAS包含两层搜索空间，即空间层和时间层。在空间级搜索空间中搜索关键帧S-ViPNet的结构。对非关键帧(T-ViPNets)的架构，包括时间特征融合模块和CNN层，在空间级和时间级的搜索空间中进行搜索。不同的非关键帧在特征融合模块(融合操作和特征融合阶段)和CNN层中都有不同的架构，如图2中的t + 1和t + 2帧所示。</p>
+<h3 id="空间级搜索空间">空间级搜索空间</h3>
+<p>设计了权值共享super-network，用于模型结构搜索、块数搜索和块结构搜索。我们的超网络被串联成几个阶段，每个阶段由几个具有相同输出特征空间分辨率的块组成。我们在以下五个维度进行搜索: - 弹性深度:每个阶段的块数。当深度D被选为这个阶段时，我们激活阶段的第一个D块。</p>
+<figure>
+<img src="https://x.arcto.xyz/3WYNEQ/vipnas-fig-a1.png" alt><figcaption>vipnas-fig-a1</figcaption>
+</figure>
+<ul>
+<li>弹性宽度:每个块的输出通道数量。当宽度W被选择时，我们保留第一个W过滤器。</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/DLESLr/vipnas-fig-a2.png" alt><figcaption>vipnas-fig-a2</figcaption>
+</figure>
+<ul>
+<li>弹性核大小:每个块中卷积层的克尔大小。在选择kernel大小K时，保留中心K卷积核。对于正卷积层，核大小K的可能选择为3,5,7，对于反卷积层，核大小K的可能选择为2,4。</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/Bmoxmz/vipnas-fig-a3.png" alt><figcaption>vipnas-fig-a3</figcaption>
+</figure>
+<ul>
+<li>弹性组数:每个块中卷积层[22]的组数。对于N个输入通道，它的范围从1(标准卷积)到N(深度卷积)。</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/s7qWEK/vipnas-fig-a4.png" alt><figcaption>vipnas-fig-a4</figcaption>
+</figure>
+<ul>
+<li>弹性注意模块:在每个块的末尾是否使用注意模块。由于注意模块在[8,48]中被证明是有效的姿态估计，我们在搜索空间中包含注意模块。我们研究是否在每个块的末尾使用注意模块(例如GC块[4]或SE块[16])。如果没有选择注意模块，则跳过注意模块，应用身份映射。</li>
+</ul>
+<figure>
+<img src="https://x.arcto.xyz/PwEc9E/vipnas-fig-a5.png" alt><figcaption>vipnas-fig-a5</figcaption>
+</figure>
+<h3 id="时间级搜索空间">时间级搜索空间</h3>
+<h3 id="vipnas的训练和搜索">ViPNAS的训练和搜索</h3>
+<h4 id="s-vipnet的训练和搜索">S-ViPNet的训练和搜索</h4>
+<p>基于3.2节定义的空间级搜索空间，我们使用[61]中的方法来训练超网络。采用三明治规则[60,61]和就地蒸馏[60,61]。然后对给定约束条件下的子网络进行抽样，在验证集上对每个子网络进行评估，从而搜索关键框架网络S-ViPNet的体系结构。</p>
+<h4 id="t-vipnet的训练">T-ViPNet的训练</h4>
+<p>在本节中，我们将介绍我们的ViPNAS的多帧传播训练方案。目标是在跨多个视频帧的姿态传播过程中，同时在空间和时间水平上优化整体模型的精度。总体目标函数可以表示为</p>
+<p><span class="math display">\[
+\min _{\theta_{\mathcal{T}}} \sum_{t=1}^{T} \sum_{\text {arch }^{t}} \mathcal{L}\left(\mathcal{T}\left(I^{t}, H^{t-1} ;\left\{\theta_{\mathcal{T}}, \operatorname{arch}^{t}\right\}\right)\right)
+\]</span></p>
+<p>其中，</p>
+<p><span class="math display">\[
+H^{t}= \begin{cases}\mathcal{T}\left(I^{t}, H^{t-1} ;\left\{\theta_{\lambda}, \operatorname{arch}^{t}\right\}\right), &amp; t \geq 1 \\ \mathcal{S}\left(I^{t} ;\left\{\theta_{\mathcal{S}}\right\}\right), &amp; t=0\end{cases}
+\]</span></p>
+<p><span class="math inline">\(\mathcal{S}\)</span>是关键帧模型S-ViPNet，其权值为<span class="math inline">\(\theta_{\mathcal{S}}\)</span>。在训练和搜索T-ViPNets时，它是预先训练和固定的。<span class="math inline">\(\mathcal{T}\)</span>是T-ViPNets的超网络，由<span class="math inline">\(\theta_{\mathcal{T}}\)</span>参数化。在训练过程中，我们从<span class="math inline">\(\mathcal{T}\)</span>中抽取架构<span class="math inline">\(\text{arch}^{t}\)</span>组成的子网络，并从超网络权值<span class="math inline">\(\theta_{\mathcal{T}}\)</span>中复制该架构的权值。对于每一帧<span class="math inline">\(t\)</span>，<span class="math inline">\(I^{t}\)</span>是输入图像，<span class="math inline">\(H^{t}\)</span>是预测的热图。我们使用MSE损耗函数<span class="math inline">\(\mathcal{L }\)</span>来测量每个非关键帧的目标热图和预测热图之间的差异.</p>
+<figure>
+<img src="https://x.arcto.xyz/m9uDUP/vipnas-fig-3.png" alt><figcaption>vipnas-fig-3</figcaption>
+</figure>
+<h4 id="自动计算分配">自动计算分配</h4>
+<h2 id="实验">实验🧪</h2>
+<h3 id="数据集">数据集</h3>
+<ul>
+<li><p>COCO2017 Dataset</p></li>
+<li><p>PoseTrack2018 Dataset</p></li>
+</ul>
+<h3 id="细节">细节</h3>
+<h3 id="vipnas用于高效的视频姿态估计">ViPNAS用于高效的视频姿态估计</h3>
+<figure>
+<img src="https://x.arcto.xyz/tZ4DQV/vipnas-tab-1.png" alt><figcaption>vipnas-tab-1</figcaption>
+</figure>
+<p>表1:在PoseTrack2018验证集上与其他视频姿态估计方法进行了比较。ViPNAS实现了最先进的性能，显著降低了计算复杂度。</p>
+<h3 id="vipnas用于基于图像的姿态估计">ViPNAS用于基于图像的姿态估计</h3>
+<figure>
+<img src="https://x.arcto.xyz/AJec0p/vipnas-tab-2.png" alt><figcaption>vipnas-tab-2</figcaption>
+</figure>
+<p>表2：对比COCO2017数据集。在COCO val2017 set和test-dev2017 set上，我们的方法在速度和准确性方面显著优于其他手工和NAS模型。“十字架”表示使用更强的人包围盒探测器(HTC[5])。</p>
+<h3 id="消融实验">消融实验</h3>
+<h2 id="结论">结论</h2>
+<h2 id="cite">CITE🔗</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weilaicxy22/article/details/117406595">ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search论文解读</a></li>
+</ul>
+<h2 id="那...什么是nas">那...什么是NAS？</h2>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/60414004">NAS（神经结构搜索）综述</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jinzhuojun/article/details/84698471">神经网络架构搜索（Neural Architecture Search）杂谈</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/146138419">神经架构搜索(NAS)2020最新综述：挑战与解决方案</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/45133026">一篇 NAS 的介绍</a></p></li>
+<li><p>B站视频：神经网络结构搜索 <iframe src="//player.bilibili.com/player.html?aid=460871780&bvid=BV195411T7gX&cid=343774864&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.03443">FBNet: Hardware-Aware Efficient ConvNet Design via Differentiable Neural Architecture Search</a></p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Christy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://999795.xyz/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/" title="【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search">https://999795.xyz/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
+              <a href="/tags/%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 姿态估计</a>
+              <a href="/tags/NAS/" rel="tag"><i class="fa fa-tag"></i> NAS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/10/deep-dual-consecutive-network-for-human-pose-estimation/" rel="prev" title="【论文阅读】Deep Dual Consecutive Network for Human Pose Estimation">
+                  <i class="fa fa-chevron-left"></i> 【论文阅读】Deep Dual Consecutive Network for Human Pose Estimation
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">34k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">31 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+  <script async src="/js/cursor/love.min.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+</body>
+</html>

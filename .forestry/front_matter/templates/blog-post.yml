@@ -18,3 +18,4 @@ pages:
 - source/_posts/deep-dual-consecutive-network-for-human-pose-estimation.md
 - source/_posts/human-pose-regression-with-residual-log-likelihood-estimation.md
 - source/_posts/pose-recognition-with-cascade-transformers.md
+- source/_posts/vipnas-efficient-video-pose-estimation-via-neural-architecture-search.md
