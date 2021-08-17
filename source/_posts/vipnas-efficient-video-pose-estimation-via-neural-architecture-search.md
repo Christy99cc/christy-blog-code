@@ -70,14 +70,15 @@ categories: ''
 
 ### 神经结构搜索（NAS）
 
-#### 图片级任务的NAS
+- 图片级任务的NAS
 
-#### 视频级任务的NAS
+- 视频级任务的NAS
 
-#### 单张图姿态估计的NAS
+- 单张图姿态估计的NAS
 
 **小结**：
 我们的工作与现有的NAS工作有三个不同之处。
+
 1. 首次将NAS应用于**视频**姿态估计
 
 2. 现有的图像级和视频级任务并不会同时搜索不同的架构，但我们的工作搜索框架专用模型，以便进一步利用NAS在视频姿态估计中的能力。
@@ -159,6 +160,17 @@ $\mathcal{S}$是关键帧模型S-ViPNet，其权值为$\theta_{\mathcal{S}}$。�
 
 #### 自动计算分配
 
+如上所述，不同框架的子网络(T-ViPNets)不一定共享相同的架构。在ViPNAS中，不同的模型复杂度被自动分配给不同的框架。
+我们的目标是寻找一组子网络架构($\left\{\operatorname{arch}^{t}\right\}_{t=1: T}$)，在总体计算复杂度(Flops)约束C下优化总体平均精度(AP):
+
+$$
+\begin{aligned}
+&\max _{\text {arch }: T} \sum_{t=1}^{T} \operatorname{AP}\left(\mathcal{T}\left(I^{t}, H^{t-1} ;\left\{\theta_{\mathcal{T}}, \operatorname{arch}^{t}\right\}\right)\right) \\
+&\text { s.t. } \quad \sum_{t=1}^{T} \text { Flops }\left(\operatorname{arch}^{t}\right) \leq \mathrm{C}
+\end{aligned}
+$$
+
+在搜索过程中，随机抽样满足给定约束的子网络，并评估验证集上的准确性。在Flops约束下，验证集上AP值最高的抽样子网络作为T-ViPNets。
 
 ## 实验🧪
 
