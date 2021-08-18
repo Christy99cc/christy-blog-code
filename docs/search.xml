@@ -1168,7 +1168,7 @@ H^{t}= \begin{cases}\mathcal{T}\left(I^{t}, H^{t-1} ;\left\{\theta_{\lambda}, \o
       </tags>
   </entry>
   <entry>
-    <title>【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks</title>
+    <title>【论文简读】【AdvMix】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks</title>
     <url>/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/</url>
     <content><![CDATA[<blockquote>
 <p>写在前：</p>
@@ -1240,6 +1240,13 @@ I_{m i x}=\mathcal{M}_{0} \odot I+\sum_{k=1}^{K} \mathcal{M}_{k} \odot \mathcal{
 <p><span class="math display">\[
 \mathcal{V}(\mathcal{D}, \mathcal{G})=\min _{\phi} \max _{\theta} \underset{\mathcal{I} \sim \Omega}{\mathbb{E}} \mathcal{L}\left(\mathcal{D}(\mathcal{G}(\mathcal{O}(\mathcal{I}), \theta), \phi), \mathcal{H}_{g t}\right)
 \]</span></p>
+<h2 id="思考">思考🤔</h2>
+<ul>
+<li><p>这篇文章主要是在<strong>数据处理</strong>方面下的功夫，提出一种结合了知识蒸馏的对抗数据增强的方法。</p></li>
+<li><p>与模型无关，可以增强姿态估计器的鲁棒性。也就是说，可以与各种姿态估计模型相结合。</p></li>
+<li><p>在对抗训练的过程，还是有些疑问。。。<a href="https://zhuanlan.zhihu.com/p/296809584">对抗训练——终极数据增强？</a>这个知乎的文章也没有看明白QUQ</p></li>
+<li><p>关于知识蒸馏，之前简单了解思想，根据这篇文章重新回顾一下～<a href="https://zhuanlan.zhihu.com/p/102038521">【经典简读】知识蒸馏(Knowledge Distillation) 经典之作</a></p></li>
+</ul>
 ]]></content>
       <tags>
         <tag>论文阅读</tag>

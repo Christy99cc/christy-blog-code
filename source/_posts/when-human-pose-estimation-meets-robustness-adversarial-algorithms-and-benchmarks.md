@@ -1,5 +1,5 @@
 ---
-title: "【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms
+title: "【论文简读】【AdvMix】When Human Pose Estimation Meets Robustness: Adversarial Algorithms
   and Benchmarks"
 date: 2021-08-18T11:20:00+08:00
 tags:
@@ -127,3 +127,14 @@ $$
 $$
 \mathcal{V}(\mathcal{D}, \mathcal{G})=\min _{\phi} \max _{\theta} \underset{\mathcal{I} \sim \Omega}{\mathbb{E}} \mathcal{L}\left(\mathcal{D}(\mathcal{G}(\mathcal{O}(\mathcal{I}), \theta), \phi), \mathcal{H}_{g t}\right)
 $$
+
+
+## 思考🤔
+
+- 这篇文章主要是在**数据处理**方面下的功夫，提出一种结合了知识蒸馏的对抗数据增强的方法。
+
+- 与模型无关，可以增强姿态估计器的鲁棒性。也就是说，可以与各种姿态估计模型相结合。
+
+- 在对抗训练的过程，还是有些疑问。。。[对抗训练——终极数据增强？](https://zhuanlan.zhihu.com/p/296809584)这个知乎的文章也没有看明白QUQ
+
+- 关于知识蒸馏，之前简单了解思想，根据这篇文章重新回顾一下～[【经典简读】知识蒸馏(Knowledge Distillation) 经典之作](https://zhuanlan.zhihu.com/p/102038521)
