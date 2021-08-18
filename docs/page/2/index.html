@@ -160,7 +160,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -472,6 +472,261 @@ if(canvas.getContext){
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/upload/avatar.jpg">
+      <meta itemprop="name" content="Christy">
+      <meta itemprop="description" content="保持热情:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杯西瓜汁er🍉">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/08/22/05Amazon%E4%BA%91%E8%AE%A1%E7%AE%97AWS/" class="post-title-link" itemprop="url">05Amazon云计算AWS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-22 16:00:00" itemprop="dateCreated datePublished" datetime="2020-08-22T16:00:00+00:00">2020-08-22</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>为专业课复习用</p>
+</blockquote>
+<h2 id="介绍">介绍</h2>
+<p>Amazon Web Service（AWS）</p>
+<h3 id="amazon云的提出">Amazon云的提出</h3>
+<p>IaaS：将硬件设备等基础资源封装成服务供用户使用</p>
+<h3 id="amazon提供的服务主要包括">Amazon提供的服务主要包括</h3>
+<ul>
+<li>弹性计算云EC2</li>
+<li>简单存储服务S3</li>
+<li>简单数据库服务Simple DB</li>
+<li>简单队列服务SQS</li>
+<li>弹性MapReduce服务</li>
+<li>内容推送服务CloudFront</li>
+<li>电子商务服务DevPay</li>
+<li>灵活支付服务FPS</li>
+</ul>
+<h2 id="基础存储架构dynamo">🌿基础存储架构Dynamo</h2>
+<p>🌿Amazon平台基础存储架构：Dynamo</p>
+<p>Amazon平台的架构是完全的<strong>分布式、去中心化</strong></p>
+<p><strong>需求</strong>——Amazon平台中有很多服务对存储的需求只是读取、写入，（满足简单的键/值式存储）</p>
+<h3 id="dynamo">🌿Dynamo</h3>
+<ul>
+<li>简单的键/值方式存储数据，不支持复杂的查询</li>
+<li>存储的是数据值的原始形式（bit），不解析数据的具体内容、不识别任何数据结构，这使得它几乎可以处理所有的数据类型</li>
+</ul>
+<h3 id="dynamo需要解决的主要问题及解决方案">🌿Dynamo需要解决的主要问题及解决方案</h3>
+<table>
+<thead>
+<tr class="header">
+<th>问题</th>
+<th>采取的相关技术</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>数据均衡分布</td>
+<td>改进的一致性哈希算法</td>
+</tr>
+<tr class="even">
+<td>数据备份</td>
+<td>参数可调的quorum机制</td>
+</tr>
+<tr class="odd">
+<td>数据冲突处理</td>
+<td>向量时钟Vector Clock</td>
+</tr>
+<tr class="even">
+<td>成员资格及错误检测</td>
+<td>基于Gossip协议的成员资格和错误检测</td>
+</tr>
+<tr class="odd">
+<td>临时故障处理</td>
+<td>Hinted handoff（数据回传机制）</td>
+</tr>
+<tr class="even">
+<td>永久故障处理</td>
+<td>Merkle哈希树</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dynamo的存储节点">Dynamo的存储节点</h3>
+<p>Dynamo中的存储节点呈<u>无中心的环状</u>分布。</p>
+<figure>
+<img src="https://x.arcto.xyz/3GRgG9/Dynamo存储架构.png" alt><figcaption>Dynamo存储架构</figcaption>
+</figure>
+<h4 id="两个基本概念">两个基本概念</h4>
+<ol type="1">
+<li><p>preference list</p>
+<p>存储与某个特定键值相对应的数据的节点列表</p></li>
+<li><p>coordinator</p>
+<p>执行一次读或写操作的节点</p></li>
+</ol>
+<blockquote>
+<p>通常，coordinator 是 preference list 上的第一个节点</p>
+</blockquote>
+<h2 id="dynamo架构的主要技术">Dynamo架构的主要技术</h2>
+<h3 id="数据均衡分布的问题">数据均衡分布的问题</h3>
+<p>Dynamo采用了<u>分布式的数据存储架构</u>，均衡的数据分布可以保证负载平衡和系统良好的扩展性。</p>
+<p>因此，<u>各个节点上数据的均衡性</u>是影响Dynamo性能的关键问题。</p>
+<blockquote>
+<p>取模分配方式：如果增加一台主机，会有大量的数据进行迁移</p>
+</blockquote>
+<h4 id="一致性哈希算法">🌿🌿🌿一致性哈希算法</h4>
+<p>一致性哈希算法是目前主流的<strong>分布式哈希表</strong>（Distributed Hash Table，DHT）协议之一</p>
+<p>一致性哈希算法除了能够保证哈希运算结果充分分散到整个环上外，还能保证在添加或删除设备节点时只会影响到其在哈希环中的前驱设备节点，而不会对其他设备节点产生影响。</p>
+<figure>
+<img src="https://x.arcto.xyz/H0Oh14/dynamo一致性hash.png" alt><figcaption>dynamo一致性hash</figcaption>
+</figure>
+<p>一致性哈希算法可以<strong>大大降低</strong>在添加或删除节点时引起的<strong>节点间的数据传输开销</strong></p>
+<h4 id="改进的一致性哈希算法">改进的一致性哈希算法</h4>
+<p>Dynamo中引入了<strong>虚拟节点</strong>的概念</p>
+<p>每个虚拟节点都<strong>隶属于</strong>某一个实际的<strong>物理节点</strong>，一个物理节点根据其性能的差异被分为<strong>一个或多个虚拟节点</strong>。</p>
+<p>各个虚拟节点的<strong>能力基本相当</strong>，并随机分布在<strong>哈希环</strong>上。</p>
+<figure>
+<img src="https://x.arcto.xyz/IkDGuR/dynamo虚拟节点.png" alt><figcaption>dynamo虚拟节点</figcaption>
+</figure>
+<p>Dynamo将整个哈希环划分成Q等份，每个等份称为一个数据分区（Partition）</p>
+<p>在存储数据时，每个数据会被先分配到某个数据分区，再根据负责该数据分区的虚拟节点，最终确定其所存储的物理节点。</p>
+<figure>
+<img src="https://x.arcto.xyz/IkDGuR/dynamo虚拟节点.png" alt><figcaption>dynamo数据分区</figcaption>
+</figure>
+<h5 id="数据分区的好处">数据分区的好处</h5>
+<ol type="1">
+<li>减小数据分布不均衡的可能性</li>
+<li>添加或删除设备节点时引起较小的数据传输</li>
+</ol>
+<h5 id="改进的一致性哈希算法的优势">改进的一致性哈希算法的优势</h5>
+<ul>
+<li>负载均衡</li>
+<li>屏蔽节点处理能力差异</li>
+</ul>
+<h3 id="数据备份">数据备份</h3>
+<blockquote>
+<p>可以参照上面的数据分区的图来看</p>
+</blockquote>
+<ul>
+<li>在Dynamo中，每个数据的副本备份存储在哈希环顺时针方向上该数据所在虚拟节点的后继节点中。</li>
+<li>数据备份在存储数据的同时进行，会使每次写操作的延时变长。</li>
+<li>Dynamo中对写操作进行了优化，保证一个副本必须写入硬盘，其他副本只要写入节点的内存即返回写成功。</li>
+<li>每个虚拟节点上实际存储了分配给它以及分配它的前N-1个前驱虚拟节点的数据。</li>
+</ul>
+<h4 id="参数可调的弱quorum机制">参数可调的弱quorum机制</h4>
+<p>读写参数W、R、N</p>
+<p>N：系统中每条记录的副本数</p>
+<p>W：每次记录成功写操作需要写入的副本数</p>
+<p>R：每次记录读请求最少需要读取的副本数。</p>
+<p>满足R+W&gt;N，用户即可自行配置R和W</p>
+<h3 id="数据冲突问题">数据冲突问题</h3>
+<h4 id="分布式系统架构中通常考虑的三个因素">分布式系统架构中通常考虑的三个因素</h4>
+<ol type="1">
+<li>可靠性 Reliability</li>
+<li>可用性 Availability</li>
+<li>一致性 Consistency</li>
+</ol>
+<h4 id="why数据冲突">Why数据冲突？</h4>
+<ul>
+<li>Dynamo选择通过牺牲一致性来保证系统的可靠性和可用性，没有采用强一致性模型而采用了最终一致性模型。</li>
+<li>由于Dynamo中可能出现同一个数据被<strong>多个节点同时更新</strong>的情况，且<strong>无法保证数据副本的更新顺序</strong>，这有可能会导致数据冲突。</li>
+</ul>
+<h4 id="how解决数据冲突">How解决数据冲突？</h4>
+<p>采用<strong>向量时钟技术</strong>。</p>
+<figure>
+<img src="https://x.arcto.xyz/LBWKgD/dynamo向量时钟技术.png" alt><figcaption>dynamo向量时钟技术</figcaption>
+</figure>
+<p>Dynamo中的向量时钟通过<code>[node, counter]</code> 对 来表示。</p>
+<blockquote>
+<p>node表示操作节点 counter是其对应的计数器，初始值为 0节点每进行一次更新操作则计数器加 1</p>
+</blockquote>
+<h3 id="成员资格及错误检测">成员资格及错误检测</h3>
+<p>由于Dynamo采用了无中心的架构，每个成员节点都需要保存其他节点的路由信息。</p>
+<p>为了保证每个节点都能拥有最新的成员节点信息，Dynamo中采用了一种类似于<strong>Gossip（闲聊）协议</strong>的技术</p>
+<blockquote>
+<p>Dynamo中还通过Gossip来实现错误检测。任何节点向其他节点发起通信后，如果对方没有回应，则认为对方节点失效</p>
+</blockquote>
+<p>为了避免新加入的节点之间不能及时发现其他节点的存在，Dynamo中设置了一些<strong>种子节点</strong>（Seed Node）。<strong>种子节点和所有的节点都有联系</strong>。当新节点加入时，它扮演一个中介的角色，使新加入节点之间互相感知。</p>
+<figure>
+<img src="https://x.arcto.xyz/AA3YFW/dynamo成员资格及错误检测%20.png" alt><figcaption>成员资格及错误检测</figcaption>
+</figure>
+<ul>
+<li>自底向上每一层代表一次随机通信</li>
+<li>第一层节点1将信息交换给节点2</li>
+<li>第二层节点1和2同时开始随机选择其他节点交换信息</li>
+<li>直到N个节点全部传遍</li>
+</ul>
+<h3 id="容错机制临时故障处理机制">容错机制——临时故障处理机制</h3>
+<p>为了处理临时失效的节点，Dynamo中采用了一种带有监听的数据回传机制（Hinted Handoff） 当虚拟节点A失效后，会将数据临时存放在节点D的临时空间中，并在节点A重新可用后，由节点D将数据回传给节点A。</p>
+<figure>
+<img src="https://x.arcto.xyz/j17e0T/Dynamo临时故障处理机制.png" alt><figcaption>Dynamo临时故障处理机制</figcaption>
+</figure>
+<h3 id="容错机制永久性故障处理机制">容错机制——永久性故障处理机制</h3>
+<p>Dynamo采用Merkle哈希树技术来加快检测和减少数据传输量</p>
+<figure>
+<img src="https://x.arcto.xyz/6CwBAu/dynamo-merkle-tree.png" alt><figcaption>dynamo-merkle-tree</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1955,14 +2210,14 @@ F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.</code></pre>
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">36k</span>
+    <span title="站点总字数">38k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">33 分钟</span>
+    <span title="站点阅读时长">35 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

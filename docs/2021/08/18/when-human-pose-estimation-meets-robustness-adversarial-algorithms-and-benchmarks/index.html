@@ -20,25 +20,32 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"999795.xyz","root":"/","images":"/images","scheme":"Pisces","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="保持热情:)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一杯西瓜汁er🍉">
-<meta property="og:url" content="https://999795.xyz/archives/2021/08/index.html">
+<meta name="description" content="写在前： 记录📝论文重点贡献、做法等 （领会理解文章的做法）  相关信息💻  论文在：CVPR2021   简称：AdvMix 论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2105.06152  贡献点💡🌟  我们提出了三个健壮的基准测试COCO-C、MPII-C和OCHuman-C，并证明了自顶向下和自底向上的姿态估计器在损坏的图像上都遭受了严重的性能下降，引起了社区对这个问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks">
+<meta property="og:url" content="https://999795.xyz/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/index.html">
 <meta property="og:site_name" content="一杯西瓜汁er🍉">
-<meta property="og:description" content="保持热情:)">
+<meta property="og:description" content="写在前： 记录📝论文重点贡献、做法等 （领会理解文章的做法）  相关信息💻  论文在：CVPR2021   简称：AdvMix 论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2105.06152  贡献点💡🌟  我们提出了三个健壮的基准测试COCO-C、MPII-C和OCHuman-C，并证明了自顶向下和自底向上的姿态估计器在损坏的图像上都遭受了严重的性能下降，引起了社区对这个问">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://x.arcto.xyz/NXalTC/advmix-fig-3.png">
+<meta property="article:published_time" content="2021-08-18T03:20:00.000Z">
+<meta property="article:modified_time" content="2021-08-18T15:13:45.521Z">
 <meta property="article:author" content="Christy">
+<meta property="article:tag" content="论文阅读">
+<meta property="article:tag" content="姿态估计">
+<meta property="article:tag" content="数据增强">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://x.arcto.xyz/NXalTC/advmix-fig-3.png">
 
 
-<link rel="canonical" href="https://999795.xyz/archives/2021/08/">
+<link rel="canonical" href="https://999795.xyz/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/2021/08/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://999795.xyz/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/","path":"2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/","title":"【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | 一杯西瓜汁er🍉</title>
+<title>【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks | 一杯西瓜汁er🍉</title>
   
 
 
@@ -131,7 +138,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -144,6 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">相关信息💻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A1%E7%8C%AE%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">贡献点💡🌟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">摘要&#x2F;介绍🤓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">方法🤔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%B2%81%E6%A3%92%E7%9A%84%E7%9A%84%E5%A7%BF%E6%80%81%E5%9F%BA%E5%87%86"><span class="nav-number">4.1.</span> <span class="nav-text">鲁棒的的姿态基准</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E5%87%86%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">4.1.1.</span> <span class="nav-text">基准数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E6%A0%87%E5%87%86"><span class="nav-number">4.1.2.</span> <span class="nav-text">评价标准</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%8A%97%E5%A2%9E%E5%BC%BA%E6%B7%B7%E5%90%88advmix"><span class="nav-number">4.2.</span> <span class="nav-text">对抗增强混合(AdvMix)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">4.2.1.</span> <span class="nav-text">增强生成器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%83%AD%E5%9B%BE%E5%9B%9E%E5%BD%92"><span class="nav-number">4.2.2.</span> <span class="nav-text">热图回归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%8A%97%E8%AE%AD%E7%BB%83"><span class="nav-number">4.2.3.</span> <span class="nav-text">对抗训练</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -471,149 +479,190 @@ if(canvas.getContext){
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 17 篇日志。 继续努力。</span>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://999795.xyz/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/upload/avatar.jpg">
+      <meta itemprop="name" content="Christy">
+      <meta itemprop="description" content="保持热情:)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一杯西瓜汁er🍉">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-18 03:20:00" itemprop="dateCreated datePublished" datetime="2021-08-18T03:20:00+00:00">2021-08-18</time>
+    </span>
+
+  
       </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>写在前：</p>
+<p>记录📝论文重点贡献、做法等</p>
+<p>（领会理解文章的做法）</p>
+</blockquote>
+<h2 id="相关信息">相关信息💻</h2>
+<blockquote>
+<p>论文在：CVPR2021</p>
+</blockquote>
+<ul>
+<li><p>简称：AdvMix</p></li>
+<li><p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.06152">https://arxiv.org/abs/2105.06152</a></p></li>
+</ul>
+<h2 id="贡献点">贡献点💡🌟</h2>
+<ul>
+<li><p>我们提出了三个健壮的基准测试COCO-C、MPII-C和OCHuman-C，并证明了自顶向下和自底向上的姿态估计器在损坏的图像上都遭受了严重的性能下降，引起了社区对这个问题的关注。</p></li>
+<li><p>通过大量的实验，我们得到了许多有趣的结论，这些结论将有助于提高未来工作的准确性和稳健性。</p></li>
+<li><p>我们提出了一种<strong>结合知识蒸馏的对抗数据增强方法AdvMix</strong>，该方法与模型无关，且易于实现。它显著提高了姿态估计模型的鲁棒性，同时保持或略微提高了对干净数据的性能，而没有额外的推断计算开销。</p></li>
+</ul>
+<h2 id="摘要介绍">摘要/介绍🤓</h2>
+<p>人体姿态估计是计算机视觉中一项基础而又富有挑战性的任务，其目标是定位人体的关键点。然而，与人类视觉对各种数据损坏(如模糊和像素化)的健壮性不同，当前的姿态估计器很容易被这些损坏所混淆。</p>
+<p>本文通过建立COCO-C、MPII-C和OCHuman-C严格的鲁棒基准来评估当前高级位姿估计器的弱点，对这一问题进行了全面的研究和解决，并提出了一种新的<strong>AdvMix算法</strong>来提高它们在不同腐蚀情况下的鲁棒性。</p>
+<p>我们的工作有几个独特的好处。</p>
+<ol type="1">
+<li><p>AdvMix是模型无关的，能够在广泛的姿态估计模型中使用。</p></li>
+<li><p>AdvMix由对抗性增强和知识蒸馏两部分组成。对抗性增强包含两个神经网络模块，它们以对抗性的方式进行联合和竞争训练，其中生成器网络混合不同的损坏图像来混淆姿态估计器，通过学习更难的样本来提高姿态估计器的鲁棒性。为了通过对抗增强对噪声模式进行补偿，采用知识分解的方法将清晰的位姿结构知识转移到目标位姿估计器中。</p></li>
+</ol>
+<p>(3)大量实验表明，AdvMix显著提高了姿态估计在广泛的腐败范围内的稳健性，同时在各种具有挑战性的基准数据集中保持了对干净数据的准确性。</p>
+<h2 id="方法">方法🤔</h2>
+<h3 id="鲁棒的的姿态基准">鲁棒的的姿态基准</h3>
+<h4 id="基准数据集">基准数据集</h4>
+<ul>
+<li><p>COCO-C Dataset.</p></li>
+<li><p>MPII-C Dataset.</p></li>
+<li><p>OCHuman-C Dataset.</p></li>
+</ul>
+<h4 id="评价标准">评价标准</h4>
+<h3 id="对抗增强混合advmix">对抗增强混合(AdvMix)</h3>
+<h4 id="增强生成器">增强生成器</h4>
+<figure>
+<img src="https://x.arcto.xyz/NXalTC/advmix-fig-3.png" alt><figcaption>advmix-fig-3: Overview of AdvMix. 框架包括两个模块:对抗增强模块和知识蒸馏模块。对抗增强模块包括一个增强生成器和一个姿态估计器。</figcaption>
+</figure>
+<p>如图3所示，给定图像<span class="math inline">\(I\)</span>，我们首先使用平行列增强策略<span class="math inline">\(\mathcal{O}_{k}\)</span>随机生成<span class="math inline">\(K\)</span>个不同的增强图像<span class="math inline">\(\mathcal{O}_{k}(I)\)</span>。在我们的实现中，我们默认使用K = 2。与原始图像I一起，我们得到一组<span class="math inline">\(K + 1\)</span>的proposal图像。利用增强生成器<span class="math inline">\(\mathcal{G}(\cdot, \theta)\)</span>输出归一化注意力映射<span class="math inline">\(\mathcal{M}^{(K+1) \times H \times W}\)</span>，其中H和W为图像分辨率。注意力映射图<span class="math inline">\(\mathcal{M}\)</span>被用作权重来混合提案图像，其中<span class="math inline">\(\odot\)</span>是Hadamard乘积。</p>
+<p><span class="math display">\[
+I_{m i x}=\mathcal{M}_{0} \odot I+\sum_{k=1}^{K} \mathcal{M}_{k} \odot \mathcal{O}_{k}(I)
+\]</span></p>
+<p>在图像<span class="math inline">\(I\)</span>中，我们选择Grid-Mask和AutoAugment生成随机增强图像，然后通过混合增强生成器的权重来混合这些图像。我们采用U-Net[34]架构构建增强生成器<span class="math inline">\(\mathcal{G}(\cdot, \theta)\)</span>，生成用于混合随机增强图像的注意力映射。</p>
+<h4 id="热图回归">热图回归</h4>
+<p>人体姿态是用二维高斯置信度热图编码的，每个通道对应一个人体关键点。人体姿态估计网络<span class="math inline">\(\mathcal{D}(\cdot, \phi)\)</span>的目标是最小化预测热图与地面真实热图Hgt<span class="math inline">\(\mathcal{H}_{gt}\)</span>之间的MSE损失:</p>
+<p><span class="math display">\[
+\mathcal{L}_{\mathcal{D}^{*}}=\left\|\mathcal{D}\left(I_{m i x}, \phi\right)-\mathcal{H}_{g t}\right\|_{2}^{2}
+\]</span></p>
+<p>为加强对目标姿态估计器<span class="math inline">\(\mathcal{D}\)</span>的监督，我们引入教师姿态估计器<span class="math inline">\(\mathcal{T}\)</span>，以蒸馏知识，并提供<strong>软</strong>热图标签。注意，<span class="math inline">\(\mathcal{T}\)</span>和<span class="math inline">\(\mathcal{D}\)</span>共享相同的架构，而且<span class="math inline">\(\mathcal{T}\)</span>在干净的训练数据上预先训练过。<span class="math inline">\(\mathcal{T}\)</span>的参数将在训练时固定。为知识蒸馏损失选择MSE损失，即:</p>
+<p><span class="math display">\[
+\mathcal{L}_{\mathcal{D}_{k d}}=\|\mathcal{D}(I, \phi)-\mathcal{T}(I)\|_{2}^{2}
+\]</span></p>
+<p>将姿态估计器<span class="math inline">\(\mathcal{D}\)</span>训练时的整体损失函数表示为:</p>
+<p><span class="math display">\[
+\mathcal{L}_{\mathcal{D}_{k d}}=\|\mathcal{D}(I, \phi)-\mathcal{T}(I)\|_{2}^{2}
+\]</span></p>
+<p>其中，α是MSE损失和知识蒸馏损失之间的损失重量平衡。由于模型对α不敏感，故选择α = 0.1作为默认设置。</p>
+<h4 id="对抗训练">对抗训练</h4>
+<p>增强生成器<span class="math inline">\(\mathcal{G}(\cdot, \theta)\)</span>和人体姿态估计器增强生成器<span class="math inline">\(\mathcal{D}(\cdot, \phi)\)</span>以对抗的方式进行训练。增强生成器<span class="math inline">\(\mathcal{G}(\cdot, \theta)\)</span>试图找到最容易混淆的方法来混合随机图像，而<span class="math inline">\(\mathcal{D}(\cdot, \phi)\)</span>则从较硬的训练样本中学习更鲁棒的特征。优化目标的定义为:</p>
+<p><span class="math display">\[
+\mathcal{L}_{\mathcal{G}}=-\mathcal{L}_{\mathcal{D}^{*}}
+\]</span></p>
+<p>总的来说，整个学习过程可以定义为具有价值函数<span class="math inline">\(\mathcal{V}(\mathcal{D}, \mathcal{G})\)</span>的二人零和博弈:</p>
+<p><span class="math display">\[
+\mathcal{V}(\mathcal{D}, \mathcal{G})=\min _{\phi} \max _{\theta} \underset{\mathcal{I} \sim \Omega}{\mathbb{E}} \mathcal{L}\left(\mathcal{D}(\mathcal{G}(\mathcal{O}(\mathcal{I}), \theta), \phi), \mathcal{H}_{g t}\right)
+\]</span></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-18T03:20:00+00:00"
-              content="2021-08-18">
-          08-18
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/" itemprop="url">
-            <span itemprop="name">【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          
 
-      
-    </header>
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Christy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://999795.xyz/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/" title="【论文简读】When Human Pose Estimation Meets Robustness: Adversarial Algorithms and Benchmarks">https://999795.xyz/2021/08/18/when-human-pose-estimation-meets-robustness-adversarial-algorithms-and-benchmarks/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i> 论文阅读</a>
+              <a href="/tags/%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1/" rel="tag"><i class="fa fa-tag"></i> 姿态估计</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA/" rel="tag"><i class="fa fa-tag"></i> 数据增强</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/" rel="prev" title="【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search">
+                  <i class="fa fa-chevron-left"></i> 【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-17T18:35:00+00:00"
-              content="2021-08-17">
-          08-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/17/vipnas-efficient-video-pose-estimation-via-neural-architecture-search/" itemprop="url">
-            <span itemprop="name">【论文阅读】ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-10T18:00:00+00:00"
-              content="2021-08-10">
-          08-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/10/deep-dual-consecutive-network-for-human-pose-estimation/" itemprop="url">
-            <span itemprop="name">【论文阅读】Deep Dual Consecutive Network for Human Pose Estimation</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-08T12:00:00+00:00"
-              content="2021-08-08">
-          08-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/08/human-pose-regression-with-residual-log-likelihood-estimation/" itemprop="url">
-            <span itemprop="name">【论文阅读】Human Pose Regression with Residual Log-likelihood Estimation</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-08T08:30:00+00:00"
-              content="2021-08-08">
-          08-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/08/pose-recognition-with-cascade-transformers/" itemprop="url">
-            <span itemprop="name">【论文阅读】Pose Recognition with Cascade Transformers</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-08-05T16:00:00+00:00"
-              content="2021-08-05">
-          08-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/08/05/next/" itemprop="url">
-            <span itemprop="name">使用NexT主题的博客更新日志</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 </div>
   </main>
