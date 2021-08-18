@@ -27,7 +27,7 @@ categories: ''
 > 作者单位：香港中文大学、商汤科技、香港大学、SenseTime Research and Tetras.AI、悉尼大学
 > 
 
-- 简称
+- 简称：ViPNAS
 
 - 论文地址：[https://arxiv.org/abs/2105.10154](https://arxiv.org/abs/2105.10154)
 
