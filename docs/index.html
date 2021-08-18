@@ -516,14 +516,14 @@ if(canvas.getContext){
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4.2k</span>
+      <span>5.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -623,6 +623,10 @@ if(canvas.getContext){
 <img src="https://x.arcto.xyz/PwEc9E/vipnas-fig-a5.png" alt><figcaption>vipnas-fig-a5</figcaption>
 </figure>
 <h3 id="时间级搜索空间">时间级搜索空间</h3>
+<p>单是轻量级的姿态模型在捕获全局信息和区分外观相似的关节方面存在困难。然而，考虑到相邻视频帧中的姿态是时间相关的，轻量级模型可以根据局部外观和之前帧的引导来估计关节的位置。</p>
+<p><strong>时间特征融合</strong>是视频姿态估计任务的关键。以往关于时间融合的研究主要在两个方面有所不同，即<strong>融合操作和特征融合</strong>阶段。流行的<u>融合操作可能包括加法(Add)、乘法(Mul)和串接(Cat)等</u>。由于不同的姿态网络喜欢不同的融合操作，融合操作的选择是手工精心制作的。此外，采用不同的方法融合不同阶段的输入特征。一般来说，<u>低级特征可能包含更详细的局部信息，而高级特征可能包含更多的全局信息</u>。在以往的作品中，使用的特征级别主要是通过试错来选择的。而在ViPNAS中，我们允许网络在一次搜索中自动搜索最佳融合操作和特征融合的最佳阶段。</p>
+<p>如图2所示，我们设计的时间特征融合模块包括两个输入，即先前框架的热图和当前框架<span class="math inline">\(t + 1\)</span>的特征。时域特征融合模块首先选择输入特征<span class="math inline">\(F^{t+1}_2\)</span> 的位置。来自相邻帧的姿态热图通过一个<span class="math inline">\(1 \times 1\)</span>卷积处理，然后一个双线性插值层来调整通道和分辨率(宽度和高度)，以匹配<strong>选择的</strong>特征<span class="math inline">\(F^{t+1}_2\)</span>。然后使用<strong>选择的</strong>融合算子(Cat)对热图和特征进行融合，再对融合算子进行<span class="math inline">\(1 \times 1\)</span>卷积处理，使融合后的特征(<span class="math inline">\(F^{t+1}_2\)</span>)与输入特征具有相同的形状。</p>
+<p>我们对非关键帧的时间级搜索空间包括特征融合操作的<span class="math inline">\(N_O\)</span>种选择，例如添加(Add)、乘法(Mul)和连接(Cat)；以及和<span class="math inline">\(N_S\)</span>种选择的输入特征阶段，例如<span class="math inline">\(F_1\)</span>, <span class="math inline">\(F_2\)</span>, <span class="math inline">\(F_3\)</span>和<span class="math inline">\(F_4\)</span>。时间搜索空间的大小是<span class="math inline">\(\left(N_{O} \times N_{S}\right)^{T}\)</span>，不可能通过试错来优化。”</p>
 <h3 id="vipnas的训练和搜索">ViPNAS的训练和搜索</h3>
 <h4 id="s-vipnet的训练和搜索">S-ViPNet的训练和搜索</h4>
 <p>基于3.2节定义的空间级搜索空间，我们使用[61]中的方法来训练超网络。采用三明治规则[60,61]和就地蒸馏[60,61]。然后对给定约束条件下的子网络进行抽样，在验证集上对每个子网络进行评估，从而搜索关键框架网络S-ViPNet的体系结构。</p>
@@ -667,6 +671,7 @@ H^{t}= \begin{cases}\mathcal{T}\left(I^{t}, H^{t-1} ;\left\{\theta_{\lambda}, \o
 <p>表2：对比COCO2017数据集。在COCO val2017 set和test-dev2017 set上，我们的方法在速度和准确性方面显著优于其他手工和NAS模型。“十字架”表示使用更强的人包围盒探测器(HTC[5])。</p>
 <h3 id="消融实验">消融实验</h3>
 <h2 id="结论">结论</h2>
+<p>在本文中，我们提出了在线视频姿态估计的ViPNAS，在精度和计算成本之间进行权衡。ViPNAS自动为不同的帧分配计算资源(即Flops)，以实现整体优化。通过设计新的时空搜索空间，我们可以同时搜索CNN的架构和时间连接，即融合操作和特征融合点。经验实验证明，我们提出的ViPNAS成功地发现了在cpu实时性能上达到最先进精度的体系结构。</p>
 <h2 id="cite">CITE🔗</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weilaicxy22/article/details/117406595">ViPNAS: Efficient Video Pose Estimation via Neural Architecture Search论文解读</a></li>
@@ -2065,14 +2070,14 @@ V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \lef
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">35k</span>
+    <span title="站点总字数">36k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">32 分钟</span>
+    <span title="站点阅读时长">33 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
