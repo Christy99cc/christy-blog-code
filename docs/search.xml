@@ -1024,7 +1024,7 @@ V_{i j}=\sum_{m, n} U_{n m} \max \left(0,1-\left|x_{i}-m\right|\right) \max \lef
 <p>作者单位：香港中文大学、商汤科技、香港大学、SenseTime Research and Tetras.AI、悉尼大学</p>
 </blockquote>
 <ul>
-<li><p>简称</p></li>
+<li><p>简称：ViPNAS</p></li>
 <li><p>论文地址：<a href="https://arxiv.org/abs/2105.10154">https://arxiv.org/abs/2105.10154</a></p></li>
 <li><p>代码地址：<a href="https://github.com/luminxu/ViPNAS">https://github.com/luminxu/ViPNAS</a></p></li>
 </ul>
