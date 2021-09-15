@@ -1374,6 +1374,32 @@ F(N) = F(N - 1) + F(N - 2), 其中 N &gt; 1.</code></pre>
       </tags>
   </entry>
   <entry>
+    <title> 换了台机器 又要给自己新建用户了</title>
+    <url>/2021/09/15/%E6%8D%A2%E4%BA%86%E5%8F%B0%E6%9C%BA%E5%99%A8-%E5%8F%88%E8%A6%81%E7%BB%99%E8%87%AA%E5%B7%B1%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7%E4%BA%86/</url>
+    <content><![CDATA[<blockquote>
+<p>需要准备：</p>
+</blockquote>
+<blockquote>
+<p>Linux系统 （本文使用的是Ubuntu 18.04）</p>
+<p>一个拥有sudo权限的账号user</p>
+</blockquote>
+<ol type="1">
+<li>创建账号</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo adduser zsx</span><br></pre></td></tr></table></figure>
+<p>同时会创建用户主目录<code>/home/zsx/</code></p>
+<ol start="2" type="1">
+<li>为用户增加sudo权限</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/sudoers </span><br></pre></td></tr></table></figure>
+<p>增加权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># User privilege specification</span><br><span class="line">root    ALL=(ALL:ALL) ALL</span><br><span class="line">zsx ALL=(ALL:ALL) ALL</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>04Google云计算技术</title>
     <url>/2020/08/19/04Google%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF/</url>
     <content><![CDATA[<blockquote>
